@@ -90,7 +90,7 @@ https://localhost:[port]/swagger
 
 2. **Migration Errors**
    - Ensure all migrations are up to date
-   - Run `Update-Database` in Package Manager Console
+   - Run `dotnet ef Database update` in Package Manager Console
 
 ## Contributing
 1. Create a new branch for your feature
