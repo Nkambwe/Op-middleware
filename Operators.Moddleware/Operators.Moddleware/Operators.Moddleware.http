@@ -1,0 +1,6 @@
+@Operators.Moddleware_HostAddress = http://localhost:5204
+
+GET {{Operators.Moddleware_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

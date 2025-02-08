@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Operators.Moddleware.props" />
+</Project>

@@ -1,0 +1,18 @@
+[
+  {
+    "ContainingType": "Operators.Moddleware.Controllers.OperatorsController",
+    "Method": "RetrieveUser",
+    "RelativePath": "middleware/RetrieveUser",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Operators.Moddleware.HttpHelpers.UserRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
