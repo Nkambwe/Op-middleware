@@ -1,11 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Operators.Moddleware.HttpHelpers {
     public class UserRequest {
-        [JsonProperty("username")]
+        [JsonPropertyName("username")]
         public string Username { get; set; }
 
-        [JsonProperty("decrypt")]
+        [JsonPropertyName("decrypt")]
         public string[] Decrypt { get; set; }
     }
 }

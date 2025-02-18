@@ -25,9 +25,9 @@ namespace Operators.Moddleware.Data.Repositories {
                 if(filters != null ){
                     entity = filters.Aggregate(itemslist,
                             (current, next) => current.Include(next)).FirstOrDefault();
-                } else { 
-                    entity = _entities.FirstOrDefault(predicate);
-                }
+                } 
+
+                entity = _entities.FirstOrDefault(predicate);
                 
             } catch (Exception ex) {
                 throw new Exception(ex.Message);
@@ -42,20 +42,22 @@ namespace Operators.Moddleware.Data.Repositories {
         public async Task<T> GetAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] filters) {
             T entity = null;
             try {
-                 var itemslist = _entities.AsQueryable();
-                if(filters != null ){
-                    entity = await filters.Aggregate(itemslist,
-                            (current, next) => current.Include(next)).FirstOrDefaultAsync();
-                } else { 
-                    entity = await _entities.FirstOrDefaultAsync(predicate);
+                var itemslist = _entities.AsQueryable();
+
+                // Apply Includes first if filters exist
+                if (filters != null && filters.Length > 0) {
+                    itemslist = filters.Aggregate(itemslist, (current, next) => current.Include(next));
                 }
-                
+
+                // Apply the predicate to filter results
+                entity = await itemslist.FirstOrDefaultAsync(predicate);
             } catch (Exception ex) {
                 throw new Exception(ex.Message);
             }
 
             return entity;
         }
+
 
         public IList<T> GetAll()
             => [.. _entities];
