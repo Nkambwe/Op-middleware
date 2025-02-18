@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "nv5v9CRgGas=",
+  "dgSpecHash": "OC+gUADbMcs=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Macjohnan\\source\\repos\\Operators.Moddleware\\Operators.Moddleware\\Operators.Moddleware.csproj",
+  "projectFilePath": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Operators.Moddleware.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Macjohnan\\.nuget\\packages\\automapper\\13.0.1\\automapper.13.0.1.nupkg.sha512",
     "C:\\Users\\Macjohnan\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
@@ -98,12 +98,5 @@
     "C:\\Users\\Macjohnan\\.nuget\\packages\\system.threading.channels\\6.0.0\\system.threading.channels.6.0.0.nupkg.sha512",
     "C:\\Users\\Macjohnan\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1900",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Error occurred while getting package vulnerability data: Unable to load the service index for source https://api.nuget.org/v3/index.json."
-    }
-  ]
+  "logs": []
 }

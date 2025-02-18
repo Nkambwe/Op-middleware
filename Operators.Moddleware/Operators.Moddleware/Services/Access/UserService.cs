@@ -4,6 +4,7 @@ using Operators.Moddleware.Exceptions;
 using Operators.Moddleware.Helpers;
 
 namespace Operators.Moddleware.Services.Access {
+
     public class UserService(IUserRepository repo) : IUserService {
         private readonly IUserRepository _repo = repo;
         private readonly ServiceLogger _logger = new("Operations_log");

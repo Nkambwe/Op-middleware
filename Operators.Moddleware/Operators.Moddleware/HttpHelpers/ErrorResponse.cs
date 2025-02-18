@@ -2,7 +2,7 @@
     public class ErrorResponse : SystemResponse {
 
         public ErrorResponse(int statusCode, string message, string description) { 
-            StatusCode = statusCode;
+            ResponseCode = statusCode;
             ResponseMessage = message; 
             ResponseDescription = description;
         }

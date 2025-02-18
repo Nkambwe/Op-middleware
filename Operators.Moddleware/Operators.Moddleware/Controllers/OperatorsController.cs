@@ -30,35 +30,39 @@ namespace Operators.Moddleware.Controllers {
                 var user = await _userService.FindUsernameAsync(request.Username);
         
                 if (user == null) {
-                    return new JsonResult(new ErrorResponse(
-                        (int)ResponseCode.NOTFOUND,
-                        ResponseCode.NOTFOUND.GetDescription(),
-                        "Username does not exist"
-                    ));
+                    return new JsonResult(new UserResponse() {
+                        ResponseCode =  (int)ResponseCode.NOTFOUND,
+                        ResponseMessage = ResponseCode.NOTFOUND.GetDescription(),
+                        ResponseDescription =   "Username does not exist",
+                        Data = null
+                    });
                 }
 
                 if (!user.IsActive) {
-                    return new JsonResult(new ErrorResponse(
-                        (int)ResponseCode.FORBIDDEN,
-                        ResponseCode.FORBIDDEN.GetDescription(),
-                        $"User account with username '{request.Username}' is deactivated"
-                    ));
+                    return new JsonResult(new UserResponse() {
+                        ResponseCode =  (int)ResponseCode.FORBIDDEN,
+                        ResponseMessage = ResponseCode.FORBIDDEN.GetDescription(),
+                        ResponseDescription =   $"User account with username '{request.Username}' is deactivated",
+                        Data = null
+                    });
                 }
 
                 if (!user.IsVerified) {
-                    return new JsonResult(new ErrorResponse(
-                        (int)ResponseCode.FORBIDDEN,
-                        ResponseCode.FORBIDDEN.GetDescription(),
-                        $"User account with username '{request.Username}' is not verified"
-                    ));
+                    return new JsonResult(new UserResponse() {
+                        ResponseCode =  (int)ResponseCode.FORBIDDEN,
+                        ResponseMessage = ResponseCode.FORBIDDEN.GetDescription(),
+                        ResponseDescription =  $"User account with username '{request.Username}' is not verified",
+                        Data = null
+                    });
                 }
 
                 if (user.IsDeleted) {
-                    return new JsonResult(new ErrorResponse(
-                        (int)ResponseCode.FORBIDDEN,
-                        ResponseCode.FORBIDDEN.GetDescription(),
-                        $"User account with username '{request.Username}' is deleted"
-                    ));
+                    return new JsonResult(new UserResponse() {
+                        ResponseCode =  (int)ResponseCode.FORBIDDEN,
+                        ResponseMessage = ResponseCode.FORBIDDEN.GetDescription(),
+                        ResponseDescription =  $"User account with username '{request.Username}' is deleted",
+                        Data = null
+                    });
                 }
 
                 var result = _mapper.Map<UserResponse>(user);
@@ -66,32 +70,33 @@ namespace Operators.Moddleware.Controllers {
                 //get userpassword
                 var password = await _passwordService.GetPasswordAsync(user.CurrentPassword);
                 if (password != null) { 
-                    result.ExpiresIn = ( await _parameterService.GetIntegerParameterAsync(ParameterName.PWD_NUMBEROFDAYSTOEXPIREY)) - (DateTime.Now - password.SetOn).Days;
-                    result.PasswordId = password.Id;
-                    result.Password = password.Password;
+                    result.Data.ExpiresIn = ( await _parameterService.GetIntegerParameterAsync(ParameterName.PWD_NUMBEROFDAYSTOEXPIREY)) - (DateTime.Now - password.SetOn).Days;
+                    result.Data.PasswordId = password.Id;
+                    result.Data.Password = password.Password;
                 }
 
                 //check wether passwords are allowed to expire
-                result.ExpirePasswords = await _parameterService.GetBooleanParameterAsync(ParameterName.PWD_USEEXIPRINGPASSWORDS);
+                result.Data.ExpirePasswords = await _parameterService.GetBooleanParameterAsync(ParameterName.PWD_USEEXIPRINGPASSWORDS);
                 
                 //..decrypt fields
                 if(request.Decrypt != null && request.Decrypt.Length > 0) { 
 
                     try{ 
                         decrypter = new(_logger);
-                        result = decrypter.DecryptProperties(result, request.Decrypt);
+                        result.Data = decrypter.DecryptProperties(result.Data, request.Decrypt);
                     } catch(Exception ex){ 
                         string msg = $"{ex.Message}";
-                        return new JsonResult(new ErrorResponse(
-                            (int)ResponseCode.SERVERERROR,
-                            ResponseCode.SERVERERROR.GetDescription(),
-                            msg
-                        ));
+                        return new JsonResult(new UserResponse() {
+                            ResponseCode =  (int)ResponseCode.SERVERERROR,
+                            ResponseMessage = msg,
+                            ResponseDescription = ResponseCode.SERVERERROR.GetDescription(),
+                            Data = null
+                        });
                     }
                     
                 }
 
-                result.StatusCode = (int)ResponseCode.SUCCESS;
+                result.ResponseCode = (int)ResponseCode.SUCCESS;
                 result.ResponseMessage = ResponseCode.SUCCESS.GetDescription();
                 return new JsonResult(result);
             } catch (Exception ex) {
@@ -99,11 +104,12 @@ namespace Operators.Moddleware.Controllers {
                 _logger.LogToFile(msg, "ERROR");
                 _logger.LogToFile($"{ex.StackTrace}", "STACKTRACE");
         
-               return new JsonResult(new ErrorResponse(
-                    (int)ResponseCode.SERVERERROR,
-                    ResponseCode.SERVERERROR.GetDescription(),
-                    msg
-                ));
+               return new JsonResult(new UserResponse() {
+                    ResponseCode =  (int)ResponseCode.SERVERERROR,
+                    ResponseMessage = msg,
+                    ResponseDescription = ResponseCode.SERVERERROR.GetDescription(),
+                    Data = null
+                });
             }
         }
 

@@ -1,7 +1,16 @@
-﻿namespace Operators.Moddleware.HttpHelpers {
+﻿using System.Text.Json.Serialization;
+
+namespace Operators.Moddleware.HttpHelpers {
+
     public class SystemResponse {
-        public int StatusCode { get; set; }
+        [JsonPropertyName("responseCode")]
+        public int ResponseCode { get; set; }
+    
+        [JsonPropertyName("responseMessage")]
         public string ResponseMessage { get; set; }
-        public string ResponseDescription { get; set; }
+    
+        [JsonPropertyName("responseDescription")]
+        public string ResponseDescription { get; set; }="";
     }
+
 }
