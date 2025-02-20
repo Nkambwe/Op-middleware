@@ -8,6 +8,7 @@ namespace Operators.Moddleware.Data.EntityConfigurations {
             entityBuilder.HasKey(t => t.Id);
             entityBuilder.Property(t => t.Parameter).HasColumnName("Paramname").HasMaxLength(250).IsRequired();
             entityBuilder.Property(t => t.ParameterValue).HasColumnName("Paramvalue").HasMaxLength(250).IsRequired();
+            entityBuilder.Property(t => t.Identifier).HasColumnName("Identifier").HasMaxLength(100).IsRequired();
             entityBuilder.Property(t => t.IsActive).HasDefaultValue(false);
             entityBuilder.Property(t => t.IsDeleted).HasDefaultValue(false);
             entityBuilder.Property(t => t.CreatedOn).IsRequired();

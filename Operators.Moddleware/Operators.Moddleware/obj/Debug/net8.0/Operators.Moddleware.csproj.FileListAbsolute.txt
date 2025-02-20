@@ -334,7 +334,6 @@ C:\Projects\Operators\middleware\Op-middleware\Operators.Moddleware\Operators.Mo
 C:\Projects\Operators\middleware\Op-middleware\Operators.Moddleware\Operators.Moddleware\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.Operators.Moddleware.props
 C:\Projects\Operators\middleware\Op-middleware\Operators.Moddleware\Operators.Moddleware\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Operators.Moddleware.props
 C:\Projects\Operators\middleware\Op-middleware\Operators.Moddleware\Operators.Moddleware\obj\Debug\net8.0\staticwebassets.pack.json
-C:\Projects\Operators\middleware\Op-middleware\Operators.Moddleware\Operators.Moddleware\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Projects\Operators\middleware\Op-middleware\Operators.Moddleware\Operators.Moddleware\obj\Debug\net8.0\Operator.DF477EE3.Up2Date
 C:\Projects\Operators\middleware\Op-middleware\Operators.Moddleware\Operators.Moddleware\obj\Debug\net8.0\Operators.Moddleware.dll
 C:\Projects\Operators\middleware\Op-middleware\Operators.Moddleware\Operators.Moddleware\obj\Debug\net8.0\refint\Operators.Moddleware.dll

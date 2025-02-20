@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Operators.Moddleware.csproj": {}
+    "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.moddleware\\Operators.Moddleware.csproj": {}
   },
   "projects": {
-    "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Operators.Moddleware.csproj": {
+    "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.moddleware\\Operators.Moddleware.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Operators.Moddleware.csproj",
+        "projectUniqueName": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.moddleware\\Operators.Moddleware.csproj",
         "projectName": "Operators.Moddleware",
-        "projectPath": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Operators.Moddleware.csproj",
+        "projectPath": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.moddleware\\Operators.Moddleware.csproj",
         "packagesPath": "C:\\Users\\Macjohnan\\.nuget\\packages\\",
-        "outputPath": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\obj\\",
+        "outputPath": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.moddleware\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -11,6 +11,9 @@ namespace Operators.Moddleware.Data.Entities {
         [Column(Order = 3)]
         public string ParameterValue {get; set;}
 
+        [Column(Order = 4)]
+        public string Identifier {get; set;}
+
         public virtual Branch Branch { get; set; }
         
         public override string ToString() => $"{Parameter}";

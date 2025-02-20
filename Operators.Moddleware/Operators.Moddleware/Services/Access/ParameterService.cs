@@ -1,4 +1,5 @@
-﻿using Operators.Moddleware.Data.Repositories.access;
+﻿using Operators.Moddleware.Data.Entities;
+using Operators.Moddleware.Data.Repositories.access;
 using Operators.Moddleware.Helpers;
 
 namespace Operators.Moddleware.Services.Access {
@@ -36,6 +37,18 @@ namespace Operators.Moddleware.Services.Access {
             }
 
             return value;
+        }
+
+        public Task<List<ConfigurationParameter>> GetParametersAsync(string identifier) {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> InsertParametersAsync(params ConfigurationParameter[] parameters) {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> UpdateParametersAsync(params ConfigurationParameter[] parameters) {
+            throw new NotImplementedException();
         }
     }
 }

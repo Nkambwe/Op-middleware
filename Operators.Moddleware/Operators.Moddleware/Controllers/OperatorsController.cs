@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Operators.Moddleware.Data.Entities;
 using Operators.Moddleware.Helpers;
 using Operators.Moddleware.HttpHelpers;
 using Operators.Moddleware.Services;
@@ -138,5 +139,23 @@ namespace Operators.Moddleware.Controllers {
             return new JsonResult(userResp);
         }
 
+
+        [HttpPost("SaveConfigurations")]
+        [Produces("application/json")]
+        public async Task<IActionResult> SaveConfigurations([FromBody]SettingsRequest request) { 
+            ConfigurationParameter[] parameters = [];
+            var paramData = await _parameterService.InsertParametersAsync(parameters);
+
+            var settingResponse = new SystemResponse() {
+                ResponseCode =  (int)ResponseCode.SUCCESS,
+                ResponseMessage = ResponseCode.SUCCESS.GetDescription(),
+                ResponseDescription =   $"'{request.SettingType}' settings have been updated successfully",
+
+            };
+
+            var response = JsonConvert.SerializeObject(settingResponse);
+            _logger.LogToFile($"API RESPONSE : {response}", "MSG");
+            return new JsonResult(settingResponse);
+        }
     }
 }
