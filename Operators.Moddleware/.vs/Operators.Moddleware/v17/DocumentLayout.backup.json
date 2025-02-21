@@ -3,8 +3,32 @@
   "WorkspaceRootPath": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\data\\entityconfigurations\\parameterentityconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\data\\entityconfigurations\\parameterentityconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\controllers\\operatorscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\controllers\\operatorscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\services\\access\\iparameterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\services\\access\\iparameterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\services\\access\\parameterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\services\\access\\parameterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\data\\repositories\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\data\\repositories\\repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\data\\repositories\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\data\\repositories\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\httphelpers\\systemresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\httphelpers\\systemresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\services\\branchservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -15,20 +39,16 @@
       "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\httphelpers\\settingsrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\data\\repositories\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\data\\repositories\\irepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\data\\repositories\\access\\iparametersrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\data\\repositories\\access\\iparametersrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\services\\access\\parameterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\services\\access\\parameterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\httphelpers\\responsecode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\httphelpers\\responsecode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\services\\access\\iparameterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\services\\access\\iparameterservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\httphelpers\\systemresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\httphelpers\\systemresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\helpers\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\helpers\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -63,38 +83,90 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "ParameterEntityConfiguration.cs",
+              "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Data\\EntityConfigurations\\ParameterEntityConfiguration.cs",
+              "RelativeDocumentMoniker": "Operators.Moddleware\\Data\\EntityConfigurations\\ParameterEntityConfiguration.cs",
+              "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Data\\EntityConfigurations\\ParameterEntityConfiguration.cs",
+              "RelativeToolTip": "Operators.Moddleware\\Data\\EntityConfigurations\\ParameterEntityConfiguration.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-21T02:06:49.459Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "IParametersRepository.cs",
+              "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Data\\Repositories\\access\\IParametersRepository.cs",
+              "RelativeDocumentMoniker": "Operators.Moddleware\\Data\\Repositories\\access\\IParametersRepository.cs",
+              "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Data\\Repositories\\access\\IParametersRepository.cs",
+              "RelativeToolTip": "Operators.Moddleware\\Data\\Repositories\\access\\IParametersRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-21T01:25:05.819Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ResponseCode.cs",
+              "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\HttpHelpers\\ResponseCode.cs",
+              "RelativeDocumentMoniker": "Operators.Moddleware\\HttpHelpers\\ResponseCode.cs",
+              "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\HttpHelpers\\ResponseCode.cs",
+              "RelativeToolTip": "Operators.Moddleware\\HttpHelpers\\ResponseCode.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAADwvxYAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-21T01:19:14.337Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "MappingProfile.cs",
+              "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Helpers\\MappingProfile.cs",
+              "RelativeDocumentMoniker": "Operators.Moddleware\\Helpers\\MappingProfile.cs",
+              "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Helpers\\MappingProfile.cs",
+              "RelativeToolTip": "Operators.Moddleware\\Helpers\\MappingProfile.cs",
+              "ViewState": "AgIAAHIAAAAAAAAAAAAAAIIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-21T00:50:50.484Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "OperatorsController.cs",
               "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Controllers\\OperatorsController.cs",
               "RelativeDocumentMoniker": "Operators.Moddleware\\Controllers\\OperatorsController.cs",
               "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Controllers\\OperatorsController.cs",
               "RelativeToolTip": "Operators.Moddleware\\Controllers\\OperatorsController.cs",
-              "ViewState": "AgIAAIMAAAAAAAAAAAAlwI0AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAL8AAAAAAAAAAAArwM8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-18T02:40:34.189Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "IParameterService.cs",
               "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Services\\Access\\IParameterService.cs",
               "RelativeDocumentMoniker": "Operators.Moddleware\\Services\\Access\\IParameterService.cs",
               "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Services\\Access\\IParameterService.cs",
               "RelativeToolTip": "Operators.Moddleware\\Services\\Access\\IParameterService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAA3AAAAAAAAAA==",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAwwCMAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-20T03:11:07.58Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "ParameterService.cs",
               "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Services\\Access\\ParameterService.cs",
               "RelativeDocumentMoniker": "Operators.Moddleware\\Services\\Access\\ParameterService.cs",
               "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Services\\Access\\ParameterService.cs",
               "RelativeToolTip": "Operators.Moddleware\\Services\\Access\\ParameterService.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAywCUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACAAAAAAAAAAAAAQwCUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-20T03:10:38.388Z",
               "EditorCaption": ""
@@ -109,39 +181,52 @@
       "FloatingWindowState": {
         "Id": "a67633ae-4c5f-405c-a426-aa73833e2b82",
         "Display": 0,
-        "X": 126,
-        "Y": 165,
+        "X": 58,
+        "Y": 144,
         "Width": 705,
-        "Height": 1002,
+        "Height": 746,
         "WindowState": 2
       },
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
+              "Title": "Repository.cs",
+              "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Data\\Repositories\\Repository.cs",
+              "RelativeDocumentMoniker": "Operators.Moddleware\\Data\\Repositories\\Repository.cs",
+              "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Data\\Repositories\\Repository.cs",
+              "RelativeToolTip": "Operators.Moddleware\\Data\\Repositories\\Repository.cs",
+              "ViewState": "AgIAAHAAAAAAAAAAAAAiwI8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-21T01:28:06.937Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "SettingsRequest.cs",
               "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\HttpHelpers\\SettingsRequest.cs",
               "RelativeDocumentMoniker": "Operators.Moddleware\\HttpHelpers\\SettingsRequest.cs",
               "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\HttpHelpers\\SettingsRequest.cs",
               "RelativeToolTip": "Operators.Moddleware\\HttpHelpers\\SettingsRequest.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAIAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-20T03:23:08.601Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "IRepository.cs",
               "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Data\\Repositories\\IRepository.cs",
               "RelativeDocumentMoniker": "Operators.Moddleware\\Data\\Repositories\\IRepository.cs",
               "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Data\\Repositories\\IRepository.cs",
               "RelativeToolTip": "Operators.Moddleware\\Data\\Repositories\\IRepository.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAMwAoAAAAQAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAQAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-18T20:00:36.56Z",
               "EditorCaption": ""
@@ -156,11 +241,12 @@
               "RelativeToolTip": "Operators.Moddleware\\HttpHelpers\\SystemResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-18T17:29:24.762Z"
+              "WhenOpened": "2025-02-18T17:29:24.762Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 7,
               "Title": "BranchService.cs",
               "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Services\\BranchService.cs",
               "RelativeDocumentMoniker": "Operators.Moddleware\\Services\\BranchService.cs",

@@ -2,6 +2,6 @@
 
 namespace Operators.Moddleware.Data.Repositories.access {
     public interface IParametersRepository : IRepository<ConfigurationParameter> {
-
+        
     }
 }

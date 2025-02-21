@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EFCore.BulkExtensions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Operators.Moddleware.Data.Entities;
 using System.Linq.Expressions;
 
@@ -135,5 +137,21 @@ namespace Operators.Moddleware.Data.Repositories {
 
         public async Task<bool> ExistsAsync(Expression<Func<T, bool>> expression)
             => await _entities.FirstOrDefaultAsync(expression) != null;
+
+        public async Task<bool> BulkyInsertAsync(T[] parameters) {
+            if (parameters == null || parameters.Length == 0)
+                return false;
+
+            await _context.BulkInsertAsync(parameters.ToList());
+            return true;
+        }
+
+        public async Task<bool> BulkyUpdateAsync(T[] parameters) {
+            if (parameters == null || parameters.Length == 0)
+                return false;
+
+            await _context.BulkUpdateAsync(parameters.ToList());
+            return true;
+        }
     }
 }

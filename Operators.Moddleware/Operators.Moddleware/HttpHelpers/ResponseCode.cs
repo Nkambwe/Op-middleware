@@ -19,6 +19,8 @@ namespace Operators.Moddleware.HttpHelpers {
         [Description("Action not allowed")]
         FORBIDDEN = 403,
         [Description("Password has expired")]
-        PASSWORDEXPIRED = 145
+        PASSWORDEXPIRED = 145,
+        [Description("Process failed")]
+        FAILED = 146
     }
 }

@@ -2,6 +2,7 @@
 using Operators.Moddleware.Data.Entities;
 using Operators.Moddleware.Data.Entities.Access;
 using Operators.Moddleware.HttpHelpers;
+using System.Globalization;
 
 namespace Operators.Moddleware.Helpers {
     public class MappingProfile : Profile {
@@ -113,6 +114,45 @@ namespace Operators.Moddleware.Helpers {
                 .ForMember(dest => dest.CreatedOn, opt => opt.MapFrom(o => o.Data.AddedOn))
                 .ForMember(dest => dest.LastModifiedBy, opt => opt.MapFrom(o => (o.Data.ModifiedBy ?? string.Empty).Trim()))
                 .ForMember(dest => dest.LastModifiedOn, opt => opt.MapFrom(o => o.Data.ModifiedOn));
+
+            CreateMap<HttpHelpers.Attribute, ConfigurationParameter>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Identifier, opt => opt.MapFrom(src => src.Identifier))
+                .ForMember(dest => dest.Parameter, opt => opt.MapFrom(src => src.ParameterName))
+                .ForMember(dest => dest.ParameterValue, opt => opt.MapFrom(src => ConvertParameterValue(src.ParameterValue)))
+            
+                // Set default values for DomainEntity properties
+                .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => true))
+                .ForMember(dest => dest.IsDeleted, opt => opt.MapFrom(src => false))
+                .ForMember(dest => dest.CreatedOn, opt => opt.MapFrom(src => DateTime.UtcNow))
+                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => "System"))
+                .ForMember(dest => dest.LastModifiedOn, opt => opt.Ignore())
+                .ForMember(dest => dest.LastModifiedBy, opt => opt.Ignore())
+
+                // Ignore navigation property
+                .ForMember(dest => dest.Branch, opt => opt.Ignore())
+                .ForMember(dest => dest.BranchId, opt => opt.Ignore());
+
+            // Reverse mapping if needed
+            CreateMap<ConfigurationParameter, HttpHelpers.Attribute>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Identifier, opt => opt.MapFrom(src => src.Identifier))
+                .ForMember(dest => dest.ParameterName, opt => opt.MapFrom(src => src.Parameter))
+                .ForMember(dest => dest.ParameterValue, opt => opt.MapFrom(src => src.ParameterValue));
+        }
+
+        private string ConvertParameterValue(object value) {
+            if (value == null)
+                return null;
+
+            // Handle different types of values
+            return value switch
+            {
+                DateTime dateTime => dateTime.ToString("O"), // ISO 8601 format
+                DateTimeOffset dateTimeOffset => dateTimeOffset.ToString("O"),
+                IFormattable formattable => formattable.ToString(null, CultureInfo.InvariantCulture),
+                _ => value.ToString()
+            };
         }
 
     }

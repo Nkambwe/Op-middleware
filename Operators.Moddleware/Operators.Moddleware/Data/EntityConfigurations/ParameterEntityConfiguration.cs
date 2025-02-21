@@ -12,9 +12,9 @@ namespace Operators.Moddleware.Data.EntityConfigurations {
             entityBuilder.Property(t => t.IsActive).HasDefaultValue(false);
             entityBuilder.Property(t => t.IsDeleted).HasDefaultValue(false);
             entityBuilder.Property(t => t.CreatedOn).IsRequired();
-            entityBuilder.Property(t => t.CreatedBy).HasMaxLength(250).IsFixedLength().IsRequired();
+            entityBuilder.Property(t => t.CreatedBy).IsRequired();
             entityBuilder.Property(t => t.LastModifiedOn).IsRequired(false);
-            entityBuilder.Property(t => t.LastModifiedBy).HasMaxLength(250).IsFixedLength().IsRequired(false);
+            entityBuilder.Property(t => t.LastModifiedBy).IsRequired(false);
         }
     }
 }

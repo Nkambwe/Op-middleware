@@ -17,7 +17,7 @@ namespace Operators.Moddleware.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.12")
+                .HasAnnotation("ProductVersion", "8.0.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -393,10 +393,8 @@ namespace Operators.Moddleware.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nchar(250)")
-                        .HasColumnOrder(53)
-                        .IsFixedLength();
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnOrder(53);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2")
@@ -422,10 +420,8 @@ namespace Operators.Moddleware.Migrations
                         .HasColumnOrder(51);
 
                     b.Property<string>("LastModifiedBy")
-                        .HasMaxLength(250)
-                        .HasColumnType("nchar(250)")
-                        .HasColumnOrder(55)
-                        .IsFixedLength();
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnOrder(55);
 
                     b.Property<DateTime?>("LastModifiedOn")
                         .HasColumnType("datetime2")

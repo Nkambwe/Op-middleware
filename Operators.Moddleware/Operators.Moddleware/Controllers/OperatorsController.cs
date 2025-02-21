@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Operators.Moddleware.Data.Entities;
+using Operators.Moddleware.Data.Entities.Access;
 using Operators.Moddleware.Helpers;
 using Operators.Moddleware.HttpHelpers;
 using Operators.Moddleware.Services;
 using Operators.Moddleware.Services.Access;
+using System;
 
 namespace Operators.Moddleware.Controllers {
 
@@ -143,18 +145,89 @@ namespace Operators.Moddleware.Controllers {
         [HttpPost("SaveConfigurations")]
         [Produces("application/json")]
         public async Task<IActionResult> SaveConfigurations([FromBody]SettingsRequest request) { 
-            ConfigurationParameter[] parameters = [];
-            var paramData = await _parameterService.InsertParametersAsync(parameters);
+            SystemResponse settingResponse;
+            string json;
 
-            var settingResponse = new SystemResponse() {
-                ResponseCode =  (int)ResponseCode.SUCCESS,
-                ResponseMessage = ResponseCode.SUCCESS.GetDescription(),
-                ResponseDescription =   $"'{request.SettingType}' settings have been updated successfully",
+            //..make sure you have settings to save
+            HttpHelpers.Attribute[] attributes = request.Attributes;
+            if(attributes.Length == 0) { 
+                settingResponse = new() {
+                    ResponseCode =  (int)ResponseCode.BADREQUEST,
+                    ResponseMessage = ResponseCode.BADREQUEST.GetDescription(),
+                    ResponseDescription =   $"Settings list is empty, there's nothing to save",
 
-            };
+                };
 
-            var response = JsonConvert.SerializeObject(settingResponse);
-            _logger.LogToFile($"API RESPONSE : {response}", "MSG");
+                json = JsonConvert.SerializeObject(settingResponse);
+                _logger.LogToFile($"API RESPONSE : {json}", "MSG");
+                return new JsonResult(settingResponse);
+            }
+
+            //..get branch settings are attached to
+            long branchId = request.BranchId == 0 ? 1 : request.BranchId;
+            Branch branch = await _branchService.FindBranchByIdAsync(branchId);
+            if(branch == null) { 
+                settingResponse = new() {
+                    ResponseCode =  (int)ResponseCode.NOTFOUND,
+                    ResponseMessage = ResponseCode.NOTFOUND.GetDescription(),
+                    ResponseDescription =   $"No branch found with Branch ID '{request.BranchId}'",
+
+                };
+
+                json = JsonConvert.SerializeObject(settingResponse);
+                _logger.LogToFile($"API RESPONSE : {json}", "MSG");
+                return new JsonResult(settingResponse);
+            }
+
+            //..get user posting the settings
+            long userId = request.UserId;
+            User user = await _userService.FindUserByIdAsync(userId);
+            if(user == null) { 
+                settingResponse = new() {
+                    ResponseCode =  (int)ResponseCode.NOTFOUND,
+                    ResponseMessage = ResponseCode.NOTFOUND.GetDescription(),
+                    ResponseDescription =   $"No User found with User ID '{request.BranchId}'",
+
+                };
+
+                json = JsonConvert.SerializeObject(settingResponse);
+                _logger.LogToFile($"API RESPONSE : {json}", "MSG");
+                return new JsonResult(settingResponse);
+            }
+
+            //..map request objects to configuration parameters
+            ConfigurationParameter[] parameters = _mapper.Map<ConfigurationParameter[]>(attributes);
+
+            //..update records
+            parameters.ToList().ForEach(p => { 
+                p.BranchId = branchId;
+                p.CreatedBy = HashGenerator.EncryptString(user.EmployeeNo);
+                p.LastModifiedBy = HashGenerator.EncryptString(user.EmployeeNo);
+                p.LastModifiedOn = DateTime.Now;
+            });
+
+            json = JsonConvert.SerializeObject(parameters);
+            _logger.LogToFile($"List of settings : {json}", "INFO");
+
+            var isSuccessful = await _parameterService.InsertParametersAsync(parameters);
+            if(isSuccessful){
+                settingResponse = new() {
+                    ResponseCode =  (int)ResponseCode.SUCCESS,
+                    ResponseMessage = ResponseCode.SUCCESS.GetDescription(),
+                    ResponseDescription =   $"Settings saved and updated successfully",
+
+                };
+            } else {
+                settingResponse = new() {
+                    ResponseCode =  (int)ResponseCode.FAILED,
+                    ResponseMessage = ResponseCode.FAILED.GetDescription(),
+                    ResponseDescription =   $"An error occurred, could not save settings",
+
+                };
+            }
+
+             json = JsonConvert.SerializeObject(settingResponse);
+            _logger.LogToFile($"API RESPONSE : {json}", "MSG");
             return new JsonResult(settingResponse);
         }
     }

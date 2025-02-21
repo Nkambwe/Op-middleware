@@ -14,5 +14,21 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Operators.Moddleware.Controllers.OperatorsController",
+    "Method": "SaveConfigurations",
+    "RelativePath": "middleware/SaveConfigurations",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Operators.Moddleware.HttpHelpers.SettingsRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

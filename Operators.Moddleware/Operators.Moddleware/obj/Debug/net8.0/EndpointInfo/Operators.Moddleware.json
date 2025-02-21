@@ -50,10 +50,102 @@
           }
         }
       }
+    },
+    "/middleware/SaveConfigurations": {
+      "post": {
+        "tags": [
+          "Operators"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SettingsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SettingsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SettingsRequest"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/SettingsRequest"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/SettingsRequest"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/SettingsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "Attribute": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "identifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "parameterName": {
+            "type": "string",
+            "nullable": true
+          },
+          "parameterValue": {
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SettingsRequest": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "branchId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "settingType": {
+            "type": "string",
+            "nullable": true
+          },
+          "attributes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Attribute"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "UserRequest": {
         "type": "object",
         "properties": {

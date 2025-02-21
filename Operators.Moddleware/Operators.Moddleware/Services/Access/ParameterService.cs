@@ -43,12 +43,10 @@ namespace Operators.Moddleware.Services.Access {
             throw new NotImplementedException();
         }
 
-        public Task<bool> InsertParametersAsync(params ConfigurationParameter[] parameters) {
-            throw new NotImplementedException();
-        }
+        public async Task<bool> InsertParametersAsync(params ConfigurationParameter[] parameters) 
+            => await _repo.BulkyInsertAsync(parameters);
 
-        public Task<bool> UpdateParametersAsync(params ConfigurationParameter[] parameters) {
-            throw new NotImplementedException();
-        }
+        public async Task<bool> UpdateParametersAsync(params ConfigurationParameter[] parameters)
+            => await _repo.BulkyUpdateAsync(parameters);
     }
 }
