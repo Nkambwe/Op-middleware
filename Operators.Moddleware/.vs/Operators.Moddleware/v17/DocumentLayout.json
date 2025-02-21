@@ -81,7 +81,7 @@
               "RelativeDocumentMoniker": "Operators.Moddleware\\Data\\Repositories\\Repository.cs",
               "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Data\\Repositories\\Repository.cs",
               "RelativeToolTip": "Operators.Moddleware\\Data\\Repositories\\Repository.cs",
-              "ViewState": "AgIAAHAAAAAAAAAAAAAiwI8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAHYAAAAAAAAAAAAwwIwAAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-21T01:28:06.937Z",
               "EditorCaption": ""
@@ -96,8 +96,7 @@
               "RelativeToolTip": "Operators.Moddleware\\HttpHelpers\\SettingsRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAIAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-20T03:23:08.601Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-20T03:23:08.601Z"
             },
             {
               "$type": "Document",
@@ -107,7 +106,7 @@
               "RelativeDocumentMoniker": "Operators.Moddleware\\Data\\Repositories\\IRepository.cs",
               "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Data\\Repositories\\IRepository.cs",
               "RelativeToolTip": "Operators.Moddleware\\Data\\Repositories\\IRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAQAAAArAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwCIAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-18T20:00:36.56Z",
               "EditorCaption": ""
@@ -122,8 +121,7 @@
               "RelativeToolTip": "Operators.Moddleware\\HttpHelpers\\SystemResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-18T17:29:24.762Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-18T17:29:24.762Z"
             },
             {
               "$type": "Document",
@@ -135,8 +133,7 @@
               "RelativeToolTip": "Operators.Moddleware\\Services\\BranchService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAABEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-20T02:22:43.316Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-20T02:22:43.316Z"
             }
           ]
         }

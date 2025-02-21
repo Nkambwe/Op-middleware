@@ -138,19 +138,19 @@ namespace Operators.Moddleware.Data.Repositories {
         public async Task<bool> ExistsAsync(Expression<Func<T, bool>> expression)
             => await _entities.FirstOrDefaultAsync(expression) != null;
 
-        public async Task<bool> BulkyInsertAsync(T[] parameters) {
-            if (parameters == null || parameters.Length == 0)
+        public async Task<bool> BulkyInsertAsync(T[] entities) {
+            if (entities == null || entities.Length == 0)
                 return false;
 
-            await _context.BulkInsertAsync(parameters.ToList());
+            await _context.BulkInsertAsync(entities.ToList());
             return true;
         }
 
-        public async Task<bool> BulkyUpdateAsync(T[] parameters) {
-            if (parameters == null || parameters.Length == 0)
+        public async Task<bool> BulkyUpdateAsync(T[] entities) {
+            if (entities == null || entities.Length == 0)
                 return false;
 
-            await _context.BulkUpdateAsync(parameters.ToList());
+            await _context.BulkUpdateAsync(entities.ToList());
             return true;
         }
     }

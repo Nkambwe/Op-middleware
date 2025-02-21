@@ -21,8 +21,17 @@ namespace Operators.Moddleware.Data.Repositories {
         Task<bool> DeleteAsync(T entity);
         bool Exists(Expression<Func<T, bool>> expression);
         Task<bool> ExistsAsync(Expression<Func<T, bool>> expression);
-
-        Task<bool> BulkyInsertAsync(T[] parameters);
-        Task<bool> BulkyUpdateAsync(T[] parameters);
+        /// <summary>
+        /// Bulk inserts to the database
+        /// </summary>
+        /// <param name="entities"></param>
+        /// <returns></returns>
+        Task<bool> BulkyInsertAsync(T[] entities);
+        /// <summary>
+        /// Bulk updates to the database
+        /// </summary>
+        /// <param name="entities"></param>
+        /// <returns></returns>
+        Task<bool> BulkyUpdateAsync(T[] entities);
     }
 }
