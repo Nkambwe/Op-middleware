@@ -6,7 +6,7 @@ using Operators.Moddleware.Services;
 
 namespace Operators.Moddleware.Extensions {
 
-    public static class OPeratorService {
+    public static class ServiceCollectionExtesnion {
 
         public static void RegisterServices(this IServiceCollection services){ 
              //..register repositories

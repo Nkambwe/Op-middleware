@@ -9,8 +9,8 @@ namespace Operators.Moddleware.Services {
         private readonly IBranchRepository _repo = repo;
         private readonly ServiceLogger _logger = new("Operations_log");
         
-        public async Task<Branch> FindBranchByIdAsync(long branchId) {
-            var branch = await _repo.GetAsync(branchId);
+        public async Task<Branch> FindBranchByIdAsync(long branchId, bool includeDeleted) {
+            var branch = await _repo.GetAsync(branchId, includeDeleted);
             if(branch != null){ 
                 _logger.LogToFile($"BRANCH :: Branch '{branch}' found.", "REPOSITORY");
             } else{
@@ -20,8 +20,8 @@ namespace Operators.Moddleware.Services {
             return branch;
         }
 
-        public async Task<Branch> FindCodeAsync(string branchCode) {
-            var branch = await _repo.GetAsync(b => b.BranchCode == branchCode);
+        public async Task<Branch> FindCodeAsync(string branchCode, bool includeDeleted) {
+            var branch = await _repo.GetAsync(b => b.BranchCode == branchCode, includeDeleted);
             if(branch != null){ 
                 _logger.LogToFile($"BRANCH :: Branch '{branch}' found.", "REPOSITORY");
             } else{
@@ -42,24 +42,24 @@ namespace Operators.Moddleware.Services {
             return result;
         }
 
-        public async Task<bool> DeleteBranchAsync(long branchId) {
-            var branch = await _repo.GetAsync(branchId);
+        public async Task<bool> DeleteBranchAsync(long branchId, bool markAsDeleted) {
+            var branch = await _repo.GetAsync(branchId, markAsDeleted);
             if (branch != null) {
-                return await _repo.DeleteAsync(branch);
+                return await _repo.DeleteAsync(branch,markAsDeleted);
             } else { 
                 throw new NotFoundException($"No branch with branch ID '{branchId}' found"); 
             } 
         }
 
 
-        public async Task<bool> UpdateBranchAsync(Branch branch) {
+        public async Task<bool> UpdateBranchAsync(Branch branch, bool includeDeleted) {
             _logger.LogToFile($"Attepting to update branch", "REPOSITORY");
-            if (!await _repo.ExistsAsync(b => b.BranchCode == branch.BranchCode)) {
+            if (!await _repo.ExistsAsync(b => b.BranchCode == branch.BranchCode, includeDeleted)) {
                 _logger.LogToFile($"NOTFOUND :: Branch '{branch}' already exists", "REPOSITORY");
                 throw new NotFoundException($"No branch with code '{branch.BranchCode}' found"); 
             }
 
-            var result = await _repo.UpdateAsync(branch);
+            var result = await _repo.UpdateAsync(branch, includeDeleted);
             if(result){ 
                 _logger.LogToFile($"BRANCH :: {branch} updated successfully", "REPOSITORY");
             } else{
@@ -67,8 +67,8 @@ namespace Operators.Moddleware.Services {
             }
             return result;
         }
-        public async Task<bool> BranchExistsAsync(string branchCode) {
-            var result = await _repo.ExistsAsync(b => b.BranchCode == branchCode);
+        public async Task<bool> BranchExistsAsync(string branchCode, bool includeDeleted) {
+            var result = await _repo.ExistsAsync(b => b.BranchCode == branchCode, includeDeleted);
             if(result){ 
                 _logger.LogToFile($"BRANCH :: Branch with code '{branchCode}' found.", "REPOSITORY");
             } else{
@@ -77,8 +77,8 @@ namespace Operators.Moddleware.Services {
             return result;
         }
 
-        public async Task<bool> BranchExistsByNameAsync(string branchName) {
-            var result = await _repo.ExistsAsync(b => b.BranchName == branchName);
+        public async Task<bool> BranchExistsByNameAsync(string branchName, bool includeDeleted) {
+            var result = await _repo.ExistsAsync(b => b.BranchName == branchName, includeDeleted);
             if(result){ 
                 _logger.LogToFile($"BRANCH :: Branch with name '{branchName}' found.", "REPOSITORY");
             } else{

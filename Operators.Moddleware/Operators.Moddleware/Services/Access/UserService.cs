@@ -9,8 +9,8 @@ namespace Operators.Moddleware.Services.Access {
         private readonly IUserRepository _repo = repo;
         private readonly ServiceLogger _logger = new("Operations_log");
 
-        public async Task<User> FindUsernameAsync(string username) {
-            var user = await _repo.GetAsync(u => u.Username == username, u => u.Branch, u => u.Role, u => u.Permissions);
+        public async Task<User> FindUsernameAsync(string username, bool includeDeleted) {
+            var user = await _repo.GetAsync(u => u.Username == username,includeDeleted , u => u.Branch, u => u.Role, u => u.Permissions, u => u.Passwords);
             if (user != null) {
                 _logger.LogToFile($"USER :: User '{user}' found.", "REPOSITORY");
             } else {
@@ -20,8 +20,8 @@ namespace Operators.Moddleware.Services.Access {
             return user;
         }
 
-        public async Task<User> FindEmployeeCodeAsync(string employeeNo) {
-            var user = await _repo.GetAsync(u => u.EmployeeNo == employeeNo);
+        public async Task<User> FindEmployeeCodeAsync(string employeeNo, bool includeDeleted) {
+            var user = await _repo.GetAsync(u => u.EmployeeNo == employeeNo, includeDeleted);
             if (user != null) {
                 _logger.LogToFile($"USER :: User '{user}' found.", "REPOSITORY");
             } else {
@@ -31,8 +31,8 @@ namespace Operators.Moddleware.Services.Access {
             return user;
         }
 
-        public async Task<User> FindUserByIdAsync(long userId) {
-            var user = await _repo.GetAsync(userId);
+        public async Task<User> FindUserByIdAsync(long userId, bool includeDeleted) {
+            var user = await _repo.GetAsync(userId, includeDeleted);
             if (user != null) {
                 _logger.LogToFile($"USER :: User '{user}' found.", "REPOSITORY");
             } else {
@@ -53,14 +53,14 @@ namespace Operators.Moddleware.Services.Access {
             return result;
         }
 
-        public async Task<bool> UpdateUserAsync(User user) {
+        public async Task<bool> UpdateUserAsync(User user, bool includeDeleted) {
             _logger.LogToFile($"Attepting to update user", "REPOSITORY");
-            if (!await _repo.ExistsAsync(u => u.Username == user.Username)) {
+            if (!await _repo.ExistsAsync(u => u.Username == user.Username, includeDeleted)) {
                 _logger.LogToFile($"NOTFOUND :: User '{user}' already exists", "REPOSITORY");
                 throw new NotFoundException($"No user with Username '{user}' found");
             }
 
-            var result = await _repo.UpdateAsync(user);
+            var result = await _repo.UpdateAsync(user, includeDeleted);
             if (result) {
                 _logger.LogToFile($"USER :: {user} updated successfully", "REPOSITORY");
             } else {
@@ -69,8 +69,8 @@ namespace Operators.Moddleware.Services.Access {
             return result;
         }
 
-        public async Task<bool> UserExistsAsync(string employeeNo) {
-            var result = await _repo.ExistsAsync(u => u.EmployeeNo == employeeNo);
+        public async Task<bool> UserExistsAsync(string employeeNo, bool includeDeleted) {
+            var result = await _repo.ExistsAsync(u => u.EmployeeNo == employeeNo, includeDeleted);
             if (result) {
                 _logger.LogToFile($"USER :: User with employee number '{employeeNo}' found.", "REPOSITORY");
             } else {
@@ -79,8 +79,8 @@ namespace Operators.Moddleware.Services.Access {
             return result;
         }
 
-        public async Task<bool> UserExistsByNameAsync(string username) {
-            var result = await _repo.ExistsAsync(u => u.Username == username);
+        public async Task<bool> UserExistsByNameAsync(string username, bool includeDeleted) {
+            var result = await _repo.ExistsAsync(u => u.Username == username, includeDeleted);
             if (result) {
                 _logger.LogToFile($"USER :: User with username '{username}' found.", "REPOSITORY");
             } else {
@@ -89,8 +89,8 @@ namespace Operators.Moddleware.Services.Access {
             return result;
         }
 
-        public async Task<bool> UserExistsByEmailAsync(string email) {
-            var result = await _repo.ExistsAsync(u => u.EmployeeNo == email);
+        public async Task<bool> UserExistsByEmailAsync(string email, bool includeDeleted) {
+            var result = await _repo.ExistsAsync(u => u.EmployeeNo == email, includeDeleted);
             if (result) {
                 _logger.LogToFile($"USER :: User with email address '{email}' found.", "REPOSITORY");
             } else {

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Operators.Moddleware.Data.Entities {
-    public abstract class DomainEntity {
+    public abstract class DomainEntity: ISoftDelete {
         [Column(Order = 0)]
         public long Id { get; set; }
 
@@ -10,6 +10,7 @@ namespace Operators.Moddleware.Data.Entities {
 
         [Column(Order = 51)]
         public bool IsDeleted { get; set; }
+
         [Column(Order = 52)]
         public DateTime CreatedOn { get; set; }
 

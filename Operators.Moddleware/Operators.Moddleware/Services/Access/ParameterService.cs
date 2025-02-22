@@ -1,15 +1,18 @@
 ﻿using Operators.Moddleware.Data.Entities;
 using Operators.Moddleware.Data.Repositories.access;
 using Operators.Moddleware.Helpers;
+using System.Linq.Expressions;
 
 namespace Operators.Moddleware.Services.Access {
+
     public class ParameterService(IParametersRepository repo) : IParameterService {
+
         private readonly IParametersRepository _repo = repo;
         private readonly ServiceLogger _logger = new("Operations_log");
 
-        public async Task<string> GetStringParameterAsync(string param) {
+        public async Task<string> GetStringParameterAsync(string param, bool includeDeleted = false) {
             _logger.LogToFile($"Retrieve string parameter: {param}", "INFO");
-            var paramater = await _repo.GetAsync(p => p.Parameter.Equals(param));
+            var paramater = await _repo.GetAsync(p => p.Parameter.Equals(param), includeDeleted);
             if(string.IsNullOrWhiteSpace(paramater.ParameterValue)){ 
                 _logger.LogToFile($"Parameter value for : {param} not set", "INFO");
                 return string.Empty;
@@ -18,15 +21,15 @@ namespace Operators.Moddleware.Services.Access {
             return paramater.ParameterValue.Trim();
         }
 
-        public async Task<bool> GetBooleanParameterAsync(string param) {
+        public async Task<bool> GetBooleanParameterAsync(string param, bool includeDeleted = false) {
             _logger.LogToFile($"Retrieve boolean parameter: {param}", "INFO");
-            var paramater = await _repo.GetAsync(p => p.Parameter.Equals(param));
-            return paramater != null && paramater.ParameterValue.Equals("1");
+            var paramater = await _repo.GetAsync(p => p.Parameter.Equals(param), includeDeleted);
+            return paramater != null && paramater.ParameterValue.Equals("True", StringComparison.CurrentCultureIgnoreCase);
         }
 
-        public async Task<int> GetIntegerParameterAsync(string param) {
+        public async Task<int> GetIntegerParameterAsync(string param, bool includeDeleted = false) {
             _logger.LogToFile($"Retrieve integer parameter: {param}", "INFO");
-            var paramater = await _repo.GetAsync(p => p.Parameter.Equals(param));
+            var paramater = await _repo.GetAsync(p => p.Parameter.Equals(param), includeDeleted);
             if(paramater == null){
                 _logger.LogToFile($"Parameter value for : {param} not set", "INFO");
                 return 0;    
@@ -39,14 +42,16 @@ namespace Operators.Moddleware.Services.Access {
             return value;
         }
 
-        public Task<List<ConfigurationParameter>> GetParametersAsync(string identifier) {
-            throw new NotImplementedException();
-        }
+        public async Task<IList<ConfigurationParameter>> GetParametersAsync(string identifier, bool includeDeleted = false) 
+            => await _repo.GetAllAsync(p => p.Identifier.Equals(identifier), includeDeleted);
 
         public async Task<bool> InsertParametersAsync(params ConfigurationParameter[] parameters) 
             => await _repo.BulkyInsertAsync(parameters);
 
         public async Task<bool> UpdateParametersAsync(params ConfigurationParameter[] parameters)
-            => await _repo.BulkyUpdateAsync(parameters);
+            => await _repo.BulkyUpdateAsync( parameters);
+
+        public async Task<IList<ConfigurationParameter>> GetParametersAsync(Expression<Func<ConfigurationParameter, bool>> where, bool includeDeleted)
+            => await _repo.GetAllAsync(where, includeDeleted);
     }
 }

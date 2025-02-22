@@ -7,7 +7,6 @@ using Operators.Moddleware.Helpers;
 using Operators.Moddleware.HttpHelpers;
 using Operators.Moddleware.Services;
 using Operators.Moddleware.Services.Access;
-using System;
 
 namespace Operators.Moddleware.Controllers {
 
@@ -34,7 +33,10 @@ namespace Operators.Moddleware.Controllers {
             string[] decrypt = request.Decrypt; 
             string response;
             try {
-                var user = await _userService.FindUsernameAsync(request.Username);
+                //..get this from settings
+                var includeDeleted = await _parameterService.GetBooleanParameterAsync("includeDeletedObjects");
+
+                var user = await _userService.FindUsernameAsync(request.Username, includeDeleted);
         
                
                 if (user == null) {
@@ -163,9 +165,12 @@ namespace Operators.Moddleware.Controllers {
                 return new JsonResult(settingResponse);
             }
 
+            //..include deleted variables
+            var includeDeleted = await _parameterService.GetBooleanParameterAsync("includeDeletedObjects");
+
             //..get branch settings are attached to
             long branchId = request.BranchId == 0 ? 1 : request.BranchId;
-            Branch branch = await _branchService.FindBranchByIdAsync(branchId);
+            Branch branch = await _branchService.FindBranchByIdAsync(branchId, includeDeleted);
             if(branch == null) { 
                 settingResponse = new() {
                     ResponseCode =  (int)ResponseCode.NOTFOUND,
@@ -181,7 +186,7 @@ namespace Operators.Moddleware.Controllers {
 
             //..get user posting the settings
             long userId = request.UserId;
-            User user = await _userService.FindUserByIdAsync(userId);
+            User user = await _userService.FindUserByIdAsync(userId, includeDeleted);
             if(user == null) { 
                 settingResponse = new() {
                     ResponseCode =  (int)ResponseCode.NOTFOUND,
@@ -195,14 +200,101 @@ namespace Operators.Moddleware.Controllers {
                 return new JsonResult(settingResponse);
             }
 
-            //..map request objects to configuration parameters
-            ConfigurationParameter[] parameters = _mapper.Map<ConfigurationParameter[]>(attributes);
+             ConfigurationParameter[] parameters = null;
+            //..get settings param names
+            var paramnames = attributes?.Select(p => p?.ParameterName)
+                          .Where(name => !string.IsNullOrEmpty(name))
+                          .ToList() ?? [];
+
+            //..get all parameters in the database with these names
+            var configs = (await _parameterService.GetParametersAsync(p => paramnames.Contains(p.Parameter) && p.BranchId == branchId)).ToList();
+            var inList = new Dictionary<string, object>();
+            if(configs.Count != 0) { 
+                _logger.LogToFile($"Updating the settings already in the database. A total of {configs.Count} found", "INFO");
+                //..update those found in the database
+                configs.ForEach(p => { 
+                    var attribute = attributes.FirstOrDefault(a => (string)a.ParameterName == p.Parameter);
+                    if(attribute == null){
+                        inList.Add(attribute.ParameterName, attribute.ParameterValue);
+                    } else { 
+                        p.ParameterValue = Convert.ToString(attribute.ParameterValue);
+                        p.LastModifiedBy = user.Username;
+                        p.LastModifiedOn = DateTime.Now;
+                    }
+                });
+                
+                //lets update these configurations
+               var isUpdated = await _parameterService.UpdateParametersAsync([.. configs]);
+                int notUpdated = inList.Count;
+                int toBeupdated = configs.Count - notUpdated;
+                if(isUpdated){
+                     _logger.LogToFile($"A total of {toBeupdated} settings of {configs.Count} updated", "INFO");
+                } else {
+                    var dmsg =$"Failed to update settings. A total of {toBeupdated} was supposed to be updated";
+                    _logger.LogToFile(dmsg, "INFO");
+                    settingResponse = new() {
+                        ResponseCode =  (int)ResponseCode.NOTFOUND,
+                        ResponseMessage = ResponseCode.NOTFOUND.GetDescription(),
+                        ResponseDescription = dmsg,
+
+                    };
+
+                    //..no need to continue here, just return
+                    json = JsonConvert.SerializeObject(settingResponse);
+                    _logger.LogToFile($"API RESPONSE : {json}", "MSG");
+                    return new JsonResult(settingResponse);
+                }
+
+                //..lets add new ones that are missing
+                if(notUpdated > 0) { 
+                    string[] keys = [.. inList.Keys];
+                    var newAttributes = attributes.Where(a => keys.Contains(a.ParameterName)).ToList();
+                    if(newAttributes != null){ 
+                        //..all are already updated, just return
+                        settingResponse = new() {
+                            ResponseCode =  (int)ResponseCode.SUCCESS,
+                            ResponseMessage = ResponseCode.SUCCESS.GetDescription(),
+                            ResponseDescription =$"Settings saved and updated successfully",
+
+                        };
+
+                        json = JsonConvert.SerializeObject(settingResponse);
+                        _logger.LogToFile($"API RESPONSE : {json}", "MSG");
+                        return new JsonResult(settingResponse);
+                    } 
+
+                    //..if we get here, it means we have new ones to save
+                    //..map the new objects to configuration parameters
+                    parameters = _mapper.Map<ConfigurationParameter[]>(newAttributes);
+                } else { 
+                    //..here too all is updated, just return
+                    settingResponse = new() {
+                        ResponseCode =  (int)ResponseCode.SUCCESS,
+                        ResponseMessage = ResponseCode.SUCCESS.GetDescription(),
+                        ResponseDescription =$"Settings saved and updated successfully",
+
+                    };
+
+                    json = JsonConvert.SerializeObject(settingResponse);
+                    _logger.LogToFile($"API RESPONSE : {json}", "MSG");
+                    return new JsonResult(settingResponse);
+                }
+
+            } else { 
+                //..if we are here, it means all settings are new
+                //..map new objects to configuration parameters
+                 parameters = _mapper.Map<ConfigurationParameter[]>(attributes);
+            }
 
             //..update records
-            parameters.ToList().ForEach(p => { 
+            _logger.LogToFile($"Adding a total of {parameters.Length} configurations");
+
+            //..make sure the collection is null safe
+            var safeParameters = parameters?.Where(p => p != null).ToList() ?? [];
+            safeParameters.ForEach(p => { 
                 p.BranchId = branchId;
-                p.CreatedBy = HashGenerator.EncryptString(user.EmployeeNo);
-                p.LastModifiedBy = HashGenerator.EncryptString(user.EmployeeNo);
+                p.CreatedBy = HashGenerator.EncryptString(user?.EmployeeNo);
+                p.LastModifiedBy = HashGenerator.EncryptString(user?.EmployeeNo);
                 p.LastModifiedOn = DateTime.Now;
             });
 
@@ -214,15 +306,13 @@ namespace Operators.Moddleware.Controllers {
                 settingResponse = new() {
                     ResponseCode =  (int)ResponseCode.SUCCESS,
                     ResponseMessage = ResponseCode.SUCCESS.GetDescription(),
-                    ResponseDescription =   $"Settings saved and updated successfully",
-
+                    ResponseDescription = $"Settings saved and updated successfully"
                 };
             } else {
                 settingResponse = new() {
                     ResponseCode =  (int)ResponseCode.FAILED,
                     ResponseMessage = ResponseCode.FAILED.GetDescription(),
-                    ResponseDescription =   $"An error occurred, could not save settings",
-
+                    ResponseDescription =   $"An error occurred, could not save settings"
                 };
             }
 
