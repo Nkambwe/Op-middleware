@@ -208,25 +208,22 @@ namespace Operators.Moddleware.Controllers {
 
             //..get all parameters in the database with these names
             var configs = (await _parameterService.GetParametersAsync(p => paramnames.Contains(p.Parameter) && p.BranchId == branchId)).ToList();
-            var inList = new Dictionary<string, object>();
             if(configs.Count != 0) { 
                 _logger.LogToFile($"Updating the settings already in the database. A total of {configs.Count} found", "INFO");
                 //..update those found in the database
-                configs.ForEach(p => { 
-                    var attribute = attributes.FirstOrDefault(a => (string)a.ParameterName == p.Parameter);
-                    if(attribute == null){
-                        inList.Add(attribute.ParameterName, attribute.ParameterValue);
-                    } else { 
-                        p.ParameterValue = Convert.ToString(attribute.ParameterValue);
-                        p.LastModifiedBy = user.Username;
-                        p.LastModifiedOn = DateTime.Now;
-                    }
-                });
-                
+
+                List<string> toUpdate = new();
+                foreach(var p in configs){ 
+                    var attribute = attributes.FirstOrDefault(a => a.ParameterName == p.Parameter);
+                    p.ParameterValue = Convert.ToString(attribute.ParameterValue);
+                    p.LastModifiedBy = user.Username;
+                    p.LastModifiedOn = DateTime.Now;
+                    toUpdate.Add(attribute.ParameterName);
+                }
+
                 //lets update these configurations
                var isUpdated = await _parameterService.UpdateParametersAsync([.. configs]);
-                int notUpdated = inList.Count;
-                int toBeupdated = configs.Count - notUpdated;
+                int toBeupdated = toUpdate.Count;
                 if(isUpdated){
                      _logger.LogToFile($"A total of {toBeupdated} settings of {configs.Count} updated", "INFO");
                 } else {
@@ -246,10 +243,9 @@ namespace Operators.Moddleware.Controllers {
                 }
 
                 //..lets add new ones that are missing
-                if(notUpdated > 0) { 
-                    string[] keys = [.. inList.Keys];
-                    var newAttributes = attributes.Where(a => keys.Contains(a.ParameterName)).ToList();
-                    if(newAttributes != null){ 
+                if(toBeupdated < attributes.Length) { 
+                    var newAttributes = attributes.Where(a => !toUpdate.Contains(a.ParameterName)).ToList();
+                    if(newAttributes == null){ 
                         //..all are already updated, just return
                         settingResponse = new() {
                             ResponseCode =  (int)ResponseCode.SUCCESS,
@@ -266,6 +262,13 @@ namespace Operators.Moddleware.Controllers {
                     //..if we get here, it means we have new ones to save
                     //..map the new objects to configuration parameters
                     parameters = _mapper.Map<ConfigurationParameter[]>(newAttributes);
+                    foreach(var p in parameters){ 
+                        p.CreatedBy = user.Username;
+                        p.CreatedOn = DateTime.Now;
+                        p.LastModifiedBy = user.Username;
+                        p.LastModifiedOn = DateTime.Now;
+                    }
+                    
                 } else { 
                     //..here too all is updated, just return
                     settingResponse = new() {
