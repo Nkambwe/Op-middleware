@@ -320,5 +320,81 @@ namespace Operators.Moddleware.Controllers {
             _logger.LogToFile($"API RESPONSE : {json}", "MSG");
             return new JsonResult(settingResponse);
         }
+
+        [HttpPost("getAllSettings")]
+        [Produces("application/json")]
+        public async Task<IActionResult> getAllSettings([FromBody]GeneralRequest request) { 
+            GeneralResponse<HttpHelpers.Attribute> response = null;
+            string json = JsonConvert.SerializeObject(request);
+             _logger.LogToFile($"REQUEST BODY : {json}", "MSG");
+
+            
+            //..include deleted variables
+            var includeDeleted = await _parameterService.GetBooleanParameterAsync("includeDeletedObjects");
+
+             //..get branch settings are attached to
+            long branchId = request.BranchId == 0 ? 1 : request.BranchId;
+            Branch branch = await _branchService.FindBranchByIdAsync(branchId, includeDeleted);
+            if(branch == null) { 
+                response = new() {
+                    ResponseCode =  (int)ResponseCode.NOTFOUND,
+                    ResponseMessage = ResponseCode.NOTFOUND.GetDescription(),
+                    ResponseDescription =   $"No branch found with Branch ID '{request.BranchId}'",
+
+                };
+
+                json = JsonConvert.SerializeObject(response);
+                _logger.LogToFile($"API RESPONSE : {json}", "MSG");
+                return new JsonResult(response);
+            }
+
+            //..get user posting the settings
+            long userId = request.UserId;
+            User user = await _userService.FindUserByIdAsync(userId, includeDeleted);
+            if(user == null) { 
+                response = new() {
+                    ResponseCode =  (int)ResponseCode.NOTFOUND,
+                    ResponseMessage = ResponseCode.NOTFOUND.GetDescription(),
+                    ResponseDescription =   $"No User found with User ID '{request.BranchId}'",
+
+                };
+
+                json = JsonConvert.SerializeObject(response);
+                _logger.LogToFile($"API RESPONSE : {json}", "MSG");
+                return new JsonResult(response);
+            }
+
+            //..make sure user has access to branch records
+            if(branchId != user.BranchId){ 
+                 response = new() {
+                    ResponseCode =  (int)ResponseCode.FORBIDDEN,
+                    ResponseMessage = ResponseCode.FORBIDDEN.GetDescription(),
+                    ResponseDescription = "User account is not assigned to branch and cannot access these records",
+
+                };
+
+                json = JsonConvert.SerializeObject(response);
+                _logger.LogToFile($"API RESPONSE : {json}", "MSG");
+                return new JsonResult(response);
+            }
+
+            //..get settings
+            var settings = await _parameterService.GetAllParametersAsync();
+            HttpHelpers.Attribute[] items = _mapper.Map<HttpHelpers.Attribute[]>(settings); 
+            if(items == null || items.Length == 0){ 
+                items = [];    
+            }
+
+            response = new() {
+                ResponseCode =  (int)ResponseCode.SUCCESS,
+                ResponseMessage = ResponseCode.SUCCESS.GetDescription(),
+                ResponseDescription = $"Settings saved and updated successfully",
+                Items = [.. items]
+            };
+
+            json = JsonConvert.SerializeObject(response);
+            _logger.LogToFile($"API RESPONSE : {json}", "MSG");
+            return new JsonResult(response);
+        }
     }
 }

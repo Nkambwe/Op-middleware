@@ -1,6 +1,22 @@
 [
   {
     "ContainingType": "Operators.Moddleware.Controllers.OperatorsController",
+    "Method": "getAllSettings",
+    "RelativePath": "middleware/getAllSettings",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Operators.Moddleware.HttpHelpers.GeneralRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Operators.Moddleware.Controllers.OperatorsController",
     "Method": "RetrieveUser",
     "RelativePath": "middleware/RetrieveUser",
     "HttpMethod": "POST",

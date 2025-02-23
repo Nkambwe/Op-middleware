@@ -22,6 +22,12 @@ namespace Operators.Moddleware.Services.Access {
         /// <summary>
         /// Get a list of parameters belonging to a defined identifier
         /// </summary>
+        /// <returns>Task containg a list of parameters</returns>
+        Task<IList<ConfigurationParameter>> GetAllParametersAsync();
+        
+        /// <summary>
+        /// Get a list of parameters belonging to a defined identifier
+        /// </summary>
         /// <param name="identifier">Parameter identifier</param>
         /// <returns>Task containg a list of parameters</returns>
         Task<IList<ConfigurationParameter>> GetParametersAsync(string identifier, bool includeDeleted = false);

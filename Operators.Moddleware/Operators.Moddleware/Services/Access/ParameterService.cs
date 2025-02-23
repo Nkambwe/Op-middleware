@@ -42,6 +42,9 @@ namespace Operators.Moddleware.Services.Access {
             return value;
         }
 
+        public async  Task<IList<ConfigurationParameter>> GetAllParametersAsync()
+            => await _repo.GetAllAsync();
+
         public async Task<IList<ConfigurationParameter>> GetParametersAsync(string identifier, bool includeDeleted = false) 
             => await _repo.GetAllAsync(p => p.Identifier.Equals(identifier), includeDeleted);
 
