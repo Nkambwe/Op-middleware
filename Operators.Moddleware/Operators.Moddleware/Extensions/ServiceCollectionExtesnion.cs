@@ -3,6 +3,8 @@ using Operators.Moddleware.Data.Repositories;
 using Operators.Moddleware.Helpers;
 using Operators.Moddleware.Services.Access;
 using Operators.Moddleware.Services;
+using Operators.Moddleware.Services.Settings;
+using Operators.Moddleware.Data.Repositories.Settings;
 
 namespace Operators.Moddleware.Extensions {
 
@@ -18,6 +20,9 @@ namespace Operators.Moddleware.Extensions {
             services.AddScoped<IPasswordsRepository, PasswordsRepository>();
             services.AddScoped<IParametersRepository, ParametersRepository>();
 
+            services.AddScoped<IThemeRepository, ThemeRepository>();
+            services.AddScoped<IUserThemeRepository, UserThemeRepository>();
+
             //..logging
             services.AddScoped<IServiceLogger, ServiceLogger>();
 
@@ -28,6 +33,8 @@ namespace Operators.Moddleware.Extensions {
             services.AddScoped<IPermissionService, PermissionService>();
             services.AddScoped<IPasswordService, PasswordService>();
             services.AddScoped<IParameterService, ParameterService>();
+            services.AddScoped<IThemeService, ThemeService>();
+            services.AddScoped<IUserThemeService, UserThemeService>();
         }
     }
 }

@@ -14,6 +14,7 @@ namespace Operators.Moddleware.Data.EntityConfigurations {
             entityBuilder.Property(b => b.CreatedBy).HasMaxLength(250).IsFixedLength().IsRequired();
             entityBuilder.Property(b => b.LastModifiedOn).IsRequired(false);
             entityBuilder.Property(b => b.LastModifiedBy).HasMaxLength(250).IsFixedLength().IsRequired(false);
+        
         }
     }
 }

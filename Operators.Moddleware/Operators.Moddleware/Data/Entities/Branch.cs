@@ -1,4 +1,5 @@
 ﻿using Operators.Moddleware.Data.Entities.Access;
+using Operators.Moddleware.Data.Entities.Settings;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Operators.Moddleware.Data.Entities {

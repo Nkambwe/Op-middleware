@@ -2,13 +2,9 @@
 
 namespace Operators.Moddleware.Data.Repositories {
 
-    public class BranchRepository: Repository<Branch>, IBranchRepository {
+    public class BranchRepository(OpsDbContext context) : Repository<Branch>(context), IBranchRepository {
 
-        private readonly OpsDbContext _context;
-
-        public BranchRepository(OpsDbContext context) : base(context) {
-            _context = context;
-        }
+        private readonly OpsDbContext _context = context;
     }
 
 }

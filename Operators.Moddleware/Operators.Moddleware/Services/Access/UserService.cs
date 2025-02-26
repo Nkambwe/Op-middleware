@@ -10,7 +10,7 @@ namespace Operators.Moddleware.Services.Access {
         private readonly ServiceLogger _logger = new("Operations_log");
 
         public async Task<User> FindUsernameAsync(string username, bool includeDeleted) {
-            var user = await _repo.GetAsync(u => u.Username == username,includeDeleted , u => u.Branch, u => u.Role, u => u.Permissions, u => u.Passwords);
+            var user = await _repo.GetAsync(u => u.Username == username,includeDeleted , u => u.Branch, u => u.Role, u => u.Permissions, u => u.Passwords, u=> u.Theme);
             if (user != null) {
                 _logger.LogToFile($"USER :: User '{user}' found.", "REPOSITORY");
             } else {

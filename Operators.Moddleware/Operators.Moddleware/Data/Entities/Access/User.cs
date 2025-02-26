@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Operators.Moddleware.Data.Entities.Settings;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Operators.Moddleware.Data.Entities.Access {
 
@@ -30,8 +31,13 @@ namespace Operators.Moddleware.Data.Entities.Access {
         [Column(Order = 9)]
         public bool IsLoggedin { get; set; }
 
+        [Column(Order = 10)]
+        public long ThemeId { get; set; }
+
         public virtual Role Role { get; set; }
         public virtual Branch Branch { get; set; }
+        public virtual UserTheme Theme { get; set; }
+
         public virtual ICollection<Permission> Permissions { get; set; }
         public ICollection<UserPermission> UserPermissions { get; set; }
         public ICollection<UserPassword> Passwords { get; set; }

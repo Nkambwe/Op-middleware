@@ -1,4 +1,4 @@
-﻿using Operators.Moddleware.Data.Entities;
+﻿using Operators.Moddleware.Data.Entities.Settings;
 using Operators.Moddleware.Helpers;
 
 namespace Operators.Moddleware.Data.Repositories.access {

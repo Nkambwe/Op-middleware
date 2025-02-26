@@ -224,6 +224,10 @@ namespace Operators.Moddleware.Migrations
                         .HasColumnType("bigint")
                         .HasColumnOrder(1);
 
+                    b.Property<long>("ThemeId")
+                        .HasColumnType("bigint")
+                        .HasColumnOrder(10);
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasMaxLength(250)
@@ -235,6 +239,9 @@ namespace Operators.Moddleware.Migrations
                     b.HasIndex("BranchId");
 
                     b.HasIndex("RoleId");
+
+                    b.HasIndex("ThemeId")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });
@@ -378,7 +385,7 @@ namespace Operators.Moddleware.Migrations
                     b.ToTable("Branches");
                 });
 
-            modelBuilder.Entity("Operators.Moddleware.Data.Entities.ConfigurationParameter", b =>
+            modelBuilder.Entity("Operators.Moddleware.Data.Entities.Settings.ConfigurationParameter", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -448,6 +455,125 @@ namespace Operators.Moddleware.Migrations
                     b.ToTable("Parameters");
                 });
 
+            modelBuilder.Entity("Operators.Moddleware.Data.Entities.Settings.Theme", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnOrder(0);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nchar(250)")
+                        .HasColumnOrder(53)
+                        .IsFixedLength();
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2")
+                        .HasColumnOrder(52);
+
+                    b.Property<string>("FontFamily")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)")
+                        .HasColumnOrder(5);
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true)
+                        .HasColumnOrder(50);
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnOrder(51);
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasMaxLength(250)
+                        .HasColumnType("nchar(250)")
+                        .HasColumnOrder(55)
+                        .IsFixedLength();
+
+                    b.Property<DateTime?>("LastModifiedOn")
+                        .HasColumnType("datetime2")
+                        .HasColumnOrder(54);
+
+                    b.Property<string>("PrimaryColor")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)")
+                        .HasColumnOrder(3);
+
+                    b.Property<string>("SecondaryColor")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)")
+                        .HasColumnOrder(4);
+
+                    b.Property<string>("ThemeName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnOrder(2);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Themes");
+                });
+
+            modelBuilder.Entity("Operators.Moddleware.Data.Entities.Settings.UserTheme", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnOrder(0);
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnOrder(53);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2")
+                        .HasColumnOrder(52);
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit")
+                        .HasColumnOrder(50);
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit")
+                        .HasColumnOrder(51);
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnOrder(55);
+
+                    b.Property<DateTime?>("LastModifiedOn")
+                        .HasColumnType("datetime2")
+                        .HasColumnOrder(54);
+
+                    b.Property<long>("ThemeId")
+                        .HasColumnType("bigint")
+                        .HasColumnOrder(2);
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint")
+                        .HasColumnOrder(1);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserThemes");
+                });
+
             modelBuilder.Entity("Operators.Moddleware.Data.Entities.Access.User", b =>
                 {
                     b.HasOne("Operators.Moddleware.Data.Entities.Branch", "Branch")
@@ -462,9 +588,17 @@ namespace Operators.Moddleware.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Operators.Moddleware.Data.Entities.Settings.UserTheme", "Theme")
+                        .WithOne("User")
+                        .HasForeignKey("Operators.Moddleware.Data.Entities.Access.User", "ThemeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Branch");
 
                     b.Navigation("Role");
+
+                    b.Navigation("Theme");
                 });
 
             modelBuilder.Entity("Operators.Moddleware.Data.Entities.Access.UserPassword", b =>
@@ -497,7 +631,7 @@ namespace Operators.Moddleware.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Operators.Moddleware.Data.Entities.ConfigurationParameter", b =>
+            modelBuilder.Entity("Operators.Moddleware.Data.Entities.Settings.ConfigurationParameter", b =>
                 {
                     b.HasOne("Operators.Moddleware.Data.Entities.Branch", "Branch")
                         .WithMany("Parameters")
@@ -506,6 +640,17 @@ namespace Operators.Moddleware.Migrations
                         .IsRequired();
 
                     b.Navigation("Branch");
+                });
+
+            modelBuilder.Entity("Operators.Moddleware.Data.Entities.Settings.UserTheme", b =>
+                {
+                    b.HasOne("Operators.Moddleware.Data.Entities.Settings.Theme", "Theme")
+                        .WithMany("UserThemes")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Theme");
                 });
 
             modelBuilder.Entity("Operators.Moddleware.Data.Entities.Access.Permission", b =>
@@ -530,6 +675,16 @@ namespace Operators.Moddleware.Migrations
                     b.Navigation("Parameters");
 
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("Operators.Moddleware.Data.Entities.Settings.Theme", b =>
+                {
+                    b.Navigation("UserThemes");
+                });
+
+            modelBuilder.Entity("Operators.Moddleware.Data.Entities.Settings.UserTheme", b =>
+                {
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

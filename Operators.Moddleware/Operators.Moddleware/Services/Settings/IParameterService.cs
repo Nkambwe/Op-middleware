@@ -1,7 +1,7 @@
-﻿using Operators.Moddleware.Data.Entities;
+﻿using Operators.Moddleware.Data.Entities.Settings;
 using System.Linq.Expressions;
 
-namespace Operators.Moddleware.Services.Access {
+namespace Operators.Moddleware.Services.Settings {
 
     public interface IParameterService {
 
@@ -12,7 +12,7 @@ namespace Operators.Moddleware.Services.Access {
         /// <returns>Task containg a parameter of boolean value</returns>
         Task<bool> GetBooleanParameterAsync(string param, bool includeDeleted = false);
 
-         /// <summary>
+        /// <summary>
         /// Get parameter of a integer value
         /// </summary>
         /// <param name="param">Parameter name</param>
@@ -24,7 +24,7 @@ namespace Operators.Moddleware.Services.Access {
         /// </summary>
         /// <returns>Task containg a list of parameters</returns>
         Task<IList<ConfigurationParameter>> GetAllParametersAsync();
-        
+
         /// <summary>
         /// Get a list of parameters belonging to a defined identifier
         /// </summary>

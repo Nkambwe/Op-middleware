@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Operators.Moddleware.Data.Entities;
 using Operators.Moddleware.Data.Entities.Access;
+using Operators.Moddleware.Data.Entities.Settings;
 using Operators.Moddleware.HttpHelpers;
 using System.Globalization;
 

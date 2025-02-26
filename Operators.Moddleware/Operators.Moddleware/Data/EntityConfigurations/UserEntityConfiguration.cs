@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Operators.Moddleware.Data.Entities.Access;
+using Operators.Moddleware.Data.Entities.Settings;
 
 namespace Operators.Moddleware.Data.EntityConfigurations {
     public class UserEntityConfiguration {
@@ -8,6 +9,7 @@ namespace Operators.Moddleware.Data.EntityConfigurations {
             entityBuilder.HasKey(t => t.Id);
             entityBuilder.Property(t => t.RoleId);
             entityBuilder.Property(t => t.BranchId);
+            entityBuilder.Property(t => t.ThemeId);
             entityBuilder.Property(t => t.EmployeeNo).HasMaxLength(200).IsFixedLength().IsRequired();
             entityBuilder.Property(t => t.Username).HasMaxLength(250).IsRequired();
             entityBuilder.Property(t => t.EmailAddress).HasMaxLength(250).IsRequired();
@@ -21,6 +23,11 @@ namespace Operators.Moddleware.Data.EntityConfigurations {
             entityBuilder.Property(t => t.LastModifiedOn).IsRequired(false);
             entityBuilder.Property(t => t.LastModifiedBy).HasMaxLength(250).IsFixedLength().IsRequired(false);
         
+            //One-to-One: User to Branch relationship
+            entityBuilder.HasOne(u => u.Theme)
+                .WithOne(t => t.User)
+                .HasForeignKey<UserTheme>(t => t.UserId);
+
             // One-to-Many: User to Branch relationship
             entityBuilder
                 .HasOne(u => u.Branch)

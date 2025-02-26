@@ -1,15 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Operators.Moddleware.Data;
-using Operators.Moddleware.Data.Repositories;
-using Operators.Moddleware.Data.Repositories.access;
 using Operators.Moddleware.Extensions;
 using Operators.Moddleware.Helpers;
-using Operators.Moddleware.Services;
-using Operators.Moddleware.Services.Access;
 
 namespace Operators.Moddleware {
+
     public class Startup {
 
         

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Operators.Moddleware.Data.Entities;
+using Operators.Moddleware.Data.Entities.Settings;
 
 namespace Operators.Moddleware.Data.EntityConfigurations {
     public class ParameterEntityConfiguration {

@@ -3,17 +3,19 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Operators.Moddleware.Data.Entities;
 using Operators.Moddleware.Data.Entities.Access;
+using Operators.Moddleware.Data.Entities.Settings;
 using Operators.Moddleware.Helpers;
 using Operators.Moddleware.HttpHelpers;
 using Operators.Moddleware.Services;
 using Operators.Moddleware.Services.Access;
+using Operators.Moddleware.Services.Settings;
 
 namespace Operators.Moddleware.Controllers {
 
     [ApiController]
     [Route("middleware")]
     public class OperatorsController(IMapper mapper, IBranchService branchService, IUserService userService,
-        IRoleService roleService, IPermissionService permissionService,
+        IRoleService roleService, IPermissionService permissionService, IThemeService themeService,
         IPasswordService passwordService, IParameterService parameterService) : ControllerBase {
         private readonly IMapper _mapper = mapper;
         
@@ -25,6 +27,7 @@ namespace Operators.Moddleware.Controllers {
         private readonly IPermissionService _permissionService = permissionService;
         private readonly IPasswordService _passwordService = passwordService;
         private readonly IParameterService _parameterService = parameterService;
+        private readonly IThemeService _themeService = themeService;
 
         [HttpPost("RetrieveUser")]
         [Produces("application/json")]
@@ -92,6 +95,14 @@ namespace Operators.Moddleware.Controllers {
                 }
 
                 userResp = _mapper.Map<UserResponse>(user);
+
+                //get user theme
+                var theme = await _themeService.FindThemeAsync(t => t.Id == user.Theme.ThemeId);
+                if(theme != null) { 
+                    userResp.Data.ThemeId = theme.Id;
+                    userResp.Data.ThemeTexture = theme.PrimaryColor;
+                    userResp.Data.ThemeColor = theme.SecondaryColor;
+                }
                 
                 //get userpassword
                 var password = await _passwordService.GetPasswordAsync(user.CurrentPassword);
@@ -212,7 +223,7 @@ namespace Operators.Moddleware.Controllers {
                 _logger.LogToFile($"Updating the settings already in the database. A total of {configs.Count} found", "INFO");
                 //..update those found in the database
 
-                List<string> toUpdate = new();
+                List<string> toUpdate = [];
                 foreach(var p in configs){ 
                     var attribute = attributes.FirstOrDefault(a => a.ParameterName == p.Parameter);
                     p.ParameterValue = Convert.ToString(attribute.ParameterValue);

@@ -125,27 +125,24 @@ namespace Operators.Moddleware.Data.Repositories {
             }
         }
 
-        public async Task<T> GetAsync(Expression<Func<T, bool>> where,bool includeDeleted = false, params Expression<Func<T, object>>[] filters) {
-            try {
-                var query = _entities.AsQueryable();
-
-                // Apply Includes if filters exist
-                if (filters?.Length > 0) {
-                    query = filters.Aggregate(query, (current, next) => current.Include(next));
-                }
-
-                // Apply soft-delete filter if includeDeleted is false
-                if (!includeDeleted) {
-                    query = query.Where(e => EF.Property<bool>(e, "IsDeleted") == false);
-                }
-
-                return await query.FirstOrDefaultAsync(where);
-            } catch (Exception ex) {
-                _logger.LogToFile($"Get operation failed: {ex.Message}", "DBOPS");
-                _logger.LogToFile("STACKTRACE ::", "DBOPS");
-                _logger.LogToFile($"{ex.StackTrace}", "ERROR");
-                return null;
+        public async Task<T> GetAsync(Expression<Func<T, bool>> predicate, bool includeDeleted = false, params Expression<Func<T, object>>[] filters) {
+            IQueryable<T> query = _entities;
+    
+            // Apply the deleted filter if needed
+            if (!includeDeleted)  {
+                 query = query.Where(e => EF.Property<bool>(e, "IsDeleted") == false);
             }
+    
+            // Apply predicate
+            query = query.Where(predicate);
+    
+            // Apply LEFT JOIN for each filter using Include
+            foreach (var filter in filters) {
+                //  we need to use Include() which creates LEFT JOIN in EF Core
+                query = query.Include(filter);
+            }
+    
+            return await query.FirstOrDefaultAsync();
         }
 
 
