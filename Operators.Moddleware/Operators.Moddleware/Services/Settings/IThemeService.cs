@@ -5,6 +5,8 @@ namespace Operators.Moddleware.Services.Settings {
 
     public interface IThemeService {
         Task<Theme> FindThemeAsync(Expression<Func<Theme, bool>> where);
+
+         Task<Theme> GetFirstThemeAsync(Expression<Func<Theme, bool>> where);
     }
 
 }

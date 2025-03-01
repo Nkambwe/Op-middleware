@@ -1,13 +1,12 @@
-﻿using Operators.Moddleware.Data.Entities.Access;
+﻿using Microsoft.EntityFrameworkCore;
+using Operators.Moddleware.Data.Entities.Access;
 
 namespace Operators.Moddleware.Data.Repositories.access {
 
-    public class UserRepository : Repository<User>, IUserRepository {
+    public class UserRepository (IDbContextFactory<OpsDbContext> contextFactory) :
+        Repository<User>(contextFactory), IUserRepository {
 
-        private readonly OpsDbContext _context;
+        private readonly IDbContextFactory<OpsDbContext>  _context = contextFactory;
 
-        public UserRepository(OpsDbContext context) : base(context) {
-            _context = context;
-        }
     }
 }

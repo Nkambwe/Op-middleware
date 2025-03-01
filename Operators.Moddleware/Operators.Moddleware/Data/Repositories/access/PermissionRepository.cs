@@ -1,12 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Operators.Moddleware.Data.Entities.Access;
 using Operators.Moddleware.Exceptions;
 using Operators.Moddleware.Helpers;
 
 namespace Operators.Moddleware.Data.Repositories.access {
 
-    public class PermissionRepository(OpsDbContext context) : Repository<Permission>(context), IPermissionRepository {
-        private readonly OpsDbContext _context = context;
+    public class PermissionRepository(IDbContextFactory<OpsDbContext> contextFactory) :
+        Repository<Permission>(contextFactory), IPermissionRepository {
+
+        private readonly IDbContextFactory<OpsDbContext>  _contextFactory = contextFactory;
         private readonly ServiceLogger _logger = new("Operations_log");
 
 
@@ -18,8 +21,10 @@ namespace Operators.Moddleware.Data.Repositories.access {
         /// <returns></returns>
         /// <exception cref="NotFoundException">Throws exception if user record not found</exception>
         public async Task<bool> AssignPermissionsToUserAsync(long userId, List<long> permissionIds) {
+
+            using var context = _contextFactory.CreateDbContext();
             try {
-                var user = await _context.Users
+                var user = await context.Users
                     .Include(u => u.UserPermissions)
                     .FirstOrDefaultAsync(u => u.Id == userId);
 
@@ -45,7 +50,7 @@ namespace Operators.Moddleware.Data.Repositories.access {
                     });
                 }
 
-                await _context.SaveChangesAsync();
+                await context.SaveChangesAsync();
                 return true;
             } catch (Exception ex) {
                 _logger.LogToFile($"Error occurred while assigning permission to user : {ex.Message}", "ERROR");
@@ -61,14 +66,16 @@ namespace Operators.Moddleware.Data.Repositories.access {
         /// <param name="permissionIds"></param>
         /// <returns></returns>
         public async Task<bool> RemovePermissionsFromUserAsync(long userId, List<long> permissionIds) {
+
+            using var context = _contextFactory.CreateDbContext();
             try {
-                var userPermissions = await _context.Set<UserPermission>()
+                var userPermissions = await context.Set<UserPermission>()
                     .Where(up => up.UserId == userId && permissionIds.Contains(up.PermissionId))
                     .ToListAsync();
 
-                if (userPermissions.Any()) {
-                    _context.Set<UserPermission>().RemoveRange(userPermissions);
-                    await _context.SaveChangesAsync();
+                if (userPermissions.Count != 0) {
+                    context.Set<UserPermission>().RemoveRange(userPermissions);
+                    await context.SaveChangesAsync();
                 }
 
                 return true;
@@ -86,14 +93,16 @@ namespace Operators.Moddleware.Data.Repositories.access {
         /// <param name="newPermissionIds"></param>
         /// <returns></returns>
         public async Task<bool> UpdateUserPermissionsAsync(long userId, List<long> newPermissionIds) {
-            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            using var context = _contextFactory.CreateDbContext();
+            using var transaction = await context.Database.BeginTransactionAsync();
             try {
                 // Remove all existing permissions
-                var existingPermissions = await _context.Set<UserPermission>()
+                var existingPermissions = await context.Set<UserPermission>()
                     .Where(up => up.UserId == userId)
                     .ToListAsync();
 
-                _context.Set<UserPermission>().RemoveRange(existingPermissions);
+                context.Set<UserPermission>().RemoveRange(existingPermissions);
 
                 // Add new permissions
                 var newPermissions = newPermissionIds.Select(permissionId => new UserPermission {
@@ -101,8 +110,8 @@ namespace Operators.Moddleware.Data.Repositories.access {
                     PermissionId = permissionId
                 });
 
-                await _context.Set<UserPermission>().AddRangeAsync(newPermissions);
-                await _context.SaveChangesAsync();
+                await context.Set<UserPermission>().AddRangeAsync(newPermissions);
+                await context.SaveChangesAsync();
                 await transaction.CommitAsync();
 
                 return true;
@@ -121,8 +130,10 @@ namespace Operators.Moddleware.Data.Repositories.access {
         /// <param name="permissionId"></param>
         /// <returns></returns>
         public async Task<bool> HasPermissionAsync(long userId, long permissionId) {
-            return await _context.Set<UserPermission>()
-                .AnyAsync(up => up.UserId == userId && up.PermissionId == permissionId);
+            using var context = _contextFactory.CreateDbContext();
+            return await context.Set<UserPermission>()
+                .AnyAsync(up => up.UserId == userId && 
+                up.PermissionId == permissionId);
         }
 
         /// <summary>
@@ -131,7 +142,8 @@ namespace Operators.Moddleware.Data.Repositories.access {
         /// <param name="userId"></param>
         /// <returns></returns>
         public async Task<List<Permission>> GetUserPermissionsAsync(long userId) {
-            return await _context.Users
+            using var context = _contextFactory.CreateDbContext();
+            return await context.Users
                 .Where(u => u.Id == userId)
                 .SelectMany(u => u.Permissions)
                 .ToListAsync();

@@ -1,10 +1,12 @@
-﻿using Operators.Moddleware.Data.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Operators.Moddleware.Data.Entities;
 
 namespace Operators.Moddleware.Data.Repositories {
 
-    public class BranchRepository(OpsDbContext context) : Repository<Branch>(context), IBranchRepository {
+    public class BranchRepository(IDbContextFactory<OpsDbContext> contextFactory) :
+        Repository<Branch>(contextFactory), IBranchRepository {
 
-        private readonly OpsDbContext _context = context;
+        private readonly IDbContextFactory<OpsDbContext>  _context = contextFactory;
     }
 
 }

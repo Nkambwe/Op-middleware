@@ -31,7 +31,7 @@ namespace Operators.Moddleware {
             ServiceLogger _logger = new("Operations_log");
             try {
                
-                services.AddDbContext<OpsDbContext>(options => {
+                services.AddDbContextFactory<OpsDbContext>(options => {
                     //Retrieve the connection string from environment variables
                     string connectionString = Environment.GetEnvironmentVariable("DB_ENV");
                     if (!string.IsNullOrEmpty(connectionString)) {

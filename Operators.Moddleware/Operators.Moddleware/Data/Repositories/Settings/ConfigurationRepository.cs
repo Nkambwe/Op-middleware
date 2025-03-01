@@ -1,9 +1,10 @@
-﻿using Operators.Moddleware.Data.Entities.Settings;
+﻿using Microsoft.EntityFrameworkCore;
+using Operators.Moddleware.Data.Entities.Settings;
 
 namespace Operators.Moddleware.Data.Repositories.Settings {
-    public class ConfigurationRepository(OpsDbContext context)
-        : Repository<ConfigurationParameter>(context), IConfigurationRepository {
+    public class ConfigurationRepository(IDbContextFactory<OpsDbContext> contextFactory) :
+    Repository<ConfigurationParameter>(contextFactory), IConfigurationRepository {
 
-        private readonly OpsDbContext _context = context;
+        private readonly IDbContextFactory<OpsDbContext>  _context = contextFactory;
     }
 }

@@ -1,7 +1,7 @@
 [
   {
     "ContainingType": "Operators.Moddleware.Controllers.OperatorsController",
-    "Method": "getAllSettings",
+    "Method": "GetAllSettings",
     "RelativePath": "middleware/getAllSettings",
     "HttpMethod": "POST",
     "IsController": true,
@@ -10,6 +10,22 @@
       {
         "Name": "request",
         "Type": "Operators.Moddleware.HttpHelpers.GeneralRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Operators.Moddleware.Controllers.OperatorsController",
+    "Method": "GetTheme",
+    "RelativePath": "middleware/getTheme",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Operators.Moddleware.HttpHelpers.ThemeRequest",
         "IsRequired": true
       }
     ],
@@ -42,6 +58,22 @@
       {
         "Name": "request",
         "Type": "Operators.Moddleware.HttpHelpers.SettingsRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Operators.Moddleware.Controllers.OperatorsController",
+    "Method": "SetThemeName",
+    "RelativePath": "middleware/setThemeName",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Operators.Moddleware.HttpHelpers.ThemeNameRequest",
         "IsRequired": true
       }
     ],

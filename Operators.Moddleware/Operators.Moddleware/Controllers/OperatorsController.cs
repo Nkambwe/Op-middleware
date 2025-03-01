@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Azure;
 using Microsoft.AspNetCore.Mvc;
+using NetTopologySuite.Index.HPRtree;
 using Newtonsoft.Json;
 using Operators.Moddleware.Data.Entities;
 using Operators.Moddleware.Data.Entities.Access;
@@ -16,9 +18,10 @@ namespace Operators.Moddleware.Controllers {
     [Route("middleware")]
     public class OperatorsController(IMapper mapper, IBranchService branchService, IUserService userService,
         IRoleService roleService, IPermissionService permissionService, IThemeService themeService,
-        IPasswordService passwordService, IParameterService parameterService) : ControllerBase {
+        IUserThemeService userThemes, IPasswordService passwordService, IParameterService parameterService) :
+        ControllerBase {
+
         private readonly IMapper _mapper = mapper;
-        
         private readonly IServiceLogger _logger = new ServiceLogger("Operations_log");
         private DecryptionHandler decrypter;
         private readonly IBranchService _branchService = branchService;
@@ -28,6 +31,7 @@ namespace Operators.Moddleware.Controllers {
         private readonly IPasswordService _passwordService = passwordService;
         private readonly IParameterService _parameterService = parameterService;
         private readonly IThemeService _themeService = themeService;
+        private readonly IUserThemeService _userThemes = userThemes;
 
         [HttpPost("RetrieveUser")]
         [Produces("application/json")]
@@ -154,7 +158,6 @@ namespace Operators.Moddleware.Controllers {
             return new JsonResult(userResp);
         }
 
-
         [HttpPost("SaveConfigurations")]
         [Produces("application/json")]
         public async Task<IActionResult> SaveConfigurations([FromBody]SettingsRequest request) { 
@@ -202,7 +205,7 @@ namespace Operators.Moddleware.Controllers {
                 settingResponse = new() {
                     ResponseCode =  (int)ResponseCode.NOTFOUND,
                     ResponseMessage = ResponseCode.NOTFOUND.GetDescription(),
-                    ResponseDescription =   $"No User found with User ID '{request.BranchId}'",
+                    ResponseDescription =   $"No User found with User ID '{request.UserId}'",
 
                 };
 
@@ -337,7 +340,7 @@ namespace Operators.Moddleware.Controllers {
 
         [HttpPost("getAllSettings")]
         [Produces("application/json")]
-        public async Task<IActionResult> getAllSettings([FromBody]GeneralRequest request) { 
+        public async Task<IActionResult> GetAllSettings([FromBody]GeneralRequest request) { 
             GeneralResponse<HttpHelpers.Attribute> response = null;
             string json = JsonConvert.SerializeObject(request);
              _logger.LogToFile($"REQUEST BODY : {json}", "MSG");
@@ -406,6 +409,178 @@ namespace Operators.Moddleware.Controllers {
                 Items = [.. items]
             };
 
+            json = JsonConvert.SerializeObject(response);
+            _logger.LogToFile($"API RESPONSE : {json}", "MSG");
+            return new JsonResult(response);
+        }
+
+        
+        [HttpPost("getTheme")]
+        [Produces("application/json")]
+        public async Task<IActionResult> GetTheme([FromBody]ThemeRequest request){ 
+            ThemeResponse response;
+            string json;
+
+             //..get user posting the settings
+            long userId = request.UserId;
+            User user = await _userService.FindUserByIdAsync(userId, true);
+            if(user == null) { 
+                response = new() {
+                    ResponseCode =  (int)ResponseCode.NOTFOUND,
+                    ResponseMessage = ResponseCode.NOTFOUND.GetDescription(),
+                    ResponseDescription =   $"No User found with User ID '{request.UserId}'",
+                };
+
+                json = JsonConvert.SerializeObject(response);
+                _logger.LogToFile($"API RESPONSE : {json}", "MSG");
+                return new JsonResult(response);
+            }
+
+             //..get the current user theme
+            UserTheme userTheme = await _userThemes.FindUserThemeAsync(ut => ut.UserId == request.UserId);
+            if(userTheme == null){ 
+                response = new() {
+                    ResponseCode =  (int)ResponseCode.FAILED,
+                    ResponseMessage = ResponseCode.FAILED.GetDescription(),
+                    ResponseDescription = "No themes installed"
+                };
+                
+                json = JsonConvert.SerializeObject(response);
+                _logger.LogToFile($"API RESPONSE : {json}", "MSG");
+                return new JsonResult(response);
+            }
+
+            Theme theme = await _themeService.FindThemeAsync(ut => ut.Id == userTheme.ThemeId);
+            if(userTheme == null){ 
+                response = new() {
+                    ResponseCode =  (int)ResponseCode.FAILED,
+                    ResponseMessage = ResponseCode.FAILED.GetDescription(),
+                    ResponseDescription = "No theme found"
+                };
+                
+                json = JsonConvert.SerializeObject(response);
+                _logger.LogToFile($"API RESPONSE : {json}", "MSG");
+                return new JsonResult(response);
+            }
+
+            response = new(){ 
+                Id = theme.Id,
+                Skin = theme.PrimaryColor,
+                Color = theme.SecondaryColor,
+                ResponseCode =  (int)ResponseCode.SUCCESS,
+                ResponseMessage = ResponseCode.SUCCESS.GetDescription(),
+                ResponseDescription =$"Settings saved and updated successfully",
+            };
+
+            
+            json = JsonConvert.SerializeObject(response);
+            _logger.LogToFile($"API RESPONSE : {json}", "MSG");
+            return new JsonResult(response);
+        }
+
+        [HttpPost("setThemeName")]
+        [Produces("application/json")]
+        public async Task<IActionResult> SetThemeName([FromBody]ThemeNameRequest request){ 
+            SystemResponse response;
+            string json;
+
+             //..get user posting the settings
+            long userId = request.UserId;
+            User user = await _userService.FindUserByIdAsync(userId, true);
+            if(user == null) { 
+                response = new() {
+                    ResponseCode =  (int)ResponseCode.NOTFOUND,
+                    ResponseMessage = ResponseCode.NOTFOUND.GetDescription(),
+                    ResponseDescription =   $"No User found with User ID '{request.UserId}'",
+                };
+
+                json = JsonConvert.SerializeObject(response);
+                _logger.LogToFile($"API RESPONSE : {json}", "MSG");
+                return new JsonResult(response);
+            }
+
+            //TODO---MUST change this
+            Theme theme = new(){ 
+                ThemeName = request.Theme,
+                Id = request.Theme == "Light".ToLower() ? 1 : 5
+            };
+            
+            if(theme == null) { 
+                response = new() {
+                    ResponseCode =  (int)ResponseCode.NOTFOUND,
+                    ResponseMessage = ResponseCode.NOTFOUND.GetDescription(),
+                    ResponseDescription =   $"Theme '{request.UserId}' not found ",
+                };
+
+                json = JsonConvert.SerializeObject(response);
+                _logger.LogToFile($"API RESPONSE : {json}", "MSG");
+                return new JsonResult(response);
+            }
+
+            //..get the current user theme
+            UserTheme userTheme = await _userThemes.FindUserThemeAsync(ut => ut.UserId == request.UserId);
+            if(userTheme == null){ 
+                //..get the first theme in the table and assigne it to the user with no theme
+                theme = await _themeService.GetFirstThemeAsync(t => t.ThemeName == request.Theme);
+                if(theme != null){ 
+                    var isSaved = await _userThemes.InsertThemeAsync(new UserTheme{ 
+                        UserId = request.UserId,
+                        ThemeId = theme.Id,
+                        IsActive = true,
+                        IsDeleted = false,
+                        CreatedBy = user.EmployeeNo,
+                        CreatedOn = DateTime.Now,
+                        LastModifiedBy = user.EmployeeNo,
+                        LastModifiedOn = DateTime.Now
+                    });
+
+                    if(isSaved){
+                        response = new() {
+                            ResponseCode = (int)ResponseCode.SUCCESS,
+                            ResponseMessage = ResponseCode.SUCCESS.GetDescription(),
+                            ResponseDescription = $"Theme '{request.Theme}' saved successfully"
+                        };
+
+                    } else { 
+                        response = new() {
+                            ResponseCode = (int)ResponseCode.FAILED,
+                            ResponseMessage = ResponseCode.FAILED.GetDescription(),
+                            ResponseDescription = $"Theme '{request.Theme}' not saved"
+                        };
+                    }
+                    
+                } else { 
+                    response = new() {
+                        ResponseCode =  (int)ResponseCode.FAILED,
+                        ResponseMessage = ResponseCode.FAILED.GetDescription(),
+                        ResponseDescription = "No themes installed"
+                    };
+                }
+                
+                json = JsonConvert.SerializeObject(response);
+                _logger.LogToFile($"API RESPONSE : {json}", "MSG");
+                return new JsonResult(response);
+            }
+
+            //..save theme
+            userTheme.ThemeId = theme.Id;
+            var result = await _userThemes.UpdateUserThemeAsync(userTheme);
+            if(result) {
+                
+                response = new() {
+                    ResponseCode =  (int)ResponseCode.SUCCESS,
+                    ResponseMessage = ResponseCode.SUCCESS.GetDescription(),
+                    ResponseDescription = "Theme updated successfully"
+                };
+
+            } else { 
+                response = new() {
+                    ResponseCode =  (int)ResponseCode.FAILED,
+                    ResponseMessage = ResponseCode.FAILED.GetDescription(),
+                    ResponseDescription = "No thesemes installed"
+                };
+            }
+            
             json = JsonConvert.SerializeObject(response);
             _logger.LogToFile($"API RESPONSE : {json}", "MSG");
             return new JsonResult(response);
