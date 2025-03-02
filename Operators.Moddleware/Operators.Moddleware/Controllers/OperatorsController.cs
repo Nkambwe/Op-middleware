@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using Azure;
 using Microsoft.AspNetCore.Mvc;
-using NetTopologySuite.Index.HPRtree;
 using Newtonsoft.Json;
 using Operators.Moddleware.Data.Entities;
 using Operators.Moddleware.Data.Entities.Access;
@@ -104,8 +102,8 @@ namespace Operators.Moddleware.Controllers {
                 var theme = await _themeService.FindThemeAsync(t => t.Id == user.Theme.ThemeId);
                 if(theme != null) { 
                     userResp.Data.ThemeId = theme.Id;
-                    userResp.Data.ThemeTexture = theme.PrimaryColor;
-                    userResp.Data.ThemeColor = theme.SecondaryColor;
+                    userResp.Data.ThemeTexture = theme.Skin;
+                    userResp.Data.ThemeColor = theme.Color;
                 }
                 
                 //get userpassword
@@ -465,8 +463,8 @@ namespace Operators.Moddleware.Controllers {
 
             response = new(){ 
                 Id = theme.Id,
-                Skin = theme.PrimaryColor,
-                Color = theme.SecondaryColor,
+                Skin = theme.Skin,
+                Color = theme.Color,
                 ResponseCode =  (int)ResponseCode.SUCCESS,
                 ResponseMessage = ResponseCode.SUCCESS.GetDescription(),
                 ResponseDescription =$"Settings saved and updated successfully",
@@ -477,6 +475,106 @@ namespace Operators.Moddleware.Controllers {
             _logger.LogToFile($"API RESPONSE : {json}", "MSG");
             return new JsonResult(response);
         }
+
+        [HttpPost("setThemeColor")]
+        [Produces("application/json")]
+        public async Task<IActionResult> SetThemeColor([FromBody]ThemeNameRequest request){ 
+            SystemResponse response;
+            string json;
+
+             //..get user posting the settings
+            long userId = request.UserId;
+            User user = await _userService.FindUserByIdAsync(userId, true);
+            if(user == null) { 
+                response = new() {
+                    ResponseCode =  (int)ResponseCode.NOTFOUND,
+                    ResponseMessage = ResponseCode.NOTFOUND.GetDescription(),
+                    ResponseDescription =   $"No User found with User ID '{request.UserId}'",
+                };
+
+                json = JsonConvert.SerializeObject(response);
+                _logger.LogToFile($"API RESPONSE : {json}", "MSG");
+                return new JsonResult(response);
+            }
+
+            //..get the current user theme
+            Theme theme = null;
+            UserTheme userTheme = await _userThemes.FindUserThemeAsync(ut => ut.UserId == request.UserId);
+            if(userTheme == null){ 
+                //..user has no theme, get the one you can find with selected color
+                theme = await _themeService.GetFirstThemeAsync(t => t.Color == request.Theme);
+                if(theme != null){ 
+                    //..found, save this as user current theme
+                    var isSaved = await _userThemes.InsertThemeAsync(new UserTheme{ 
+                        UserId = request.UserId,
+                        ThemeId = theme.Id,
+                        IsActive = true,
+                        IsDeleted = false,
+                        CreatedBy = user.EmployeeNo,
+                        CreatedOn = DateTime.Now,
+                        LastModifiedBy = user.EmployeeNo,
+                        LastModifiedOn = DateTime.Now
+                    });
+
+                    if(isSaved){
+                        response = new() {
+                            ResponseCode = (int)ResponseCode.SUCCESS,
+                            ResponseMessage = ResponseCode.SUCCESS.GetDescription(),
+                            ResponseDescription = $"Theme '{request.Theme}' saved successfully"
+                        };
+
+                    } else { 
+                        response = new() {
+                            ResponseCode = (int)ResponseCode.FAILED,
+                            ResponseMessage = ResponseCode.FAILED.GetDescription(),
+                            ResponseDescription = $"Theme with color '{request.Theme}' not saved"
+                        };
+                    }
+                    
+                } else { 
+                    response = new() {
+                        ResponseCode =  (int)ResponseCode.FAILED,
+                        ResponseMessage = ResponseCode.FAILED.GetDescription(),
+                        ResponseDescription = "No themes installed"
+                    };
+                }
+                
+                json = JsonConvert.SerializeObject(response);
+                _logger.LogToFile($"API RESPONSE : {json}", "MSG");
+                return new JsonResult(response);
+            }
+
+            //..get old theme
+            Theme oldTheme = await _themeService.FindThemeAsync(t => t.Id == userTheme.ThemeId);
+            oldTheme ??= await _themeService.GetFirstThemeAsync(t => t.Color == request.Theme);
+
+            //..get the current user theme and find similar theme with desired color
+            theme = await _themeService.FindThemeAsync(t => t.Skin == oldTheme.Skin && t.Color == request.Theme);
+            theme ??= await _themeService.GetFirstThemeAsync(t => t.Color == request.Theme);
+
+            //..set this as user new theme
+            userTheme.ThemeId = theme.Id;
+            var result = await _userThemes.UpdateUserThemeAsync(userTheme);
+            if(result) {
+                
+                response = new() {
+                    ResponseCode =  (int)ResponseCode.SUCCESS,
+                    ResponseMessage = ResponseCode.SUCCESS.GetDescription(),
+                    ResponseDescription = "Theme updated successfully"
+                };
+
+            } else { 
+                response = new() {
+                    ResponseCode =  (int)ResponseCode.FAILED,
+                    ResponseMessage = ResponseCode.FAILED.GetDescription(),
+                    ResponseDescription = "No thesemes installed"
+                };
+            }
+            
+            json = JsonConvert.SerializeObject(response);
+            _logger.LogToFile($"API RESPONSE : {json}", "MSG");
+            return new JsonResult(response);
+        } 
 
         [HttpPost("setThemeName")]
         [Produces("application/json")]
@@ -499,30 +597,14 @@ namespace Operators.Moddleware.Controllers {
                 return new JsonResult(response);
             }
 
-            //TODO---MUST change this
-            Theme theme = new(){ 
-                ThemeName = request.Theme,
-                Id = request.Theme == "Light".ToLower() ? 1 : 5
-            };
-            
-            if(theme == null) { 
-                response = new() {
-                    ResponseCode =  (int)ResponseCode.NOTFOUND,
-                    ResponseMessage = ResponseCode.NOTFOUND.GetDescription(),
-                    ResponseDescription =   $"Theme '{request.UserId}' not found ",
-                };
-
-                json = JsonConvert.SerializeObject(response);
-                _logger.LogToFile($"API RESPONSE : {json}", "MSG");
-                return new JsonResult(response);
-            }
-
             //..get the current user theme
+            Theme theme = null;
             UserTheme userTheme = await _userThemes.FindUserThemeAsync(ut => ut.UserId == request.UserId);
             if(userTheme == null){ 
-                //..get the first theme in the table and assigne it to the user with no theme
-                theme = await _themeService.GetFirstThemeAsync(t => t.ThemeName == request.Theme);
+                //..get the theme that has user selected skin
+                theme = await _themeService.GetFirstThemeAsync(t => t.Skin == request.Theme);
                 if(theme != null){ 
+                    //..found, save this as user theme
                     var isSaved = await _userThemes.InsertThemeAsync(new UserTheme{ 
                         UserId = request.UserId,
                         ThemeId = theme.Id,
@@ -562,7 +644,15 @@ namespace Operators.Moddleware.Controllers {
                 return new JsonResult(response);
             }
 
-            //..save theme
+            //..get current user theme
+            Theme oldTheme = await _themeService.FindThemeAsync(t => t.Id == userTheme.ThemeId);
+            oldTheme ??= await _themeService.GetFirstThemeAsync(t => t.Skin == request.Theme); //not found
+
+            //..get the selected theme skin with the old color
+            theme = await _themeService.FindThemeAsync(t => t.Skin == request.Theme && t.Color == oldTheme.Color);
+            theme ??= await _themeService.GetFirstThemeAsync(t => t.Skin == request.Theme);
+
+            //..update theme to selected
             userTheme.ThemeId = theme.Id;
             var result = await _userThemes.UpdateUserThemeAsync(userTheme);
             if(result) {
@@ -586,4 +676,5 @@ namespace Operators.Moddleware.Controllers {
             return new JsonResult(response);
         }
     }
+
 }

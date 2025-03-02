@@ -65,6 +65,22 @@
   },
   {
     "ContainingType": "Operators.Moddleware.Controllers.OperatorsController",
+    "Method": "SetThemeColor",
+    "RelativePath": "middleware/setThemeColor",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Operators.Moddleware.HttpHelpers.ThemeNameRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Operators.Moddleware.Controllers.OperatorsController",
     "Method": "SetThemeName",
     "RelativePath": "middleware/setThemeName",
     "HttpMethod": "POST",

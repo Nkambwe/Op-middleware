@@ -8,8 +8,8 @@ namespace Operators.Moddleware.Data.EntityConfigurations {
         public static void Configure(EntityTypeBuilder<Theme> entityBuilder) {
             entityBuilder.HasKey(m => m.Id);
             entityBuilder.Property(m => m.ThemeName).HasMaxLength(100).IsRequired();
-            entityBuilder.Property(m => m.PrimaryColor).HasMaxLength(250).IsRequired();
-            entityBuilder.Property(m => m.SecondaryColor).HasMaxLength(250).IsRequired();
+            entityBuilder.Property(m => m.Skin).HasMaxLength(250).HasColumnName("PrimaryColor").IsRequired();
+            entityBuilder.Property(m => m.Color).HasMaxLength(250).HasColumnName("SecondaryColor").IsRequired();
             entityBuilder.Property(m => m.FontFamily).HasMaxLength(250).IsRequired();
             entityBuilder.Property(m => m.IsActive).HasDefaultValue(true);
             entityBuilder.Property(m => m.IsDeleted).HasDefaultValue(false);

@@ -1,5 +1,4 @@
-﻿using Operators.Moddleware.Data.Entities.Access;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Operators.Moddleware.Data.Entities.Settings {
 
@@ -9,10 +8,10 @@ namespace Operators.Moddleware.Data.Entities.Settings {
         public string ThemeName { get; set; }
 
         [Column(Order = 3)]
-        public string PrimaryColor { get; set; }
+        public string Skin { get; set; }
 
         [Column(Order = 4)]
-        public string SecondaryColor { get; set; }
+        public string Color { get; set; }
 
         [Column(Order = 5)]
         public string FontFamily { get; set; }
