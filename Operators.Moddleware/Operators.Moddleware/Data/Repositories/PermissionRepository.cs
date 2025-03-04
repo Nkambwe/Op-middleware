@@ -1,11 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Operators.Moddleware.Data.Entities.Access;
 using Operators.Moddleware.Exceptions;
 using Operators.Moddleware.Helpers;
 
-namespace Operators.Moddleware.Data.Repositories.access {
-
+namespace Operators.Moddleware.Data.Repositories {
     public class PermissionRepository(IDbContextFactory<OpsDbContext> contextFactory) :
         Repository<Permission>(contextFactory), IPermissionRepository {
 
@@ -149,5 +147,4 @@ namespace Operators.Moddleware.Data.Repositories.access {
                 .ToListAsync();
         }
     }
-
 }

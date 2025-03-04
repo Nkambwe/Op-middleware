@@ -33,6 +33,22 @@
   },
   {
     "ContainingType": "Operators.Moddleware.Controllers.OperatorsController",
+    "Method": "Logout",
+    "RelativePath": "middleware/logout",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Operators.Moddleware.HttpHelpers.LogoutRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Operators.Moddleware.Controllers.OperatorsController",
     "Method": "RetrieveUser",
     "RelativePath": "middleware/RetrieveUser",
     "HttpMethod": "POST",

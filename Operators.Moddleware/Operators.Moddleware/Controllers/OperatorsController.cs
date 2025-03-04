@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Operators.Moddleware.Data.Entities;
@@ -15,17 +16,15 @@ namespace Operators.Moddleware.Controllers {
     [ApiController]
     [Route("middleware")]
     public class OperatorsController(IMapper mapper, IBranchService branchService, IUserService userService,
-        IRoleService roleService, IPermissionService permissionService, IThemeService themeService,
-        IUserThemeService userThemes, IPasswordService passwordService, IParameterService parameterService) :
+        IThemeService themeService, IUserThemeService userThemes, IPasswordService passwordService, 
+        IParameterService parameterService) :
         ControllerBase {
 
         private readonly IMapper _mapper = mapper;
-        private readonly IServiceLogger _logger = new ServiceLogger("Operations_log");
+        private readonly ServiceLogger _logger = new("Operations_log");
         private DecryptionHandler decrypter;
         private readonly IBranchService _branchService = branchService;
         private readonly IUserService _userService = userService;
-        private readonly IRoleService _roleService = roleService;
-        private readonly IPermissionService _permissionService = permissionService;
         private readonly IPasswordService _passwordService = passwordService;
         private readonly IParameterService _parameterService = parameterService;
         private readonly IThemeService _themeService = themeService;
@@ -671,6 +670,48 @@ namespace Operators.Moddleware.Controllers {
                 };
             }
             
+            json = JsonConvert.SerializeObject(response);
+            _logger.LogToFile($"API RESPONSE : {json}", "MSG");
+            return new JsonResult(response);
+        }
+
+        
+        [HttpPost("logout")]
+        [Produces("application/json")]
+        public async Task<IActionResult> Logout([FromBody]LogoutRequest request){ 
+            string json;
+             SystemResponse response;
+
+             //..get user posting the settings
+            long userId = request.UserId;
+            User user = await _userService.FindUserByIdAsync(userId, true);
+            if(user == null) { 
+                response = new() {
+                    ResponseCode =  (int)ResponseCode.NOTFOUND,
+                    ResponseMessage = ResponseCode.NOTFOUND.GetDescription(),
+                    ResponseDescription =   $"No User found with User ID '{request.UserId}'",
+                };
+
+                json = JsonConvert.SerializeObject(response);
+                _logger.LogToFile($"API RESPONSE : {json}", "MSG");
+                return new JsonResult(response);
+            }
+
+            var logedout = await _userService.UpdateUserAsync(user, false);
+            if(logedout){
+                response = new() {
+                    ResponseCode =  (int)ResponseCode.SUCCESS,
+                    ResponseMessage = ResponseCode.SUCCESS.GetDescription(),
+                    ResponseDescription = $"User logged out successfully"
+                };
+            } else {
+                response = new() {
+                    ResponseCode =  (int)ResponseCode.FAILED,
+                    ResponseMessage = ResponseCode.FAILED.GetDescription(),
+                    ResponseDescription ="An error occurred, could signout user"
+                };
+            }
+
             json = JsonConvert.SerializeObject(response);
             _logger.LogToFile($"API RESPONSE : {json}", "MSG");
             return new JsonResult(response);

@@ -1,18 +1,21 @@
 ﻿using Operators.Moddleware.Data.Entities.Access;
-using Operators.Moddleware.Data.Repositories.access;
+using Operators.Moddleware.Data.Transactions;
 using Operators.Moddleware.Exceptions;
 using Operators.Moddleware.Helpers;
 
 namespace Operators.Moddleware.Services.Access {
-    public class PermissionService(IPermissionRepository repo) : IPermissionService {
+    public class PermissionService(IUnitOfWorkFactory uowf) : IPermissionService {
 
-        private readonly IPermissionRepository _repo = repo;
+        private readonly IUnitOfWorkFactory _uowf = uowf;
         private readonly ServiceLogger _logger = new("Operations_log");
 
         public async Task<bool> AssignPermissionsToUserAsync(long userId, List<long> permissionIds) {
 
             try {
                 _logger.LogToFile($"Attepting to assign permissions to user", "REPOSITORY");
+
+                using var _uow = _uowf.Create();
+                var _repo = _uow.PermissionRepository;
                 var result = await _repo.AssignPermissionsToUserAsync(userId, permissionIds);
                 if (result) {
                     _logger.LogToFile($"PERMISSIONS :: {permissionIds.Count} permissions granted to user", "REPOSITORY");
@@ -30,6 +33,9 @@ namespace Operators.Moddleware.Services.Access {
 
             try {
                 _logger.LogToFile($"Retrieving user permissions", "REPOSITORY");
+
+                using var _uow = _uowf.Create();
+                var _repo = _uow.PermissionRepository;
                 return await _repo.GetUserPermissionsAsync(userId);
             } catch (Exception) {
                 _logger.LogToFile($"PERMISSIONS :: An error occurred while retrieving user permissions", "REPOSITORY");
@@ -41,6 +47,9 @@ namespace Operators.Moddleware.Services.Access {
 
             try {
                 _logger.LogToFile($"Checking if user '{userId}' has permission with ID '{permissionId}'", "REPOSITORY");
+
+                using var _uow = _uowf.Create();
+                var _repo = _uow.PermissionRepository;
                 var result = await _repo.HasPermissionAsync(userId, permissionId);
                 if (result) {
                     _logger.LogToFile($"PERMISSIONS :: User has permission ID '{permissionId}'", "REPOSITORY");
@@ -56,6 +65,9 @@ namespace Operators.Moddleware.Services.Access {
 
         public async Task<bool> RemovePermissionsFromUserAsync(long userId, List<long> permissionIds) {
             _logger.LogToFile($"Attepting to remove permissions from user", "REPOSITORY");
+
+            using var _uow = _uowf.Create();
+                var _repo = _uow.PermissionRepository;
             var result = await _repo.RemovePermissionsFromUserAsync(userId, permissionIds);
             if (result) {
                 _logger.LogToFile($"PERMISSIONS :: {permissionIds.Count} permissions granted to user", "REPOSITORY");
@@ -69,6 +81,8 @@ namespace Operators.Moddleware.Services.Access {
 
             try {
                 _logger.LogToFile($"Updating user '{userId}' permissions", "REPOSITORY");
+                using var _uow = _uowf.Create();
+                var _repo = _uow.PermissionRepository;
                 var result = await _repo.UpdateUserPermissionsAsync(userId, newPermissionIds);
                 if (result) {
                     _logger.LogToFile($"PERMISSIONS :: User '{userId}' permissions have been updated", "REPOSITORY");

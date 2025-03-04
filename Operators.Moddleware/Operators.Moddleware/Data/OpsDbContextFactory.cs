@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using Operators.Moddleware.Helpers;
-using System.IO;
 
 namespace Operators.Moddleware.Data {
     public class OpsDbContextFactory : IDesignTimeDbContextFactory<OpsDbContext> {

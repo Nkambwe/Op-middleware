@@ -6,7 +6,7 @@ namespace Operators.Moddleware.Data.Repositories {
         T Get(long id, bool includeDeleted = false);
         Task<T> GetAsync(long id, bool includeDeleted = false);
         T Get(Expression<Func<T, bool>> expression, bool includeDeleted = false);
-        T Get(Expression<Func<T, bool>> predicate,bool includeDeleted = false, params Expression<Func<T, object>>[] filters);
+        T Get(Expression<Func<T, bool>> predicate, bool includeDeleted = false, params Expression<Func<T, object>>[] filters);
         Task<T> GetAsync(Expression<Func<T, bool>> expression, bool includeDeleted = false);
         /// <summary>
         /// Asynchronous search for an entity that fits predicate with related entities. Option to check if it can be marked as deleted
@@ -16,7 +16,7 @@ namespace Operators.Moddleware.Data.Repositories {
         /// <param name="filters"></param>
         /// <remarks>Usage var entity = await GetAsync(e => e.Id == 1, includeDeleted: false, x => x.RelatedEntity, x => x.AnotherEntity);</remarks>
         /// <returns></returns>
-        Task<T> GetAsync(Expression<Func<T, bool>> predicate,bool includeDeleted = false, params Expression<Func<T, object>>[] filters);
+        Task<T> GetAsync(Expression<Func<T, bool>> predicate, bool includeDeleted = false, params Expression<Func<T, object>>[] filters);
 
         /// <summary>
         /// Get a list of all entities. Option to check if entities can be marked as deleted
@@ -42,7 +42,7 @@ namespace Operators.Moddleware.Data.Repositories {
         /// <returns>Collection of all entities that fit predicate</returns>
         IList<T> GetAll(Expression<Func<T, bool>> where, bool includeDeleted);
 
-         /// <summary>
+        /// <summary>
         /// Asynchronous search for a list of all entities that fit search predicate. Option to check if entities can be marked as deleted
         /// </summary>
         /// <param name="where">Search predicate</param>
@@ -96,7 +96,7 @@ namespace Operators.Moddleware.Data.Repositories {
         /// <returns>Task containg deletion status</returns>
         Task<bool> DeleteAsync(T entity, bool markAsDeleted = false);
 
-         /// <summary>
+        /// <summary>
         /// Check if an entity exists if it fits predicate
         /// </summary>
         /// <param name="where">Search predicate</param>
@@ -132,6 +132,6 @@ namespace Operators.Moddleware.Data.Repositories {
         /// <param name="entities">Collection of entities to update</param>
         /// <param name="propertySelectors">List of properyies to update</param>
         /// <returns></returns>
-        Task<bool> BulkyUpdateAsync(T[] entities, params Expression<Func<T, object>>[] propertySelectors); 
+        Task<bool> BulkyUpdateAsync(T[] entities, params Expression<Func<T, object>>[] propertySelectors);
     }
 }

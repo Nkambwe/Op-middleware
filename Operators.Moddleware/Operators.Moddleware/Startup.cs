@@ -6,29 +6,20 @@ using Operators.Moddleware.Helpers;
 
 namespace Operators.Moddleware {
 
-    public class Startup {
+    public class Startup(IConfiguration configuration) {
 
-        
-        public IConfiguration Configuration { get; }
 
-        public Startup(IConfiguration configuration)
-            => Configuration = configuration;
+        public IConfiguration Configuration { get; } = configuration;
 
         /// <summary>
         /// Servervice configuration
         /// </summary>
         /// <param name="services">Service Interface</param>
         public void ConfigureServices(IServiceCollection services) { 
-            services.AddRazorPages();
-            services.AddControllers().AddXmlDataContractSerializerFormatters();
-            services.AddEndpointsApiExplorer();
-            services.AddEndpointsApiExplorer();
-
-            //..swagger
-            services.AddSwaggerGen(); 
-
+            
             //..db connection
             ServiceLogger _logger = new("Operations_log");
+
             try {
                
                 services.AddDbContextFactory<OpsDbContext>(options => {
@@ -55,8 +46,25 @@ namespace Operators.Moddleware {
                 _logger.LogToFile($"Database connection failed. {e.Message}", "ERROR");
             }
 
-            //..inject dependecies
+            //..logging
+            services.AddScoped<IServiceLogger, ServiceLogger>();
+
+            //register UnitOfWork
+            services.RegisterUnitOfWork();
+
+            //register Repositories
+            services.RegisterRegpositories();
+
+            //..register services
             services.RegisterServices();
+
+            services.AddRazorPages();
+            services.AddControllers().AddXmlDataContractSerializerFormatters();
+            services.AddEndpointsApiExplorer();
+            services.AddEndpointsApiExplorer();
+
+            //..swagger
+            services.AddSwaggerGen(); 
 
             //..add Auto Mapper Configurations
             var mappingConfig = new MapperConfiguration(mc => {
@@ -66,6 +74,7 @@ namespace Operators.Moddleware {
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
 
+            //..register other
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
         }

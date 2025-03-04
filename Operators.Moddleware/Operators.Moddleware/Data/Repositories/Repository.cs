@@ -2,14 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using Operators.Moddleware.Data.Entities;
 using Operators.Moddleware.Helpers;
-using System;
 using System.Linq.Expressions;
 
 namespace Operators.Moddleware.Data.Repositories {
 
     public class Repository<T>(IDbContextFactory<OpsDbContext> contextFactory) : IRepository<T> where T : DomainEntity {
 
-         private readonly IDbContextFactory<OpsDbContext> _contextFactory = contextFactory;
+        private readonly IDbContextFactory<OpsDbContext> _contextFactory = contextFactory;
         private readonly IServiceLogger _logger = new ServiceLogger("Operations_data") {
             Channel = "REPOSITORY"
         };
@@ -20,7 +19,7 @@ namespace Operators.Moddleware.Data.Repositories {
             var entities = context.Set<T>();
 
             try {
-                
+
                 var query = entities.AsQueryable();
                 if (!includeDeleted) {
                     query = query.Where(e => EF.Property<bool>(e, "IsDeleted") == false);
@@ -47,7 +46,7 @@ namespace Operators.Moddleware.Data.Repositories {
                 }
 
                 entity = await query.FirstOrDefaultAsync(e => e.Id == id);
-                
+
             } catch (Exception ex) {
                 _logger.LogToFile($"Get operation failed: {ex.Message}", "DBOPS");
                 _logger.LogToFile("STACKTRACE ::", "DBOPS");
@@ -70,7 +69,7 @@ namespace Operators.Moddleware.Data.Repositories {
                 }
 
                 entity = query.FirstOrDefault(where);
-                
+
             } catch (Exception ex) {
                 _logger.LogToFile($"Get operation failed: {ex.Message}", "DBOPS");
                 _logger.LogToFile("STACKTRACE ::", "DBOPS");
@@ -85,10 +84,10 @@ namespace Operators.Moddleware.Data.Repositories {
             using var context = _contextFactory.CreateDbContext();
             var entities = context.Set<T>();
             try {
-                 var query = entities.AsQueryable();
+                var query = entities.AsQueryable();
 
                 //include related entities
-                if(filters != null ){
+                if (filters != null) {
                     query = filters.Aggregate(query,
                             (current, next) => current.Include(next));
                 }
@@ -99,7 +98,7 @@ namespace Operators.Moddleware.Data.Repositories {
                 }
 
                 entity = query.FirstOrDefault(where);
-                
+
             } catch (Exception ex) {
                 _logger.LogToFile($"Get operation failed: {ex.Message}", "DBOPS");
                 _logger.LogToFile("STACKTRACE ::", "DBOPS");
@@ -109,7 +108,7 @@ namespace Operators.Moddleware.Data.Repositories {
             return entity;
         }
 
-        public async Task<T> GetAsync(Expression<Func<T, bool>> where, bool includeDeleted = false){
+        public async Task<T> GetAsync(Expression<Func<T, bool>> where, bool includeDeleted = false) {
 
             using var context = _contextFactory.CreateDbContext();
             var entities = context.Set<T>();
@@ -129,24 +128,24 @@ namespace Operators.Moddleware.Data.Repositories {
         }
 
         public async Task<T> GetAsync(Expression<Func<T, bool>> predicate, bool includeDeleted = false, params Expression<Func<T, object>>[] filters) {
-            
+
             using var context = _contextFactory.CreateDbContext();
             IQueryable<T> query = context.Set<T>();
-    
+
             // Apply the deleted filter if needed
-            if (!includeDeleted)  {
-                 query = query.Where(e => EF.Property<bool>(e, "IsDeleted") == false);
+            if (!includeDeleted) {
+                query = query.Where(e => EF.Property<bool>(e, "IsDeleted") == false);
             }
-    
+
             // Apply predicate
             query = query.Where(predicate);
-    
+
             // Apply LEFT JOIN for each filter using Include
             foreach (var filter in filters) {
                 //  we need to use Include() which creates LEFT JOIN in EF Core
                 query = query.Include(filter);
             }
-    
+
             return await query.FirstOrDefaultAsync();
         }
 
@@ -162,7 +161,7 @@ namespace Operators.Moddleware.Data.Repositories {
             return [.. query];
         }
 
-        public async Task<IList<T>> GetAllAsync(bool includeDeleted = false){ 
+        public async Task<IList<T>> GetAllAsync(bool includeDeleted = false) {
             using var context = _contextFactory.CreateDbContext();
             IQueryable<T> query = context.Set<T>();
             return await query.Where(e => includeDeleted || EF.Property<bool>(e, "IsDeleted") == false).ToListAsync();
@@ -201,23 +200,23 @@ namespace Operators.Moddleware.Data.Repositories {
                 _logger.LogToFile("STACKTRACE ::", "DBOPS");
                 _logger.LogToFile($"{ex.StackTrace}", "ERROR");
                 return false;
-             }
+            }
         }
 
         public async Task<bool> InsertAsync(T entity) {
-             ArgumentNullException.ThrowIfNull(entity);
+            ArgumentNullException.ThrowIfNull(entity);
 
             using var context = _contextFactory.CreateDbContext();
             var dbSet = context.Set<T>();
-             try {
+            try {
                 await dbSet.AddAsync(entity);
                 return await context.SaveChangesAsync() > 0;
-             } catch (Exception ex) {
+            } catch (Exception ex) {
                 _logger.LogToFile($"Insert operation failed: {ex.Message}", "DBOPS");
                 _logger.LogToFile("STACKTRACE ::", "DBOPS");
                 _logger.LogToFile($"{ex.StackTrace}", "ERROR");
                 return false;
-             }
+            }
         }
 
         public bool Update(T entity, bool includeDeleted = false) {
@@ -276,17 +275,17 @@ namespace Operators.Moddleware.Data.Repositories {
 
             using var context = _contextFactory.CreateDbContext();
             var dbSet = context.Set<T>();
-            try{ 
-                 if (markAsDeleted) {
+            try {
+                if (markAsDeleted) {
                     var entry = context.Entry(entity);
                     entry.Property("IsDeleted").CurrentValue = true;
                     entry.State = EntityState.Modified;
-                 } else {
+                } else {
                     dbSet.Remove(entity);
-                 }
+                }
 
-               return context.SaveChanges() > 0;
-            } catch(Exception ex) {
+                return context.SaveChanges() > 0;
+            } catch (Exception ex) {
                 _logger.LogToFile($"Delete operation failed: {ex.Message}", "DBOPS");
                 _logger.LogToFile("STACKTRACE ::", "DBOPS");
                 _logger.LogToFile($"{ex.StackTrace}", "ERROR");
@@ -322,8 +321,8 @@ namespace Operators.Moddleware.Data.Repositories {
 
             using var context = _contextFactory.CreateDbContext();
             var dbSet = context.Set<T>();
-            var record =  dbSet.FirstOrDefault(where);
-            
+            var record = dbSet.FirstOrDefault(where);
+
             if (excludeDeleted) {
                 return record != null && !record.IsDeleted;
             }
@@ -395,7 +394,7 @@ namespace Operators.Moddleware.Data.Repositories {
                 SetOutputIdentity = true,
                 PreserveInsertOrder = true,
                 //update all properties
-                UpdateByProperties = null  
+                UpdateByProperties = null
             };
 
             try {
@@ -404,7 +403,7 @@ namespace Operators.Moddleware.Data.Repositories {
                 await context.BulkUpdateAsync(validEntities, bulkConfig);
                 return true;
             } catch (Exception ex) {
-                 _logger.LogToFile($"Bulk update operation. Error! {ex.Message}", "DBOPS");
+                _logger.LogToFile($"Bulk update operation. Error! {ex.Message}", "DBOPS");
                 _logger.LogToFile("STACKTRACE ::", "DBOPS");
                 _logger.LogToFile($"{ex.StackTrace}", "ERROR");
                 return false;
@@ -441,7 +440,7 @@ namespace Operators.Moddleware.Data.Repositories {
                 await context.BulkUpdateAsync(validEntities, bulkConfig);
                 return true;
             } catch (Exception ex) {
-                 _logger.LogToFile($"Bulk update operation. Error! {ex.Message}", "DBOPS");
+                _logger.LogToFile($"Bulk update operation. Error! {ex.Message}", "DBOPS");
                 _logger.LogToFile("STACKTRACE ::", "DBOPS");
                 _logger.LogToFile($"{ex.StackTrace}", "ERROR");
                 return false;
@@ -464,6 +463,6 @@ namespace Operators.Moddleware.Data.Repositories {
 
         #endregion
 
-        
+
     }
 }

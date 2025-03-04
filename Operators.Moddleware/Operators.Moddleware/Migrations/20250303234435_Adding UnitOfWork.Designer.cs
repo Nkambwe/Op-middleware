@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Operators.Moddleware.Data;
 
@@ -11,9 +12,11 @@ using Operators.Moddleware.Data;
 namespace Operators.Moddleware.Migrations
 {
     [DbContext(typeof(OpsDbContext))]
-    partial class OpsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250303234435_Adding UnitOfWork")]
+    partial class AddingUnitOfWork
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
