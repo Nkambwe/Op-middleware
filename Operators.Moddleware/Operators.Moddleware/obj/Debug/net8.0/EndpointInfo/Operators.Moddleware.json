@@ -290,32 +290,78 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/LogoutRequest"
+                "$ref": "#/components/schemas/UserAccess"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/LogoutRequest"
+                "$ref": "#/components/schemas/UserAccess"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/LogoutRequest"
+                "$ref": "#/components/schemas/UserAccess"
               }
             },
             "application/xml": {
               "schema": {
-                "$ref": "#/components/schemas/LogoutRequest"
+                "$ref": "#/components/schemas/UserAccess"
               }
             },
             "text/xml": {
               "schema": {
-                "$ref": "#/components/schemas/LogoutRequest"
+                "$ref": "#/components/schemas/UserAccess"
               }
             },
             "application/*+xml": {
               "schema": {
-                "$ref": "#/components/schemas/LogoutRequest"
+                "$ref": "#/components/schemas/UserAccess"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/middleware/login": {
+      "post": {
+        "tags": [
+          "Operators"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserAccess"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserAccess"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserAccess"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/UserAccess"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/UserAccess"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/UserAccess"
               }
             }
           }
@@ -365,20 +411,6 @@
         },
         "additionalProperties": false
       },
-      "LogoutRequest": {
-        "type": "object",
-        "properties": {
-          "userId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "ipAddress": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "SettingsRequest": {
         "type": "object",
         "properties": {
@@ -424,6 +456,20 @@
           "userId": {
             "type": "integer",
             "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserAccess": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ipAddress": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

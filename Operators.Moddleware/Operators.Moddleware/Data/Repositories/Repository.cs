@@ -340,7 +340,7 @@ namespace Operators.Moddleware.Data.Repositories {
                 return record != null && !record.IsDeleted;
             }
 
-            return record == null;
+            return record != null;
         }
 
         public async Task<bool> BulkyInsertAsync(T[] entities) {

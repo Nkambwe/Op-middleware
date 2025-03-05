@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Azure;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Operators.Moddleware.Data.Entities;
@@ -51,6 +50,20 @@ namespace Operators.Moddleware.Controllers {
                         Data = null
                     };
 
+                    response = JsonConvert.SerializeObject(userResp);
+                    _logger.LogToFile($"API RESPONSE : {response}", "MSG");
+                    return new JsonResult(userResp);
+                }
+
+                //..check if user is logged in 
+                if(user.IsLoggedin){ 
+                    userResp = new UserResponse() {
+                        ResponseCode =  (int)ResponseCode.FORBIDDEN,
+                        ResponseMessage = "Account already logged in",
+                        ResponseDescription = ResponseCode.FORBIDDEN.GetDescription(),
+                        Data = null
+                    };
+                    
                     response = JsonConvert.SerializeObject(userResp);
                     _logger.LogToFile($"API RESPONSE : {response}", "MSG");
                     return new JsonResult(userResp);
@@ -675,10 +688,9 @@ namespace Operators.Moddleware.Controllers {
             return new JsonResult(response);
         }
 
-        
         [HttpPost("logout")]
         [Produces("application/json")]
-        public async Task<IActionResult> Logout([FromBody]LogoutRequest request){ 
+        public async Task<IActionResult> Logout([FromBody]UserAccess request){ 
             string json;
              SystemResponse response;
 
@@ -697,8 +709,51 @@ namespace Operators.Moddleware.Controllers {
                 return new JsonResult(response);
             }
 
+            user.IsLoggedin = false;
             var logedout = await _userService.UpdateUserAsync(user, false);
             if(logedout){
+                response = new() {
+                    ResponseCode =  (int)ResponseCode.SUCCESS,
+                    ResponseMessage = ResponseCode.SUCCESS.GetDescription(),
+                    ResponseDescription = $"User logged out successfully"
+                };
+            } else {
+                response = new() {
+                    ResponseCode =  (int)ResponseCode.FAILED,
+                    ResponseMessage = ResponseCode.FAILED.GetDescription(),
+                    ResponseDescription ="An error occurred, could signout user"
+                };
+            }
+
+            json = JsonConvert.SerializeObject(response);
+            _logger.LogToFile($"API RESPONSE : {json}", "MSG");
+            return new JsonResult(response);
+        }
+
+        [HttpPost("login")]
+        [Produces("application/json")]
+        public async Task<IActionResult> Login([FromBody]UserAccess request){ 
+            string json;
+             SystemResponse response;
+
+             //..get user posting the settings
+            long userId = request.UserId;
+            User user = await _userService.FindUserByIdAsync(userId, true);
+            if(user == null) { 
+                response = new() {
+                    ResponseCode =  (int)ResponseCode.NOTFOUND,
+                    ResponseMessage = ResponseCode.NOTFOUND.GetDescription(),
+                    ResponseDescription =   $"No User found with User ID '{request.UserId}'",
+                };
+
+                json = JsonConvert.SerializeObject(response);
+                _logger.LogToFile($"API RESPONSE : {json}", "MSG");
+                return new JsonResult(response);
+            }
+
+            user.IsLoggedin = true;
+            var logedin = await _userService.UpdateUserAsync(user, false);
+            if(logedin){
                 response = new() {
                     ResponseCode =  (int)ResponseCode.SUCCESS,
                     ResponseMessage = ResponseCode.SUCCESS.GetDescription(),

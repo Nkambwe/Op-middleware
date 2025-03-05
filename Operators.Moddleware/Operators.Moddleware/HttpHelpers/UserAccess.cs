@@ -2,7 +2,7 @@
 
 namespace Operators.Moddleware.HttpHelpers {
 
-    public class LogoutRequest {
+    public class UserAccess {
 
          [JsonPropertyName("userId")]
          public int UserId { get; set;}

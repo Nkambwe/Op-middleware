@@ -63,12 +63,12 @@ namespace Operators.Moddleware.Services.Access {
         }
 
         public async Task<bool> UpdateUserAsync(User user, bool includeDeleted) {
-            _logger.LogToFile($"Attepting to update user", "REPOSITORY");
+            _logger.LogToFile($"Attepting to update user", "USERS");
 
             using var _uow = _uowf.Create();
             var _repo = _uow.GetRepository<User>();
             if (!await _repo.ExistsAsync(u => u.Username == user.Username, includeDeleted)) {
-                _logger.LogToFile($"NOTFOUND : User '{user}' already exists", "USERS");
+                _logger.LogToFile($"NOTFOUND : User with username '{user.Username}' does not exists", "USERS");
                 throw new NotFoundException($"No user with Username '{user}' found");
             }
 
