@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Operators.Moddleware.Data.Entities;
 using Operators.Moddleware.Data.Entities.Access;
+using Operators.Moddleware.Data.Entities.Business;
 using Operators.Moddleware.Data.Entities.Settings;
 using Operators.Moddleware.Data.EntityConfigurations;
 
 namespace Operators.Moddleware.Data {
-    public class OpsDbContext : DbContext {
+    public class OpsDbContext(DbContextOptions<OpsDbContext> options) : DbContext(options) {
         public DbSet<Branch> Branches { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
@@ -14,9 +15,16 @@ namespace Operators.Moddleware.Data {
         public DbSet<Theme> Themes { get; set; }
         public DbSet<UserTheme> UserThemes { get; set; }
         public DbSet<ConfigurationParameter> Parameters { get; set; }
-        
-        public OpsDbContext(DbContextOptions<OpsDbContext> options)
-            : base(options) { }
+        public DbSet<District> Districts { get; set; }
+        public DbSet<Attachment> Attachments { get; set; }
+        public DbSet<BusinessContact> Contacts { get; set; }
+        public DbSet<BusinessIndustry> Industries { get; set; }
+        public DbSet<BusinessEmployer> Businesses { get; set; }
+        public DbSet<IndividualEmployer> Individuals { get; set; }
+        public DbSet<Driver> Drivers { get; set; }
+        public DbSet<DriverType> DriverTypes { get; set; }
+        public DbSet<Reference> References { get; set; }
+        public DbSet<Member> Members { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             BranchEntityConfiguration.Configure(modelBuilder.Entity<Branch>());
