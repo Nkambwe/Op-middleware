@@ -16,7 +16,7 @@ namespace Operators.Moddleware.Data.EntityConfigurations {
             entityBuilder.Property(i => i.PrimaryContact).HasColumnName("Phone1").HasMaxLength(20).IsFixedLength().IsRequired(false);
             entityBuilder.Property(i => i.SecondaryContact).HasColumnName("Phone2").HasMaxLength(20).IsFixedLength().IsRequired(false);
             entityBuilder.Property(i => i.ResidenceArea).HasColumnName("PhysicalAddress").IsRequired(false);
-            entityBuilder.Property(i => i.EmployerType).HasColumnName("Type").IsRequired(false);
+            entityBuilder.Property(i => i.EmployerType).HasColumnName("Type").IsRequired();
             entityBuilder.Property(i => i.Facebook).HasColumnName("Fbk").HasMaxLength(400).IsRequired(false);
             entityBuilder.Property(i => i.WhatsApp).HasColumnName("Wap").HasMaxLength(400).IsRequired(false);
             entityBuilder.Property(i => i.Tweeter).HasColumnName("Twr").HasMaxLength(400).IsRequired(false);

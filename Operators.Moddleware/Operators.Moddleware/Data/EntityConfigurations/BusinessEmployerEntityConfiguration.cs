@@ -13,7 +13,7 @@ namespace Operators.Moddleware.Data.EntityConfigurations {
             entityBuilder.Property(i => i.Address).HasMaxLength(200).HasColumnName("PhysicalAddress").IsRequired(false);
             entityBuilder.Property(i => i.City).HasColumnName("City").HasMaxLength(100).IsRequired(false);
             entityBuilder.Property(i => i.BusinessNumber).HasColumnName("Phone2").HasMaxLength(20).IsFixedLength().IsRequired(false);
-            entityBuilder.Property(i => i.EmployerType).HasColumnName("Type").IsRequired(false);
+            entityBuilder.Property(i => i.EmployerType).HasColumnName("Type").IsRequired();
             entityBuilder.Property(i => i.ContactId).HasColumnName("ContactId").IsRequired(false);
             entityBuilder.Property(i => i.IsActive).HasDefaultValue();
             entityBuilder.Property(i => i.IsDeleted).HasDefaultValue();
