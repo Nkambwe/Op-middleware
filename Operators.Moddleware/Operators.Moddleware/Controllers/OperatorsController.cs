@@ -14,20 +14,31 @@ namespace Operators.Moddleware.Controllers {
 
     [ApiController]
     [Route("middleware")]
-    public class OperatorsController(IMapper mapper, IBranchService branchService, IUserService userService,
-        IThemeService themeService, IUserThemeService userThemes, IPasswordService passwordService, 
-        IParameterService parameterService) :
-        ControllerBase {
+    public class OperatorsController :BaseController{
+ 
+        private readonly IPasswordService _passwordService;
+        private readonly IThemeService _themeService;
+        private readonly IUserThemeService _userThemes;
+        private readonly IServiceLogger _logger;
+        private readonly DecryptionHandler decrypter;
 
-        private readonly IMapper _mapper = mapper;
-        private readonly ServiceLogger _logger = new("Operations_log");
-        private DecryptionHandler decrypter;
-        private readonly IBranchService _branchService = branchService;
-        private readonly IUserService _userService = userService;
-        private readonly IPasswordService _passwordService = passwordService;
-        private readonly IParameterService _parameterService = parameterService;
-        private readonly IThemeService _themeService = themeService;
-        private readonly IUserThemeService _userThemes = userThemes;
+        public OperatorsController(IMapper mapper, 
+                                    IBranchService branches, 
+                                    IParameterService parameters, 
+                                    IUserService userService, 
+                                    IPasswordService passwordService,
+                                    IThemeService themeService,
+                                    IUserThemeService userThemes,
+                                    IServiceLogger logger) 
+                                    : base(mapper, branches, parameters, userService) {
+            _passwordService = passwordService;
+            _themeService = themeService;
+            _userThemes = userThemes;
+            _logger = logger;
+            _logger.Channel = $"[SYS-ACCESS {DateTime.Now:yyyyMMMdddHHmmss}]";
+            decrypter = new(_logger);
+
+        }
 
         [HttpPost("RetrieveUser")]
         [Produces("application/json")]
@@ -37,9 +48,9 @@ namespace Operators.Moddleware.Controllers {
             string response;
             try {
                 //..get this from settings
-                var includeDeleted = await _parameterService.GetBooleanParameterAsync("includeDeletedObjects");
+                var includeDeleted = await ParameterService.GetBooleanParameterAsync("includeDeletedObjects");
 
-                var user = await _userService.FindUsernameAsync(request.Username, includeDeleted);
+                var user = await UserService.FindUsernameAsync(request.Username, includeDeleted);
         
                
                 if (user == null) {
@@ -108,7 +119,7 @@ namespace Operators.Moddleware.Controllers {
                     return new JsonResult(userResp);
                 }
 
-                userResp = _mapper.Map<UserResponse>(user);
+                userResp = Mapper.Map<UserResponse>(user);
 
                 //get user theme
                 var theme = await _themeService.FindThemeAsync(t => t.Id == user.Theme.ThemeId);
@@ -121,19 +132,18 @@ namespace Operators.Moddleware.Controllers {
                 //get userpassword
                 var password = await _passwordService.GetPasswordAsync(user.CurrentPassword);
                 if (password != null) { 
-                    userResp.Data.ExpiresIn = ( await _parameterService.GetIntegerParameterAsync(ParameterName.PWD_NUMBEROFDAYSTOEXPIREY)) - (DateTime.Now - password.SetOn).Days;
+                    userResp.Data.ExpiresIn = ( await ParameterService.GetIntegerParameterAsync(ParameterName.PWD_NUMBEROFDAYSTOEXPIREY)) - (DateTime.Now - password.SetOn).Days;
                     userResp.Data.PasswordId = password.Id;
                     userResp.Data.Password = password.Password;
                 }
 
                 //check wether passwords are allowed to expire
-                userResp.Data.ExpirePasswords = await _parameterService.GetBooleanParameterAsync(ParameterName.PWD_USEEXIPRINGPASSWORDS);
+                userResp.Data.ExpirePasswords = await ParameterService.GetBooleanParameterAsync(ParameterName.PWD_USEEXIPRINGPASSWORDS);
                 
                 //..decrypt fields
                 if(decrypt != null && decrypt.Length > 0) { 
 
                     try{ 
-                        decrypter = new(_logger);
                         userResp.Data = decrypter.DecryptProperties(userResp.Data, request.Decrypt);
                     } catch(Exception ex){ 
                         string msg = $"{ex.Message}";
@@ -190,11 +200,11 @@ namespace Operators.Moddleware.Controllers {
             }
 
             //..include deleted variables
-            var includeDeleted = await _parameterService.GetBooleanParameterAsync("includeDeletedObjects");
+            var includeDeleted = await ParameterService.GetBooleanParameterAsync("includeDeletedObjects");
 
             //..get branch settings are attached to
             long branchId = request.BranchId == 0 ? 1 : request.BranchId;
-            Branch branch = await _branchService.FindBranchByIdAsync(branchId, includeDeleted);
+            Branch branch = await Branches.FindBranchByIdAsync(branchId, includeDeleted);
             if(branch == null) { 
                 settingResponse = new() {
                     ResponseCode =  (int)ResponseCode.NOTFOUND,
@@ -210,7 +220,7 @@ namespace Operators.Moddleware.Controllers {
 
             //..get user posting the settings
             long userId = request.UserId;
-            User user = await _userService.FindUserByIdAsync(userId, includeDeleted);
+            User user = await UserService.FindUserByIdAsync(userId, includeDeleted);
             if(user == null) { 
                 settingResponse = new() {
                     ResponseCode =  (int)ResponseCode.NOTFOUND,
@@ -231,7 +241,7 @@ namespace Operators.Moddleware.Controllers {
                           .ToList() ?? [];
 
             //..get all parameters in the database with these names
-            var configs = (await _parameterService.GetParametersAsync(p => paramnames.Contains(p.Parameter) && p.BranchId == branchId)).ToList();
+            var configs = (await ParameterService.GetParametersAsync(p => paramnames.Contains(p.Parameter) && p.BranchId == branchId)).ToList();
             if(configs.Count != 0) { 
                 _logger.LogToFile($"Updating the settings already in the database. A total of {configs.Count} found", "INFO");
                 //..update those found in the database
@@ -246,7 +256,7 @@ namespace Operators.Moddleware.Controllers {
                 }
 
                 //lets update these configurations
-               var isUpdated = await _parameterService.UpdateParametersAsync([.. configs]);
+               var isUpdated = await ParameterService.UpdateParametersAsync([.. configs]);
                 int toBeupdated = toUpdate.Count;
                 if(isUpdated){
                      _logger.LogToFile($"A total of {toBeupdated} settings of {configs.Count} updated", "INFO");
@@ -285,7 +295,7 @@ namespace Operators.Moddleware.Controllers {
 
                     //..if we get here, it means we have new ones to save
                     //..map the new objects to configuration parameters
-                    parameters = _mapper.Map<ConfigurationParameter[]>(newAttributes);
+                    parameters = Mapper.Map<ConfigurationParameter[]>(newAttributes);
                     foreach(var p in parameters){ 
                         p.CreatedBy = user.Username;
                         p.CreatedOn = DateTime.Now;
@@ -310,7 +320,7 @@ namespace Operators.Moddleware.Controllers {
             } else { 
                 //..if we are here, it means all settings are new
                 //..map new objects to configuration parameters
-                 parameters = _mapper.Map<ConfigurationParameter[]>(attributes);
+                 parameters = Mapper.Map<ConfigurationParameter[]>(attributes);
             }
 
             //..update records
@@ -328,7 +338,7 @@ namespace Operators.Moddleware.Controllers {
             json = JsonConvert.SerializeObject(parameters);
             _logger.LogToFile($"List of settings : {json}", "INFO");
 
-            var isSuccessful = await _parameterService.InsertParametersAsync(parameters);
+            var isSuccessful = await ParameterService.InsertParametersAsync(parameters);
             if(isSuccessful){
                 settingResponse = new() {
                     ResponseCode =  (int)ResponseCode.SUCCESS,
@@ -357,11 +367,11 @@ namespace Operators.Moddleware.Controllers {
 
             
             //..include deleted variables
-            var includeDeleted = await _parameterService.GetBooleanParameterAsync("includeDeletedObjects");
+            var includeDeleted = await ParameterService.GetBooleanParameterAsync("includeDeletedObjects");
 
              //..get branch settings are attached to
             long branchId = request.BranchId == 0 ? 1 : request.BranchId;
-            Branch branch = await _branchService.FindBranchByIdAsync(branchId, includeDeleted);
+            Branch branch = await Branches.FindBranchByIdAsync(branchId, includeDeleted);
             if(branch == null) { 
                 response = new() {
                     ResponseCode =  (int)ResponseCode.NOTFOUND,
@@ -377,7 +387,7 @@ namespace Operators.Moddleware.Controllers {
 
             //..get user posting the settings
             long userId = request.UserId;
-            User user = await _userService.FindUserByIdAsync(userId, includeDeleted);
+            User user = await UserService.FindUserByIdAsync(userId, includeDeleted);
             if(user == null) { 
                 response = new() {
                     ResponseCode =  (int)ResponseCode.NOTFOUND,
@@ -406,8 +416,8 @@ namespace Operators.Moddleware.Controllers {
             }
 
             //..get settings
-            var settings = await _parameterService.GetAllParametersAsync();
-            HttpHelpers.Attribute[] items = _mapper.Map<HttpHelpers.Attribute[]>(settings); 
+            var settings = await ParameterService.GetAllParametersAsync();
+            HttpHelpers.Attribute[] items = Mapper.Map<HttpHelpers.Attribute[]>(settings); 
             if(items == null || items.Length == 0){ 
                 items = [];    
             }
@@ -433,7 +443,7 @@ namespace Operators.Moddleware.Controllers {
 
              //..get user posting the settings
             long userId = request.UserId;
-            User user = await _userService.FindUserByIdAsync(userId, true);
+            User user = await UserService.FindUserByIdAsync(userId, true);
             if(user == null) { 
                 response = new() {
                     ResponseCode =  (int)ResponseCode.NOTFOUND,
@@ -496,7 +506,7 @@ namespace Operators.Moddleware.Controllers {
 
              //..get user posting the settings
             long userId = request.UserId;
-            User user = await _userService.FindUserByIdAsync(userId, true);
+            User user = await UserService.FindUserByIdAsync(userId, true);
             if(user == null) { 
                 response = new() {
                     ResponseCode =  (int)ResponseCode.NOTFOUND,
@@ -596,7 +606,7 @@ namespace Operators.Moddleware.Controllers {
 
              //..get user posting the settings
             long userId = request.UserId;
-            User user = await _userService.FindUserByIdAsync(userId, true);
+            User user = await UserService.FindUserByIdAsync(userId, true);
             if(user == null) { 
                 response = new() {
                     ResponseCode =  (int)ResponseCode.NOTFOUND,
@@ -696,7 +706,7 @@ namespace Operators.Moddleware.Controllers {
 
              //..get user posting the settings
             long userId = request.UserId;
-            User user = await _userService.FindUserByIdAsync(userId, true);
+            User user = await UserService.FindUserByIdAsync(userId, true);
             if(user == null) { 
                 response = new() {
                     ResponseCode =  (int)ResponseCode.NOTFOUND,
@@ -710,7 +720,7 @@ namespace Operators.Moddleware.Controllers {
             }
 
             user.IsLoggedin = false;
-            var logedout = await _userService.UpdateUserAsync(user, false);
+            var logedout = await UserService.UpdateUserAsync(user, false);
             if(logedout){
                 response = new() {
                     ResponseCode =  (int)ResponseCode.SUCCESS,
@@ -738,7 +748,7 @@ namespace Operators.Moddleware.Controllers {
 
              //..get user posting the settings
             long userId = request.UserId;
-            User user = await _userService.FindUserByIdAsync(userId, true);
+            User user = await UserService.FindUserByIdAsync(userId, true);
             if(user == null) { 
                 response = new() {
                     ResponseCode =  (int)ResponseCode.NOTFOUND,
@@ -752,7 +762,7 @@ namespace Operators.Moddleware.Controllers {
             }
 
             user.IsLoggedin = true;
-            var logedin = await _userService.UpdateUserAsync(user, false);
+            var logedin = await UserService.UpdateUserAsync(user, false);
             if(logedin){
                 response = new() {
                     ResponseCode =  (int)ResponseCode.SUCCESS,

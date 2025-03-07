@@ -7,12 +7,24 @@
       "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\controllers\\drivercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\controllers\\operatorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\controllers\\operatorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\controllers\\employercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\controllers\\employercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\extensions\\servicecollectionextesnion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\extensions\\servicecollectionextesnion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\controllers\\membercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\controllers\\membercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\controllers\\operatorscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\controllers\\operatorscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\controllers\\systemcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\controllers\\systemcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\controllers\\basecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\controllers\\basecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\data\\entities\\business\\driver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -26,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 177,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Bookmark",
@@ -50,41 +62,80 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "EmployerController.cs",
+              "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Controllers\\EmployerController.cs",
+              "RelativeDocumentMoniker": "Operators.Moddleware\\Controllers\\EmployerController.cs",
+              "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Controllers\\EmployerController.cs",
+              "RelativeToolTip": "Operators.Moddleware\\Controllers\\EmployerController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-07T15:55:42.355Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "OperatorsController.cs",
+              "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Controllers\\OperatorsController.cs",
+              "RelativeDocumentMoniker": "Operators.Moddleware\\Controllers\\OperatorsController.cs",
+              "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Controllers\\OperatorsController.cs",
+              "RelativeToolTip": "Operators.Moddleware\\Controllers\\OperatorsController.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAABoAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-07T15:54:02.69Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "SystemController.cs",
+              "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Controllers\\SystemController.cs",
+              "RelativeDocumentMoniker": "Operators.Moddleware\\Controllers\\SystemController.cs",
+              "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Controllers\\SystemController.cs",
+              "RelativeToolTip": "Operators.Moddleware\\Controllers\\SystemController.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAACEAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-07T15:44:41.908Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MemberController.cs",
+              "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Controllers\\MemberController.cs",
+              "RelativeDocumentMoniker": "Operators.Moddleware\\Controllers\\MemberController.cs",
+              "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Controllers\\MemberController.cs",
+              "RelativeToolTip": "Operators.Moddleware\\Controllers\\MemberController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-07T15:40:02.06Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "DriverController.cs",
               "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Controllers\\DriverController.cs",
               "RelativeDocumentMoniker": "Operators.Moddleware\\Controllers\\DriverController.cs",
               "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Controllers\\DriverController.cs",
               "RelativeToolTip": "Operators.Moddleware\\Controllers\\DriverController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-07T01:15:54.224Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "OperatorController.cs",
-              "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Controllers\\OperatorController.cs",
-              "RelativeDocumentMoniker": "Operators.Moddleware\\Controllers\\OperatorController.cs",
-              "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Controllers\\OperatorController.cs",
-              "RelativeToolTip": "Operators.Moddleware\\Controllers\\OperatorController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "BaseController.cs",
+              "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Controllers\\BaseController.cs",
+              "RelativeDocumentMoniker": "Operators.Moddleware\\Controllers\\BaseController.cs",
+              "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Controllers\\BaseController.cs",
+              "RelativeToolTip": "Operators.Moddleware\\Controllers\\BaseController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-07T01:14:56.1Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ServiceCollectionExtesnion.cs",
-              "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Extensions\\ServiceCollectionExtesnion.cs",
-              "RelativeDocumentMoniker": "Operators.Moddleware\\Extensions\\ServiceCollectionExtesnion.cs",
-              "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Extensions\\ServiceCollectionExtesnion.cs",
-              "RelativeToolTip": "Operators.Moddleware\\Extensions\\ServiceCollectionExtesnion.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABQAAABGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-07T00:53:39.295Z",
               "EditorCaption": ""
             }
           ]
@@ -110,7 +161,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "Driver.cs",
               "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Data\\Entities\\Business\\Driver.cs",
               "RelativeDocumentMoniker": "Operators.Moddleware\\Data\\Entities\\Business\\Driver.cs",
