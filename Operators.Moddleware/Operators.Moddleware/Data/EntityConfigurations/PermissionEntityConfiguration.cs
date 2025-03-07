@@ -8,8 +8,8 @@ namespace Operators.Moddleware.Data.EntityConfigurations {
             entityBuilder.HasKey(t => t.Id);
             entityBuilder.Property(t => t.PermissionName).HasMaxLength(250).IsRequired();
             entityBuilder.Property(t => t.Description).HasMaxLength(250).IsRequired();
-            entityBuilder.Property(t => t.IsActive).HasDefaultValue(false);
-            entityBuilder.Property(t => t.IsDeleted).HasDefaultValue(false);
+            entityBuilder.Property(t => t.IsActive).HasDefaultValue();
+            entityBuilder.Property(t => t.IsDeleted).HasDefaultValue();
             entityBuilder.Property(t => t.CreatedOn).IsRequired();
             entityBuilder.Property(t => t.CreatedBy).HasMaxLength(10).IsFixedLength().IsRequired();
             entityBuilder.Property(t => t.LastModifiedOn).IsRequired(false);

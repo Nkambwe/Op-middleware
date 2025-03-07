@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Operators.Moddleware")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+98b2361512b4b005428241d69b9afbafa93cf43c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+42cc489a4bc183c179eebf5803c233dab29f08f0")]
 [assembly: System.Reflection.AssemblyProductAttribute("Operators.Moddleware")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Operators.Moddleware")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
