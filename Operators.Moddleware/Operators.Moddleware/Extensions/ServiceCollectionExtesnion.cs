@@ -3,6 +3,7 @@ using Operators.Moddleware.Services.Access;
 using Operators.Moddleware.Services;
 using Operators.Moddleware.Services.Settings;
 using Operators.Moddleware.Data.Transactions;
+using Operators.Moddleware.Services.Business;
 
 namespace Operators.Moddleware.Extensions {
 
@@ -12,6 +13,7 @@ namespace Operators.Moddleware.Extensions {
             
             //..register services
             services.AddScoped<IBranchService, BranchService>();
+            services.AddScoped<IDistrictService, DistrictService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IPermissionService, PermissionService>();
@@ -19,7 +21,18 @@ namespace Operators.Moddleware.Extensions {
             services.AddScoped<IParameterService, ParameterService>();
             services.AddScoped<IThemeService, ThemeService>();
             services.AddScoped<IUserThemeService, UserThemeService>();
-
+            services.AddScoped<IAttachmentService, AttachmentService>();
+            services.AddScoped<IAttachmentTypeService, AttachmentTypeService>();
+            services.AddScoped<IBusinessContactService, BusinessContactService>();
+            services.AddScoped<IBusinessEmployerService, BusinessEmployerService>();
+            services.AddScoped<IBusinessIndustryService, BusinessIndustryService>();
+            services.AddScoped<IDriverService, DriverService>();
+            services.AddScoped<IDriverTypeService, DriverTypeService>();
+            services.AddScoped<IEmployerTypeService, EmployerTypeService>();
+            services.AddScoped<IIndividualEmployerService, IndividualEmployerService>();
+            services.AddScoped<IMemberService, MemberService>();
+            services.AddScoped<IReferenceService, ReferenceService>();
+            
         }
 
         /// <summary>

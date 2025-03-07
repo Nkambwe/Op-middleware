@@ -49,7 +49,7 @@ namespace Operators.Moddleware.Data.Entities.Business {
         public string Tweeter { get; set; }
         
         [Column(Order = 14)]
-        public long? DriverTypeId { get; set; }
+        public long DriverTypeId { get; set; }
         
         [Column(Order = 15)]
         public long? MemberId { get; set; }

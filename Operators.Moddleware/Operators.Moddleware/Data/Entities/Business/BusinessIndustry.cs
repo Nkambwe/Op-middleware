@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Operators.Moddleware.Data.Entities.Business {
 
-    public class BusinessIndustry {
+    public class BusinessIndustry: DomainEntity {
 
         [Column(Order = 1)]
         public string IndustryName { get; set; }

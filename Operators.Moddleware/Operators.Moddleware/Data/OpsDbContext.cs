@@ -15,6 +15,7 @@ namespace Operators.Moddleware.Data {
         public DbSet<Theme> Themes { get; set; }
         public DbSet<UserTheme> UserThemes { get; set; }
         public DbSet<ConfigurationParameter> Parameters { get; set; }
+
         public DbSet<District> Districts { get; set; }
         public DbSet<Attachment> Attachments { get; set; }
         public DbSet<BusinessContact> Contacts { get; set; }
@@ -35,6 +36,17 @@ namespace Operators.Moddleware.Data {
             ThemeEntityConfiguration.Configure(modelBuilder.Entity<Theme>());
             UserThemeEntityConfiguration.Configure(modelBuilder.Entity<UserTheme>());
             ParameterEntityConfiguration.Configure(modelBuilder.Entity<ConfigurationParameter>());
+            DistrictEntityConfiguration.Configure(modelBuilder.Entity<District>());
+            AttachmentEntityConfiguration.Configure(modelBuilder.Entity<Attachment>());
+            BusinessContactEntityConfiguration.Configure(modelBuilder.Entity<BusinessContact>());
+            BusinessIndustryEntityConfiguration.Configure(modelBuilder.Entity<BusinessIndustry>());
+            BusinessEmployerEntityConfiguration.Configure(modelBuilder.Entity<BusinessEmployer>());
+            IndividualEmployerEntityConfiguration.Configure(modelBuilder.Entity<IndividualEmployer>());
+            DriverEntityConfiguration.Configure(modelBuilder.Entity<Driver>());
+            DriverTypeEntityConfiguration.Configure(modelBuilder.Entity<DriverType>());
+            ReferenceEntityConfiguration.Configure(modelBuilder.Entity<Reference>());
+            MemberEntityConfiguration.Configure(modelBuilder.Entity<Member>());
+
             base.OnModelCreating(modelBuilder);
         }
 

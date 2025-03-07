@@ -21,16 +21,15 @@ namespace Operators.Moddleware.Data.Entities.Business {
         public string Email { get; set; }
 
         [Column(Order = 5)]
-        public string PrimaryLine { get; set; }
+        public string PrimaryContact { get; set; }
 
         [Column(Order = 6)]
-        public string SecondaryLine { get; set; }
-
+        public string SecondaryContact { get; set; }
         
         [Column(Order = 7)]
-        public long? BusinessEmployerId { get; set; }
+        public long? EmployerId { get; set; }
 
-        public virtual BusinessEmployer BusinessEmployer { get; set; }
+        public virtual BusinessEmployer Employer { get; set; }
 
         public override string ToString() => $"{FirstName} {(!string.IsNullOrWhiteSpace(MiddleName) ? MiddleName : "")} {LastName}";
         public override int GetHashCode() => ToString().GetHashCode()^3;

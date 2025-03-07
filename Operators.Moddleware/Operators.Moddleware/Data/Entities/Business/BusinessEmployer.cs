@@ -24,9 +24,10 @@ namespace Operators.Moddleware.Data.Entities.Business {
         public EmployerType EmployerType { get; set; }
 
         [Column(Order = 6)]
-        public long? BusinessContactId { get; set; }
+        public long? ContactId { get; set; }
 
         public virtual BusinessIndustry Industry {get;set;}
+        public virtual BusinessContact Contact { get; set; }
 
         public override string ToString() => $"{BusinessName}";
         public override int GetHashCode() => ToString().GetHashCode()^3;

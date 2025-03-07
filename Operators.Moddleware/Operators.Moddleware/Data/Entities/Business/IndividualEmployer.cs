@@ -6,11 +6,9 @@ namespace Operators.Moddleware.Data.Entities.Business {
         
         [Column(Order = 1)]
         public string FirstName { get; set; }
-
         
         [Column(Order = 2)]
         public string MiddleName { get; set; }
-
         
         [Column(Order = 3)]
         public string LastName { get; set; }

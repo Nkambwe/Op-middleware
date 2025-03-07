@@ -4,7 +4,9 @@ using Operators.Moddleware.Data.Entities.Access;
 using Operators.Moddleware.Data.Entities.Settings;
 
 namespace Operators.Moddleware.Data.EntityConfigurations {
+
     public class UserEntityConfiguration {
+
         public static void Configure(EntityTypeBuilder<User> entityBuilder) {
             entityBuilder.HasKey(t => t.Id);
             entityBuilder.Property(t => t.RoleId);
@@ -61,5 +63,7 @@ namespace Operators.Moddleware.Data.EntityConfigurations {
                         j.ToTable("UserPermissions");
                     });
         }
+
     }
+
 }
