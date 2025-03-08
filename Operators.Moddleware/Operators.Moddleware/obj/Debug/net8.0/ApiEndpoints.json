@@ -1,5 +1,21 @@
 [
   {
+    "ContainingType": "Operators.Moddleware.Controllers.DriverController",
+    "Method": "GetAllMembers",
+    "RelativePath": "getAllMembers",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Operators.Moddleware.HttpHelpers.ApplyRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Operators.Moddleware.Controllers.OperatorsController",
     "Method": "GetAllSettings",
     "RelativePath": "middleware/getAllSettings",
