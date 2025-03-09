@@ -54,8 +54,7 @@
               "RelativeToolTip": "Operators.Moddleware\\Services\\Access\\UserService.cs",
               "ViewState": "AgIAAB4AAAAAAAAAAAAiwAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-08T00:37:59.356Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-08T00:37:59.356Z"
             },
             {
               "$type": "Document",
@@ -67,8 +66,7 @@
               "RelativeToolTip": "Operators.Moddleware\\HttpHelpers\\UserRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-08T00:37:43.216Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-08T00:37:43.216Z"
             },
             {
               "$type": "Document",
@@ -78,7 +76,7 @@
               "RelativeDocumentMoniker": "Operators.Moddleware\\Controllers\\OperatorsController.cs",
               "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Controllers\\OperatorsController.cs",
               "RelativeToolTip": "Operators.Moddleware\\Controllers\\OperatorsController.cs",
-              "ViewState": "AgIAAIwAAAAAAAAAAAAIwKEAAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAANcAAAAAAAAAAAAowA4AAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-08T00:24:05.296Z",
               "EditorCaption": ""

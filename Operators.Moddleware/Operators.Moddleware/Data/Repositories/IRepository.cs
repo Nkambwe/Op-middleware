@@ -3,20 +3,50 @@ using System.Linq.Expressions;
 
 namespace Operators.Moddleware.Data.Repositories {
     public interface IRepository<T> where T : DomainEntity {
+		/// <summary>
+		/// Get entity by Id. Check whether to returned deleted entities <see cref="IDelete"/>
+		/// </summary>
+		/// <param name="id">Entity ID</param>
+		/// <param name="includeDeleted">Flag to check whether to returned deleted entities</param>
+		/// <returns>Entity with defined Id</returns>
         T Get(long id, bool includeDeleted = false);
+		/// <summary>
+		/// Get entity by Id. Check whether to returned deleted entities <see cref="IDelete"/>
+		/// </summary>
+		/// <param name="id">Entity ID</param>
+		/// <param name="includeDeleted">Flag to check whether to returned deleted entities</param>
+		/// <returns>Task containing entity with defined Id</returns>
         Task<T> GetAsync(long id, bool includeDeleted = false);
-        T Get(Expression<Func<T, bool>> expression, bool includeDeleted = false);
-        T Get(Expression<Func<T, bool>> predicate, bool includeDeleted = false, params Expression<Func<T, object>>[] filters);
-        Task<T> GetAsync(Expression<Func<T, bool>> expression, bool includeDeleted = false);
+		/// <summary>
+		/// Get entity the fits predicate. Check whether to returned deleted entities <see cref="IDelete"/>
+		/// </summary>
+		/// <param name="where">Search Predicate</param>
+		/// <param name="includeDeleted">Flag to check whether to returned deleted entities</param>
+		/// <returns>Entity that fits predicate</returns>
+        T Get(Expression<Func<T, bool>> where, bool includeDeleted = false);
+        /// <summary>
+		/// Get entity the fits predicate. Check whether to returned deleted entities <see cref="IDelete"/>
+		/// </summary>
+		/// <param name="where">Search Predicate</param>
+		/// <param name="includeDeleted">Flag to check whether to returned deleted entities</param>
+		/// <returns>Entity that fits predicate</returns>
+		T Get(Expression<Func<T, bool>> where, bool includeDeleted = false, params Expression<Func<T, object>>[] filters);
+        /// <summary>
+		/// Get entity the fits predicate. Check whether to returned deleted entities <see cref="IDelete"/>
+		/// </summary>
+		/// <param name="where">Search Predicate</param>
+		/// <param name="includeDeleted">Flag to check whether to returned deleted entities</param>
+		/// <returns>Entity that fits predicate</returns>
+		Task<T> GetAsync(Expression<Func<T, bool>> where, bool includeDeleted = false);
         /// <summary>
         /// Asynchronous search for an entity that fits predicate with related entities. Option to check if it can be marked as deleted
         /// </summary>
-        /// <param name="predicate"></param>
+        /// <param name="where"></param>
         /// <param name="includeDeleted"></param>
         /// <param name="filters"></param>
         /// <remarks>Usage var entity = await GetAsync(e => e.Id == 1, includeDeleted: false, x => x.RelatedEntity, x => x.AnotherEntity);</remarks>
         /// <returns></returns>
-        Task<T> GetAsync(Expression<Func<T, bool>> predicate, bool includeDeleted = false, params Expression<Func<T, object>>[] filters);
+        Task<T> GetAsync(Expression<Func<T, bool>> where, bool includeDeleted = false, params Expression<Func<T, object>>[] filters);
 
         /// <summary>
         /// Get a list of all entities. Option to check if entities can be marked as deleted
