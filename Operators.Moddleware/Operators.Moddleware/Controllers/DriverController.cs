@@ -11,6 +11,7 @@ using Operators.Moddleware.Services;
 using Operators.Moddleware.Services.Access;
 using Operators.Moddleware.Services.Business;
 using Operators.Moddleware.Services.Settings;
+using System.Linq;
 
 namespace Operators.Moddleware.Controllers {
 
@@ -43,7 +44,7 @@ namespace Operators.Moddleware.Controllers {
         [HttpPost("getAllDrivers")]
         [Produces("application/json")]
         public async Task<IActionResult> GetAllDrivers([FromBody] ApplyRequest request) {
-            SystemResponse<List<Driver>> response;
+            PagedResponse<List<DriverDto>> response;
             string json;
             try {
                 // Get user posting the settings
@@ -62,33 +63,23 @@ namespace Operators.Moddleware.Controllers {
                     return new JsonResult(response);
                 }
 
-                // Apply pagination
-                int pageNumber = request.Page > 0 ? request.Page : 1;
-                int pageSize = request.PageSize > 0 ? request.PageSize : 10;
-                int skip = (pageNumber - 1) * pageSize;
-
                 // Get paginated results with total count
-                var result = await _drivers.PageAllAsync(
-                    skip, 
-                    pageSize, 
-                    request.IncludeDeleted,
-                    m => m.IsActive);
-            
+                var result = await _drivers.PageAllAsync(request.Page, request.PageSize, request.IncludeDeleted, m => m.IsActive); 
                 var records = result.Entities.ToList();
                 int totalCount = result.Count;
         
                 // Decrypt columns required
+                List<DriverDto> drivers = new();
                 string[] decrypt = request.Decrypt;
                 if (decrypt != null && decrypt.Length > 0) {
-                    try
-                    {
+                    try {
                         records = decrypter.DecryptProperties(records, request.Decrypt);
-                    }
-                    catch (Exception ex)
-                    {
+                        if(records.Count > 0) {
+                            drivers.AddRange(from d in records select Mapper.Map<DriverDto>(d));
+                        }
+                    } catch (Exception ex) {
                         string msg = $"{ex.Message}";
-                        response = new()
-                        {
+                        response = new() {
                             ResponseCode = (int)ResponseCode.SERVERERROR,
                             ResponseMessage = msg,
                             ResponseDescription = "Oops! Something went wrong"
@@ -101,13 +92,13 @@ namespace Operators.Moddleware.Controllers {
                 response = new() {
                     ResponseCode = (int)ResponseCode.SUCCESS,
                     ResponseMessage = ResponseCode.SUCCESS.GetDescription(),
-                    ResponseDescription = "Members retrieved successfully",
-                    Data = records,
+                    ResponseDescription = "Drivers retrieved successfully",
+                    Data = drivers,
                     Meta = new Meta {
                         TotalCount = totalCount,
-                        PageSize = pageSize,
-                        CurrentPage = pageNumber,
-                        TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize)
+                        PageSize = request.PageSize,
+                        CurrentPage = request.Page,
+                        TotalPages = (int)Math.Ceiling(totalCount / (double)request.PageSize)
                     }
                 };
         

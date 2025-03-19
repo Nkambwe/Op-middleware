@@ -10,16 +10,17 @@ namespace Operators.Moddleware.HttpHelpers {
         [JsonPropertyName("ipAddress")]
         public string IPAddress { get; set;}
 
-        [JsonPropertyName("decrypt")]
-        public string[] Decrypt { get; set; }
-
-        [JsonPropertyName("page")]
+        [JsonPropertyName("pageNumber")]
         public int Page {get;set;}
         
-        [JsonPropertyName("size")]
+        [JsonPropertyName("pageSize")]
         public int PageSize {get;set;}
 
         [JsonPropertyName("includeDeleted")]
         public bool IncludeDeleted {get; set;}
+        
+        [JsonPropertyName("decrypt")]
+        public string[] Decrypt { get; set; }
+
     }
 }

@@ -15,8 +15,6 @@ namespace Operators.Moddleware.HttpHelpers {
         [JsonPropertyName("data")]
         public T Data { get; set; }
 
-        [JsonPropertyName("meta")]
-        public Meta Meta { get; set; }
     }
 
 }

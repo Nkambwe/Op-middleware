@@ -1,5 +1,6 @@
 ﻿
 namespace Operators.Moddleware.Helpers {
+
     public class DecryptionHandler {
 
         private readonly IServiceLogger _logger;
@@ -8,6 +9,12 @@ namespace Operators.Moddleware.Helpers {
             _logger = logger;
             _logger.Channel = $"[SECURE {DateTime.Now:yyyyMMMdddHHmmss}]";
         }
+
+        public List<T> DecryptProperties<T>(List<T> entities, string[] propertiesToDecrypt) where T : class  {
+            List<T> result = [];
+            result.AddRange(from T e in entities select DecryptProperties(e, propertiesToDecrypt));
+            return result;
+        } 
 
         public T DecryptProperties<T>(T entity, string[] propertiesToDecrypt) where T : class {
 

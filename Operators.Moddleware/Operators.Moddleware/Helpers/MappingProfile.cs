@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Operators.Moddleware.Data.Entities;
 using Operators.Moddleware.Data.Entities.Access;
+using Operators.Moddleware.Data.Entities.Business;
 using Operators.Moddleware.Data.Entities.Settings;
 using Operators.Moddleware.HttpHelpers;
 using System.Globalization;
@@ -141,7 +142,32 @@ namespace Operators.Moddleware.Helpers {
                 .ForMember(dest => dest.Identifier, opt => opt.MapFrom(src => src.Identifier))
                 .ForMember(dest => dest.ParameterName, opt => opt.MapFrom(src => src.Parameter))
                 .ForMember(dest => dest.ParameterValue, opt => opt.MapFrom(src => src.ParameterValue));
-        }
+        
+            CreateMap<Driver, DriverDto>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(o => o.Id))
+                .ForMember(dest => dest.FirstName, opt => opt.MapFrom(o => (o.FirstName ?? string.Empty).Trim()))
+                .ForMember(dest => dest.MiddleName, opt => opt.MapFrom(o => (o.MiddleName ?? string.Empty).Trim()))
+                .ForMember(dest => dest.SurName, opt => opt.MapFrom(o => (o.LastName ?? string.Empty).Trim()))
+                .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(o => o.DateOfBirth))
+                .ForMember(dest => dest.ResidentialDistrictId, opt => opt.MapFrom(o => o.ResidenceDistrictId))
+                .ForMember(dest => dest.DistrictOfOriginId, opt => opt.MapFrom(o => o.DistrictId))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(o => (o.Email ?? string.Empty).Trim()))
+                .ForMember(dest => dest.PrimaryContact, opt => opt.MapFrom(o => (o.PrimaryContact ?? string.Empty).Trim()))
+                .ForMember(dest => dest.AlternativeContact, opt => opt.MapFrom(o => (o.SecondaryContact ?? string.Empty).Trim()))
+                .ForMember(dest => dest.Experience, opt => opt.MapFrom(o => o.YearsOfExperience))
+                .ForMember(dest => dest.WhatsApp, opt => opt.MapFrom(o => (o.WhatsApp ?? string.Empty).Trim()))
+                .ForMember(dest => dest.Facebook, opt => opt.MapFrom(o => (o.Facebook ?? string.Empty).Trim()))
+                .ForMember(dest => dest.Tweeter, opt => opt.MapFrom(o => (o.Tweeter ?? string.Empty).Trim()))
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(o => o.ToString()))
+                .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(o => o.DriverTypeId))
+                .ForMember(dest => dest.IsActive, opt => opt.MapFrom(o => o.IsActive))
+                .ForMember(dest => dest.IsDeleted, opt => opt.MapFrom(o => o.IsDeleted))
+                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(o => (o.CreatedBy ?? string.Empty).Trim()))
+                .ForMember(dest => dest.CreatedOn, opt => opt.MapFrom(o => o.CreatedOn))
+                .ForMember(dest => dest.ModifiedBy, opt => opt.MapFrom(o => (o.LastModifiedBy ?? string.Empty).Trim()))
+                .ForMember(dest => dest.ModifiedOn, opt => opt.MapFrom(o => o.LastModifiedBy));
+
+            }
 
         private string ConvertParameterValue(object value) {
             if (value == null)
