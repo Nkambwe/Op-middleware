@@ -23,8 +23,8 @@ namespace Operators.Moddleware.Data.EntityConfigurations {
             entityBuilder.Property(i => i.ResidenceDistrictId).HasColumnName("HomeAreaId").IsRequired(false);
             entityBuilder.Property(i => i.DistrictId).HasColumnName("WorkAreaId").IsRequired(false);
             entityBuilder.Property(i => i.BusinessContactId).HasColumnName("ContactId").IsRequired(false);
-            entityBuilder.Property(i => i.IsActive).HasDefaultValue();
-            entityBuilder.Property(i => i.IsDeleted).HasDefaultValue();
+            entityBuilder.Property(i => i.IsActive).HasDefaultValue(true);
+            entityBuilder.Property(i => i.IsDeleted).HasDefaultValue(false);
             entityBuilder.Property(i => i.CreatedOn).IsRequired();
             entityBuilder.Property(i => i.CreatedBy).HasMaxLength(250).IsFixedLength().IsRequired();
             entityBuilder.Property(i => i.LastModifiedOn).IsRequired(false);

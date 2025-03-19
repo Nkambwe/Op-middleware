@@ -45,13 +45,13 @@ namespace Operators.Moddleware.Data.Entities.Business {
         [Column(Order = 12)]
         public string WhatsApp { get; set; }
 
-        [Column(Order = 13)]
+        [Column(Order = 14)]
         public string Tweeter { get; set; }
         
-        [Column(Order = 14)]
+        [Column(Order = 15)]
         public long DriverTypeId { get; set; }
         
-        [Column(Order = 15)]
+        [Column(Order = 16)]
         public long? MemberId { get; set; }
 
         public virtual DriverType DriverType {get;set;}

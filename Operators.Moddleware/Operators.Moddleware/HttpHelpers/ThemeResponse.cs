@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 
 namespace Operators.Moddleware.HttpHelpers {
-    public class ThemeResponse : SystemResponse {
+    public class ThemeResponse<T> : SystemResponse<T> {
 
         [JsonPropertyName("id")]
         public long Id { get; set;}

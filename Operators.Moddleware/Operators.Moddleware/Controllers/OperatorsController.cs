@@ -43,7 +43,7 @@ namespace Operators.Moddleware.Controllers {
         [HttpPost("RetrieveUser")]
         [Produces("application/json")]
         public async Task<IActionResult> RetrieveUser([FromBody]UserRequest request) {
-            UserResponse userResp;
+            UserResponse<UserData> userResp;
             string[] decrypt = request.Decrypt; 
             string response;
             try {
@@ -54,7 +54,7 @@ namespace Operators.Moddleware.Controllers {
         
                
                 if (user == null) {
-                    userResp = new UserResponse() {
+                    userResp = new UserResponse<UserData> () {
                         ResponseCode =  (int)ResponseCode.NOTFOUND,
                         ResponseMessage = ResponseCode.NOTFOUND.GetDescription(),
                         ResponseDescription =   "Username does not exist",
@@ -68,7 +68,7 @@ namespace Operators.Moddleware.Controllers {
 
                 //..check if user is logged in 
                 if(user.IsLoggedin){ 
-                    userResp = new UserResponse() {
+                    userResp = new UserResponse<UserData> () {
                         ResponseCode =  (int)ResponseCode.FORBIDDEN,
                         ResponseMessage = "Account already logged in",
                         ResponseDescription = ResponseCode.FORBIDDEN.GetDescription(),
@@ -81,7 +81,7 @@ namespace Operators.Moddleware.Controllers {
                 }
 
                 if (!user.IsActive) {
-                    userResp = new UserResponse() {
+                    userResp = new UserResponse<UserData>() {
                         ResponseCode =  (int)ResponseCode.FORBIDDEN,
                         ResponseMessage = ResponseCode.FORBIDDEN.GetDescription(),
                         ResponseDescription =   $"User account with username '{request.Username}' is deactivated",
@@ -94,7 +94,7 @@ namespace Operators.Moddleware.Controllers {
                 }
 
                 if (!user.IsVerified) {
-                    userResp = new UserResponse() {
+                    userResp = new UserResponse<UserData>() {
                         ResponseCode =  (int)ResponseCode.FORBIDDEN,
                         ResponseMessage = ResponseCode.FORBIDDEN.GetDescription(),
                         ResponseDescription =  $"User account with username '{request.Username}' is not verified",
@@ -107,7 +107,7 @@ namespace Operators.Moddleware.Controllers {
                 }
 
                 if (user.IsDeleted) {
-                    userResp = new UserResponse() {
+                    userResp = new UserResponse<UserData>() {
                         ResponseCode =  (int)ResponseCode.FORBIDDEN,
                         ResponseMessage = ResponseCode.FORBIDDEN.GetDescription(),
                         ResponseDescription =  $"User account with username '{request.Username}' is deleted",
@@ -119,7 +119,7 @@ namespace Operators.Moddleware.Controllers {
                     return new JsonResult(userResp);
                 }
 
-                userResp = Mapper.Map<UserResponse>(user);
+                userResp = Mapper.Map<UserResponse<UserData>>(user);
 
                 //get user theme
                 var theme = await _themeService.FindThemeAsync(t => t.Id == user.Theme.ThemeId);
@@ -147,7 +147,7 @@ namespace Operators.Moddleware.Controllers {
                         userResp.Data = decrypter.DecryptProperties(userResp.Data, request.Decrypt);
                     } catch(Exception ex){ 
                         string msg = $"{ex.Message}";
-                        userResp = new UserResponse() {
+                        userResp = new UserResponse<UserData>() {
                             ResponseCode =  (int)ResponseCode.SERVERERROR,
                             ResponseMessage = msg,
                             ResponseDescription = ResponseCode.SERVERERROR.GetDescription(),
@@ -164,7 +164,7 @@ namespace Operators.Moddleware.Controllers {
                 _logger.LogToFile(msg, "ERROR");
                 _logger.LogToFile($"{ex.StackTrace}", "STACKTRACE");
         
-                userResp = new UserResponse() {
+                userResp = new UserResponse<UserData>() {
                     ResponseCode =  (int)ResponseCode.SERVERERROR,
                     ResponseMessage = msg,
                     ResponseDescription = ResponseCode.SERVERERROR.GetDescription(),
@@ -181,7 +181,7 @@ namespace Operators.Moddleware.Controllers {
         [HttpPost("SaveConfigurations")]
         [Produces("application/json")]
         public async Task<IActionResult> SaveConfigurations([FromBody]SettingsRequest request) { 
-            SystemResponse settingResponse;
+            SystemResponse<UserData> settingResponse;
             string json;
 
             //..make sure you have settings to save
@@ -438,7 +438,7 @@ namespace Operators.Moddleware.Controllers {
         [HttpPost("getTheme")]
         [Produces("application/json")]
         public async Task<IActionResult> GetTheme([FromBody]ThemeRequest request){ 
-            ThemeResponse response;
+            ThemeResponse<Theme> response;
             string json;
 
              //..get user posting the settings
@@ -501,7 +501,7 @@ namespace Operators.Moddleware.Controllers {
         [HttpPost("setThemeColor")]
         [Produces("application/json")]
         public async Task<IActionResult> SetThemeColor([FromBody]ThemeNameRequest request){ 
-            SystemResponse response;
+            SystemResponse<UserData> response;
             string json;
 
              //..get user posting the settings
@@ -601,7 +601,7 @@ namespace Operators.Moddleware.Controllers {
         [HttpPost("setThemeName")]
         [Produces("application/json")]
         public async Task<IActionResult> SetThemeName([FromBody]ThemeNameRequest request){ 
-            SystemResponse response;
+            SystemResponse<UserData> response;
             string json;
 
              //..get user posting the settings
@@ -702,7 +702,7 @@ namespace Operators.Moddleware.Controllers {
         [Produces("application/json")]
         public async Task<IActionResult> Logout([FromBody]UserAccess request){ 
             string json;
-             SystemResponse response;
+             SystemResponse<UserData> response;
 
              //..get user posting the settings
             long userId = request.UserId;
@@ -744,7 +744,7 @@ namespace Operators.Moddleware.Controllers {
         [Produces("application/json")]
         public async Task<IActionResult> Login([FromBody]UserAccess request){ 
             string json;
-             SystemResponse response;
+             SystemResponse<UserData> response;
 
              //..get user posting the settings
             long userId = request.UserId;

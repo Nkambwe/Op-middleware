@@ -2,7 +2,7 @@
 
 namespace Operators.Moddleware.HttpHelpers {
 
-    public class SystemResponse {
+    public class SystemResponse<T> {
         [JsonPropertyName("responseCode")]
         public int ResponseCode { get; set; }
     
@@ -11,6 +11,12 @@ namespace Operators.Moddleware.HttpHelpers {
     
         [JsonPropertyName("responseDescription")]
         public string ResponseDescription { get; set; }="";
+
+        [JsonPropertyName("data")]
+        public T Data { get; set; }
+
+        [JsonPropertyName("meta")]
+        public Meta Meta { get; set; }
     }
 
 }

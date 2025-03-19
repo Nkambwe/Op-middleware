@@ -12,5 +12,14 @@ namespace Operators.Moddleware.HttpHelpers {
 
         [JsonPropertyName("decrypt")]
         public string[] Decrypt { get; set; }
+
+        [JsonPropertyName("page")]
+        public int Page {get;set;}
+        
+        [JsonPropertyName("size")]
+        public int PageSize {get;set;}
+
+        [JsonPropertyName("includeDeleted")]
+        public bool IncludeDeleted {get; set;}
     }
 }

@@ -1,6 +1,22 @@
 [
   {
     "ContainingType": "Operators.Moddleware.Controllers.DriverController",
+    "Method": "GetAllDrivers",
+    "RelativePath": "getAllDrivers",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Operators.Moddleware.HttpHelpers.ApplyRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Operators.Moddleware.Controllers.MemberController",
     "Method": "GetAllMembers",
     "RelativePath": "getAllMembers",
     "HttpMethod": "POST",

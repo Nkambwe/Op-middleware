@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Operators.Moddleware.Data.Entities;
 using Operators.Moddleware.Helpers;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace Operators.Moddleware.Data.Repositories {
@@ -445,6 +446,107 @@ namespace Operators.Moddleware.Data.Repositories {
                 _logger.LogToFile($"{ex.StackTrace}", "ERROR");
                 return false;
             }
+        }
+        
+        public virtual async Task<PagedResult<T>> PageAllAsync(int page, int size, bool includeDeleted) {
+            //make sure page size is never negative
+            page = Math.Max(1, page);   
+            size = Math.Max(1, size);  
+
+            using var context = _contextFactory.CreateDbContext();
+            var dbSet = context.Set<T>();
+
+            var query = includeDeleted ? dbSet : dbSet.Where(m => !m.IsDeleted);
+            var totalRecords = await query.CountAsync();
+            var entities = await query.Skip((page - 1) * size).Take(size).ToListAsync();
+
+            return new PagedResult<T> {
+                Entities = entities,
+                Count = totalRecords,
+                Page = page,
+                Size = size
+            };
+        }
+
+        public virtual async Task<PagedResult<T>> PageAllAsync(CancellationToken token, int page, int size, bool includeDeleted) {
+            //make sure page size is never negative
+            page = Math.Max(1, page);   
+            size = Math.Max(1, size);  
+
+            using var context = _contextFactory.CreateDbContext();
+            var dbSet = context.Set<T>();
+
+            var query = includeDeleted ? dbSet : dbSet.Where(m => !m.IsDeleted);
+            var totalRecords = await dbSet.CountAsync(token);
+            var entities = await query.Skip((page - 1) * size).Take(size).ToListAsync(token);
+
+            return new PagedResult<T> {
+                Entities = entities,
+                Count = totalRecords,
+                Page = page,
+                Size = size
+            };
+        }
+
+        public virtual async Task<PagedResult<T>> PageAllAsync(int page, int size, bool includeDeleted, Expression<Func<T, bool>> where = null) {
+            //make sure page size is never negative
+            page = Math.Max(1, page);   
+            size = Math.Max(1, size);  
+    
+            using var context = _contextFactory.CreateDbContext();
+            var dbSet = context.Set<T>();
+            var query = where != null ? dbSet.Where(where) : dbSet;
+    
+            // handle soft deleted entities
+            if (!includeDeleted && typeof(T).GetProperty("IsDeleted") != null) {
+                var parameter = Expression.Parameter(typeof(T), "x");
+                var property = Expression.Property(parameter, "IsDeleted");
+                var comparison = Expression.Equal(property, Expression.Constant(false));
+                var lambda = Expression.Lambda<Func<T, bool>>(comparison, parameter);
+
+                query = query.Where(lambda);
+            }
+    
+            var totalCount = await query.CountAsync();
+            var entities = await query.Skip((page - 1) * size).Take(size).ToListAsync();
+   
+            return new PagedResult<T> {
+                Entities = entities,
+                Count = totalCount,
+                Page = page,
+                Size = size
+            };
+        }
+
+        public virtual async Task<PagedResult<T>> PageAllAsync(CancellationToken token, int page, int size, Expression<Func<T, bool>> where = null, bool includeDeleted = false) {
+            //make sure page size is never negative
+            page = Math.Max(1, page);   
+            size = Math.Max(1, size);  
+
+            using var context = _contextFactory.CreateDbContext();
+            var dbSet = context.Set<T>();
+    
+            var query = where != null ? dbSet.Where(where) : dbSet;
+    
+            // handle soft deleted entities
+            if (!includeDeleted && typeof(T).GetProperty("IsDeleted") != null) {
+                var parameter = Expression.Parameter(typeof(T), "x");
+                var property = Expression.Property(parameter, "IsDeleted");
+                var comparison = Expression.Equal(property, Expression.Constant(false));
+                var lambda = Expression.Lambda<Func<T, bool>>(comparison, parameter);
+        
+                query = query.Where(lambda);
+            }
+    
+            var totalCount = await query.CountAsync(token);
+            var entities = await query.Skip((page - 1) * size).Take(size).ToListAsync(token);
+    
+            return new PagedResult<T> {
+                Entities = entities,
+                Count = totalCount,
+                Page = page,
+                Size = size
+            };
         }
 
         #region Helper Methods

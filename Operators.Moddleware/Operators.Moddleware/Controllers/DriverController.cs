@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.Execution;
 using Azure;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -39,63 +40,90 @@ namespace Operators.Moddleware.Controllers {
         }
 
 
-        [HttpPost("getAllMembers")]
+        [HttpPost("getAllDrivers")]
         [Produces("application/json")]
-        public async Task<IActionResult> GetAllMembers([FromBody]ApplyRequest request) { 
-            IList<Driver> records;
-            SystemResponse response;
+        public async Task<IActionResult> GetAllDrivers([FromBody] ApplyRequest request) {
+            SystemResponse<List<Driver>> response;
             string json;
-            try{ 
-                //..get user posting the settings
+            try {
+                // Get user posting the settings
                 long userId = request.UserId;
                 User user = await UserService.FindUserByIdAsync(userId, true);
-                if(user == null) { 
-                    response = new() {
-                        ResponseCode =  (int)ResponseCode.NOTFOUND,
+                if (user == null)
+                {
+                    response = new()
+                    {
+                        ResponseCode = (int)ResponseCode.NOTFOUND,
                         ResponseMessage = ResponseCode.NOTFOUND.GetDescription(),
-                        ResponseDescription =   $"No User found with User ID '{request.UserId}'",
+                        ResponseDescription = $"No User found with User ID '{request.UserId}'",
                     };
-
                     json = JsonConvert.SerializeObject(response);
                     _logger.LogToFile($"RESPONSE : {json}", "MSG");
                     return new JsonResult(response);
                 }
 
-                 //..get this from settings
-                var includeDeleted = await ParameterService.GetBooleanParameterAsync("includeDeletedObjects");
-                records = await _drivers.GetAllAsync(includeDeleted, d => d.IsActive);
+                // Apply pagination
+                int pageNumber = request.Page > 0 ? request.Page : 1;
+                int pageSize = request.PageSize > 0 ? request.PageSize : 10;
+                int skip = (pageNumber - 1) * pageSize;
 
-                //..decrypt columns required
-                string[] decrypt = request.Decrypt; 
-
-                if(decrypt != null && decrypt.Length > 0) { 
-
-                    try{ 
+                // Get paginated results with total count
+                var result = await _drivers.PageAllAsync(
+                    skip, 
+                    pageSize, 
+                    request.IncludeDeleted,
+                    m => m.IsActive);
+            
+                var records = result.Entities.ToList();
+                int totalCount = result.Count;
+        
+                // Decrypt columns required
+                string[] decrypt = request.Decrypt;
+                if (decrypt != null && decrypt.Length > 0) {
+                    try
+                    {
                         records = decrypter.DecryptProperties(records, request.Decrypt);
-                    } catch(Exception ex){ 
+                    }
+                    catch (Exception ex)
+                    {
                         string msg = $"{ex.Message}";
-                        response = new() {
-                            ResponseCode =  (int)ResponseCode.SERVERERROR,
+                        response = new()
+                        {
+                            ResponseCode = (int)ResponseCode.SERVERERROR,
                             ResponseMessage = msg,
                             ResponseDescription = "Oops! Something went wrong"
                         };
+                        return new JsonResult(response);
                     }
-                    
                 }
-
-            } catch(Exception ex){ 
-                 _logger.LogToFile($"{ex.Message}", "ERROR");
-                _logger.LogToFile($"{ex.StackTrace}", "STACKTRACE");
-
+        
+                // Return paginated response
                 response = new() {
-                    ResponseCode =  (int)ResponseCode.FAILED,
-                    ResponseMessage = ResponseCode.FAILED.GetDescription(),
-                    ResponseDescription ="Oops something went wrong"
+                    ResponseCode = (int)ResponseCode.SUCCESS,
+                    ResponseMessage = ResponseCode.SUCCESS.GetDescription(),
+                    ResponseDescription = "Members retrieved successfully",
+                    Data = records,
+                    Meta = new Meta {
+                        TotalCount = totalCount,
+                        PageSize = pageSize,
+                        CurrentPage = pageNumber,
+                        TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize)
+                    }
                 };
+        
+                return new JsonResult(response);
+            } catch (Exception ex) {
+                _logger.LogToFile($"{ex.Message}", "ERROR");
+                _logger.LogToFile($"{ex.StackTrace}", "STACKTRACE");
+                response = new() {
+                    ResponseCode = (int)ResponseCode.FAILED,
+                    ResponseMessage = ResponseCode.FAILED.GetDescription(),
+                    ResponseDescription = "Oops something went wrong"
+                };
+                return new JsonResult(response);
             }
-
-            return null;
         }
+
     }
 
 }

@@ -10,8 +10,7 @@ namespace Operators.Moddleware.Data.Entities.Business {
     public class Attachment : DomainEntity {
 
         [Column(Order = 1)]
-        public long DriverId { get; set; }
-        
+        public long DriverId { get; set; }      
         
         /// <summary>
         /// Document Personalized number. Must be unique Eg.NIN or Employee number
@@ -25,25 +24,25 @@ namespace Operators.Moddleware.Data.Entities.Business {
         [Column(Order = 3)]
         public string DocumentNumber { get; set; }
 
-        [Column(Order = 3)]
+        [Column(Order = 4)]
         public DateTime? IssueDate { get; set; }
 
-        [Column(Order = 4)]
+        [Column(Order = 5)]
         public DateTime? ExpiryDate { get; set; }
 
-        [Column(Order = 5)]
+        [Column(Order = 6)]
         public bool IsVerified { get; set; }
 
-        [Column(Order = 6)]
+        [Column(Order = 7)]
         public DateTime? VerifiedOn { get; set; }
 
-        [Column(Order = 7)]
+        [Column(Order = 8)]
         public string VerifiedBy { get; set; }
 
-        [Column(Order = 8)]
+        [Column(Order = 9)]
         public long AttachmentTypeId { get; set; }
 
-        [Column(Order = 9)]
+        [Column(Order = 10)]
         public string DocumentExtension { get; set; }
 
 

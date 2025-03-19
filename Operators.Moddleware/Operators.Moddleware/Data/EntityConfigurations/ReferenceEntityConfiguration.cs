@@ -14,8 +14,8 @@ namespace Operators.Moddleware.Data.EntityConfigurations {
             entityBuilder.Property(r => r.Email).HasMaxLength(200).HasColumnName("EmailAddress").IsRequired(false);
             entityBuilder.Property(r => r.Employment).HasMaxLength(200).IsFixedLength().IsRequired();
             entityBuilder.Property(r => r.DriverId).IsRequired();
-            entityBuilder.Property(r => r.IsActive).HasDefaultValue();
-            entityBuilder.Property(r => r.IsDeleted).HasDefaultValue();
+            entityBuilder.Property(r => r.IsActive).HasDefaultValue(true);
+            entityBuilder.Property(r => r.IsDeleted).HasDefaultValue(false);
             entityBuilder.Property(r => r.CreatedOn).IsRequired();
             entityBuilder.Property(r => r.CreatedBy).HasMaxLength(250).IsFixedLength().IsRequired();
             entityBuilder.Property(r => r.LastModifiedOn).IsRequired(false);

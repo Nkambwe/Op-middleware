@@ -25,8 +25,8 @@ namespace Operators.Moddleware.Data.EntityConfigurations {
             entityBuilder.Property(d => d.DistrictId).HasColumnName("WorkAreaId").IsRequired(false);
             entityBuilder.Property(d => d.MemberId).HasColumnName("MemberId").IsRequired(false);
             entityBuilder.Property(d => d.DriverTypeId).HasColumnName("TypeId").IsRequired();
-            entityBuilder.Property(d => d.IsActive).HasDefaultValue();
-            entityBuilder.Property(d => d.IsDeleted).HasDefaultValue();
+            entityBuilder.Property(d => d.IsActive).HasDefaultValue(true);
+            entityBuilder.Property(d => d.IsDeleted).HasDefaultValue(false);
             entityBuilder.Property(d => d.CreatedOn).IsRequired();
             entityBuilder.Property(d => d.CreatedBy).HasMaxLength(250).IsFixedLength().IsRequired();
             entityBuilder.Property(d => d.LastModifiedOn).IsRequired(false);

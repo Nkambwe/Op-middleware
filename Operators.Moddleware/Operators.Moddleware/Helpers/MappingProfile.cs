@@ -76,7 +76,7 @@ namespace Operators.Moddleware.Helpers {
                 .ForMember(dest => dest.LastModifiedBy, opt => opt.MapFrom(o => (o.ModifiedBy ?? string.Empty).Trim()))
                 .ForMember(dest => dest.LastModifiedOn, opt => opt.MapFrom(o => o.ModifiedOn));
 
-            CreateMap<User, UserResponse>()
+            CreateMap<User, UserResponse<UserData>>()
                 .ForPath(dest => dest.Data.Id, opt => opt.MapFrom(o => o.Id))
                 .ForPath(dest => dest.Data.BranchId, opt => opt.MapFrom(o => o.BranchId))
                 .ForPath(dest => dest.Data.BranchCode, opt => opt.MapFrom(o => (o.Branch != null ? o.Branch.BranchCode : string.Empty).Trim()))
@@ -97,7 +97,7 @@ namespace Operators.Moddleware.Helpers {
                 .ForPath(dest => dest.Data.ModifiedBy, opt => opt.MapFrom(o => (o.LastModifiedBy ?? string.Empty).Trim()))
                 .ForPath(dest => dest.Data.ModifiedOn, opt => opt.MapFrom(o => o.LastModifiedOn));
 
-            CreateMap<UserResponse, User>()
+            CreateMap<UserResponse<UserData>, User>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(o => o.Data.Id))
                 .ForPath(dest => dest.Branch.Id, opt => opt.MapFrom(o => o.Data.BranchId))
                 .ForPath(dest => dest.Branch.BranchCode, opt => opt.MapFrom(o => (o.Data.BranchCode ?? string.Empty).Trim()))

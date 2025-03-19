@@ -11,8 +11,8 @@ namespace Operators.Moddleware.Data.EntityConfigurations {
             entityBuilder.Property(m => m.Skin).HasMaxLength(250).HasColumnName("PrimaryColor").IsRequired();
             entityBuilder.Property(m => m.Color).HasMaxLength(250).HasColumnName("SecondaryColor").IsRequired();
             entityBuilder.Property(m => m.FontFamily).HasMaxLength(250).IsRequired();
-            entityBuilder.Property(m => m.IsActive).HasDefaultValue();
-            entityBuilder.Property(m => m.IsDeleted).HasDefaultValue();
+            entityBuilder.Property(m => m.IsActive).HasDefaultValue(true);
+            entityBuilder.Property(m => m.IsDeleted).HasDefaultValue(false);
             entityBuilder.Property(m => m.CreatedOn).IsRequired();
             entityBuilder.Property(m => m.CreatedBy).HasMaxLength(250).IsFixedLength().IsRequired();
             entityBuilder.Property(m => m.LastModifiedOn).IsRequired(false);

@@ -13,14 +13,14 @@ namespace Operators.Moddleware.Data.EntityConfigurations {
             entityBuilder.Property(a => a.DocumentNumber).HasColumnName("Docnum").HasMaxLength(30).IsFixedLength().IsRequired(false);
             entityBuilder.Property(a => a.IssueDate).HasColumnName("Issued").IsRequired(false);
             entityBuilder.Property(a => a.ExpiryDate).HasColumnName("Expiry").IsFixedLength().IsRequired(false);
-            entityBuilder.Property(a => a.IsVerified).HasColumnName("Verified").IsRequired();
+            entityBuilder.Property(a => a.IsVerified).HasColumnName("Verified");
             entityBuilder.Property(a => a.VerifiedOn).IsFixedLength().IsRequired(false);
             entityBuilder.Property(a => a.VerifiedBy).HasColumnName("Verifier").HasMaxLength(250).IsFixedLength().IsRequired(false);
             entityBuilder.Property(a => a.DocumentExtension).HasColumnName("Extension").IsRequired(false);
             entityBuilder.Property(d => d.DriverId).HasColumnName("Driver").IsRequired();
             entityBuilder.Property(d => d.AttachmentTypeId).HasColumnName("Type").IsRequired();
-            entityBuilder.Property(a => a.IsActive).HasDefaultValue();
-            entityBuilder.Property(a => a.IsDeleted).HasDefaultValue();
+            entityBuilder.Property(a => a.IsActive).HasDefaultValue(true);
+            entityBuilder.Property(a => a.IsDeleted).HasDefaultValue(false);
             entityBuilder.Property(a => a.CreatedOn).IsRequired();
             entityBuilder.Property(a => a.CreatedBy).HasMaxLength(250).IsFixedLength().IsRequired();
             entityBuilder.Property(a => a.LastModifiedOn).IsRequired(false);

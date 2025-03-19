@@ -1,5 +1,5 @@
 ﻿namespace Operators.Moddleware.HttpHelpers {
-    public class ErrorResponse : SystemResponse {
+    public class ErrorResponse<T> : SystemResponse<T> {
 
         public ErrorResponse(int statusCode, string message, string description) { 
             ResponseCode = statusCode;

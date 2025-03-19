@@ -15,8 +15,8 @@ namespace Operators.Moddleware.Data.EntityConfigurations {
             entityBuilder.Property(m => m.PrimaryContact).HasColumnName("Phone1").HasMaxLength(20).IsFixedLength().IsRequired(false);
             entityBuilder.Property(m => m.SecondaryContact).HasColumnName("Phone2").HasMaxLength(20).IsFixedLength().IsRequired(false);
             entityBuilder.Property(m => m.Address).HasColumnName("PhysicalAddress").IsRequired(false);
-            entityBuilder.Property(m => m.IsActive).HasDefaultValue();
-            entityBuilder.Property(m => m.IsDeleted).HasDefaultValue();
+            entityBuilder.Property(m => m.IsActive).HasDefaultValue(true);
+            entityBuilder.Property(m => m.IsDeleted).HasDefaultValue(false);
             entityBuilder.Property(m => m.CreatedOn).IsRequired();
             entityBuilder.Property(m => m.CreatedBy).HasMaxLength(250).IsFixedLength().IsRequired();
             entityBuilder.Property(m => m.LastModifiedOn).IsRequired(false);

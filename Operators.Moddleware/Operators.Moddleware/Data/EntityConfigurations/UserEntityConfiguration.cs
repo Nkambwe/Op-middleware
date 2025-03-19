@@ -16,10 +16,10 @@ namespace Operators.Moddleware.Data.EntityConfigurations {
             entityBuilder.Property(t => t.Username).HasMaxLength(250).IsRequired();
             entityBuilder.Property(t => t.EmailAddress).HasMaxLength(250).IsRequired();
             entityBuilder.Property(t => t.CurrentPassword).HasColumnName("pwd").IsRequired();
-            entityBuilder.Property(t => t.IsActive).HasDefaultValue();
-            entityBuilder.Property(t => t.IsVerified).HasDefaultValue();
-            entityBuilder.Property(t => t.IsLoggedin).HasDefaultValue();
-            entityBuilder.Property(t => t.IsDeleted).HasDefaultValue();
+            entityBuilder.Property(t => t.IsActive).HasDefaultValue(true);
+            entityBuilder.Property(t => t.IsVerified).HasDefaultValue(false);
+            entityBuilder.Property(t => t.IsLoggedin).HasDefaultValue(false);
+            entityBuilder.Property(t => t.IsDeleted).HasDefaultValue(false);
             entityBuilder.Property(t => t.CreatedOn).IsRequired();
             entityBuilder.Property(t => t.CreatedBy).HasMaxLength(250).IsFixedLength().IsRequired();
             entityBuilder.Property(t => t.LastModifiedOn).IsRequired(false);
