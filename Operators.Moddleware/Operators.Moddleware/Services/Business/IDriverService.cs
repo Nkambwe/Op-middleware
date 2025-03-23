@@ -6,6 +6,8 @@ namespace Operators.Moddleware.Services.Business {
 
     public interface IDriverService {
 
+        Task<Driver> GetDriverAsync(long id, bool includeDeleted = false);
+
         Task<IList<Driver>> GetAllAsync(bool includeDeleted, Expression<Func<Driver, bool>> expression);
 
         Task<PagedResult<Driver>> GetAllPagedAsync(int page, int pageSize, bool includeDeleted);

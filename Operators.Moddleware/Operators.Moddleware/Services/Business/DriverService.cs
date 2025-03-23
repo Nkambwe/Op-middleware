@@ -18,6 +18,20 @@ namespace Operators.Moddleware.Services.Business {
             };
         }
 
+        public async Task<Driver> GetDriverAsync(long id, bool includeDeleted = false) {
+            _logger.LogToFile("Retrieve driver record");
+            using var _uow = _uowf.Create();
+            var _repo = _uow.GetRepository<Driver>();
+            var driver = await _repo.GetAsync(id,includeDeleted);
+            if (driver != null) {
+                _logger.LogToFile($"No records found.", "DRIVERS");
+            } else {
+                _logger.LogToFile($"RESULT : '{driver.ToString()}' records returned", "DIVERS");
+            }
+
+            return driver;
+        }
+
         public async Task<IList<Driver>> GetAllAsync(bool includeDeleted, Expression<Func<Driver, bool>> where) {
             _logger.LogToFile("Retrieve all drivers");
             using var _uow = _uowf.Create();

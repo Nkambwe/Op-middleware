@@ -1,8 +1,8 @@
 [
   {
-    "ContainingType": "Operators.Moddleware.Controllers.DriverController",
-    "Method": "GetAllDrivers",
-    "RelativePath": "getAllDrivers",
+    "ContainingType": "Operators.Moddleware.Controllers.MemberController",
+    "Method": "GetAllMembers",
+    "RelativePath": "getAllMembers",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -16,9 +16,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Operators.Moddleware.Controllers.MemberController",
-    "Method": "GetAllMembers",
-    "RelativePath": "getAllMembers",
+    "ContainingType": "Operators.Moddleware.Controllers.DriverController",
+    "Method": "GetAllDrivers",
+    "RelativePath": "middleware/drivers/getAllDrivers",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -26,6 +26,22 @@
       {
         "Name": "request",
         "Type": "Operators.Moddleware.HttpHelpers.ApplyRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Operators.Moddleware.Controllers.DriverController",
+    "Method": "GetDrivers",
+    "RelativePath": "middleware/drivers/getDriver",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Operators.Moddleware.HttpHelpers.DriverRequest",
         "IsRequired": true
       }
     ],

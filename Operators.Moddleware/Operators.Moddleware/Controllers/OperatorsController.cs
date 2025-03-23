@@ -181,9 +181,9 @@ namespace Operators.Moddleware.Controllers {
         [HttpPost("SaveConfigurations")]
         [Produces("application/json")]
         public async Task<IActionResult> SaveConfigurations([FromBody]SettingsRequest request) { 
-            SystemResponse<UserData> settingResponse;
             string json;
-
+            SystemResponse<UserData> settingResponse;
+            
             //..make sure you have settings to save
             HttpHelpers.Attribute[] attributes = request.Attributes;
             if(attributes.Length == 0) { 

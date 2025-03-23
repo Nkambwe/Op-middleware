@@ -3,7 +3,8 @@
 namespace Operators.Moddleware.HttpHelpers {
 
     public class GeneralRequest {
-        [JsonPropertyName("userId")]
+
+         [JsonPropertyName("userId")]
          public int UserId { get; set;}
          
          [JsonPropertyName("branchId")]

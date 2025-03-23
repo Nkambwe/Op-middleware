@@ -165,7 +165,7 @@ namespace Operators.Moddleware.Helpers {
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(o => (o.CreatedBy ?? string.Empty).Trim()))
                 .ForMember(dest => dest.CreatedOn, opt => opt.MapFrom(o => o.CreatedOn))
                 .ForMember(dest => dest.ModifiedBy, opt => opt.MapFrom(o => (o.LastModifiedBy ?? string.Empty).Trim()))
-                .ForMember(dest => dest.ModifiedOn, opt => opt.MapFrom(o => o.LastModifiedBy));
+                .ForMember(dest => dest.ModifiedOn, opt => opt.MapFrom(o => o.LastModifiedOn)); 
 
             }
 

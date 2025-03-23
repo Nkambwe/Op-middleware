@@ -5,7 +5,7 @@
     "version": "1.0"
   },
   "paths": {
-    "/getAllDrivers": {
+    "/middleware/drivers/getAllDrivers": {
       "post": {
         "tags": [
           "Driver"
@@ -40,6 +40,52 @@
             "application/*+xml": {
               "schema": {
                 "$ref": "#/components/schemas/ApplyRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/middleware/drivers/getDriver": {
+      "post": {
+        "tags": [
+          "Driver"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverRequest"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverRequest"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverRequest"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverRequest"
               }
             }
           }
@@ -479,23 +525,23 @@
             "type": "string",
             "nullable": true
           },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "includeDeleted": {
+            "type": "boolean"
+          },
           "decrypt": {
             "type": "array",
             "items": {
               "type": "string"
             },
             "nullable": true
-          },
-          "page": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "size": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "includeDeleted": {
-            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -516,6 +562,31 @@
             "nullable": true
           },
           "parameterValue": {
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DriverRequest": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ipAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "driverId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "decrypt": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
             "nullable": true
           }
         },

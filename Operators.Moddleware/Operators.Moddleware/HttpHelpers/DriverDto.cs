@@ -17,16 +17,16 @@ namespace Operators.Moddleware.HttpHelpers {
 
         [JsonPropertyName("fullName")]
         public string FullName { get; set; }
-
+        
+        [JsonPropertyName("dateOfBirth")]
+        public DateTime? DateOfBirth { get; set; }
+        
         [JsonPropertyName("categoryId")]
         public long CategoryId { get; set; }
         
         [JsonPropertyName("categoryName")]
         public string CategoryName { get; set; }
 
-        [JsonPropertyName("dateOfBirth")]
-        public DateTime? DateOfBirth { get; set; }
-        
         [JsonPropertyName("email")]
         public string Email { get; set; }
 

@@ -12,7 +12,9 @@
         public string Channel { set; get; }
         public string Id { set; get; }
  
-        public ServiceLogger() { }
+        public ServiceLogger() {
+            _fileName = "activities";
+        }
  
         public ServiceLogger(string name, bool isFolder = false) {
             _fileName = name;
