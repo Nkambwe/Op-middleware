@@ -7,28 +7,16 @@
       "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\controllers\\drivercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\httphelpers\\driverrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\httphelpers\\driverrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\services\\districtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\services\\districtservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\httphelpers\\generalrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\httphelpers\\generalrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\services\\business\\drivertypeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\services\\business\\drivertypeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\controllers\\operatorscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\controllers\\operatorscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\httphelpers\\settingsrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\httphelpers\\settingsrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\services\\business\\idriverservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\services\\business\\idriverservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\services\\business\\driverservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\services\\business\\driverservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|c:\\projects\\operators\\middleware\\op-middleware\\operators.moddleware\\operators.moddleware\\services\\idistrictservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{22E88835-5BE2-4165-A1BB-90CCDE040386}|Operators.Moddleware\\Operators.Moddleware.csproj|solutionrelative:operators.moddleware\\services\\idistrictservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,22 +26,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 130,
-          "SelectedChildIndex": 10,
+          "SelectedChildIndex": 7,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "IDriverService.cs",
-              "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Services\\Business\\IDriverService.cs",
-              "RelativeDocumentMoniker": "Operators.Moddleware\\Services\\Business\\IDriverService.cs",
-              "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Services\\Business\\IDriverService.cs",
-              "RelativeToolTip": "Operators.Moddleware\\Services\\Business\\IDriverService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAgAAABKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-19T18:28:09.619Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
@@ -72,67 +46,41 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "SettingsRequest.cs",
-              "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\HttpHelpers\\SettingsRequest.cs",
-              "RelativeDocumentMoniker": "Operators.Moddleware\\HttpHelpers\\SettingsRequest.cs",
-              "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\HttpHelpers\\SettingsRequest.cs",
-              "RelativeToolTip": "Operators.Moddleware\\HttpHelpers\\SettingsRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-23T12:36:01.9Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "GeneralRequest.cs",
-              "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\HttpHelpers\\GeneralRequest.cs",
-              "RelativeDocumentMoniker": "Operators.Moddleware\\HttpHelpers\\GeneralRequest.cs",
-              "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\HttpHelpers\\GeneralRequest.cs",
-              "RelativeToolTip": "Operators.Moddleware\\HttpHelpers\\GeneralRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAlAAAAAAAAAA==",
+              "Title": "DriverTypeService.cs",
+              "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Services\\Business\\DriverTypeService.cs",
+              "RelativeDocumentMoniker": "Operators.Moddleware\\Services\\Business\\DriverTypeService.cs",
+              "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Services\\Business\\DriverTypeService.cs",
+              "RelativeToolTip": "Operators.Moddleware\\Services\\Business\\DriverTypeService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAABhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-23T12:35:08.211Z",
+              "WhenOpened": "2025-03-27T22:30:46.776Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "DriverRequest.cs",
-              "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\HttpHelpers\\DriverRequest.cs",
-              "RelativeDocumentMoniker": "Operators.Moddleware\\HttpHelpers\\DriverRequest.cs",
-              "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\HttpHelpers\\DriverRequest.cs",
-              "RelativeToolTip": "Operators.Moddleware\\HttpHelpers\\DriverRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAgAAAAAAAAAA==",
+              "Title": "DistrictService.cs",
+              "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Services\\DistrictService.cs",
+              "RelativeDocumentMoniker": "Operators.Moddleware\\Services\\DistrictService.cs",
+              "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Services\\DistrictService.cs",
+              "RelativeToolTip": "Operators.Moddleware\\Services\\DistrictService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-23T12:34:37.812Z",
+              "WhenOpened": "2025-03-27T22:30:07.711Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "OperatorsController.cs",
-              "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Controllers\\OperatorsController.cs",
-              "RelativeDocumentMoniker": "Operators.Moddleware\\Controllers\\OperatorsController.cs",
-              "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Controllers\\OperatorsController.cs",
-              "RelativeToolTip": "Operators.Moddleware\\Controllers\\OperatorsController.cs",
-              "ViewState": "AgIAAK4AAAAAAAAAAAAiwLkAAAAMAAAAAAAAAA==",
+              "Title": "IDistrictService.cs",
+              "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Services\\IDistrictService.cs",
+              "RelativeDocumentMoniker": "Operators.Moddleware\\Services\\IDistrictService.cs",
+              "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Services\\IDistrictService.cs",
+              "RelativeToolTip": "Operators.Moddleware\\Services\\IDistrictService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAMAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-23T12:31:44.851Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "DriverService.cs",
-              "DocumentMoniker": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Services\\Business\\DriverService.cs",
-              "RelativeDocumentMoniker": "Operators.Moddleware\\Services\\Business\\DriverService.cs",
-              "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Services\\Business\\DriverService.cs",
-              "RelativeToolTip": "Operators.Moddleware\\Services\\Business\\DriverService.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAawBEAAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-23T08:20:48.635Z",
+              "WhenOpened": "2025-03-27T22:27:45.197Z",
               "EditorCaption": ""
             },
             {
@@ -143,9 +91,9 @@
               "RelativeDocumentMoniker": "Operators.Moddleware\\Controllers\\DriverController.cs",
               "ToolTip": "C:\\Projects\\Operators\\middleware\\Op-middleware\\Operators.Moddleware\\Operators.Moddleware\\Controllers\\DriverController.cs",
               "RelativeToolTip": "Operators.Moddleware\\Controllers\\DriverController.cs",
-              "ViewState": "AgIAAKYAAAAAAAAAAAAUwMsAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAGwAAAAAAAAAAAAiwHYAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-19T00:35:40.248Z",
+              "WhenOpened": "2025-03-27T16:21:57.913Z",
               "EditorCaption": ""
             }
           ]

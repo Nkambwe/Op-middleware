@@ -19,6 +19,7 @@ namespace Operators.Moddleware.Controllers {
         private readonly IServiceLogger _logger;
         private readonly IDriverService _drivers;
         private readonly IDistrictService _districts;
+        private readonly IDriverTypeService _categories;
         private readonly IAttachmentService _attachment;
         private readonly DecryptionHandler decrypter;
 
@@ -28,7 +29,8 @@ namespace Operators.Moddleware.Controllers {
                                 IDistrictService districts,
                                 IAttachmentService attachment,
                                 IUserService userService,
-                                IDriverService drivers) 
+                                IDriverService drivers,
+                                IDriverTypeService categories) 
                                 : base(mapper, branches, parameters, userService) {
 
             _logger = logger;
@@ -36,6 +38,7 @@ namespace Operators.Moddleware.Controllers {
             _drivers = drivers;
             _attachment = attachment;
             _districts = districts;
+            _categories = categories;
             decrypter = new(_logger);
         }
 
@@ -92,6 +95,48 @@ namespace Operators.Moddleware.Controllers {
                 // Ensure records are not null before processing
                 if (records?.Count > 0) {
                     drivers = records.Select(Mapper.Map<DriverDto>).ToList();
+
+                    // Optimize category retrieval with a single query and dictionary lookup
+                    var uniqueCategoryIds = drivers
+                        .Select(d => d.CategoryId)
+                        .Distinct()
+                        .ToArray();
+
+                    if (uniqueCategoryIds.Any()) {
+                        // Fetch categories in a single async call
+                        var categories = await _categories.GetDriverTypesAsync(false, uniqueCategoryIds);
+
+                        // Use dictionary for faster lookups
+                        var categoriesDict = categories.ToDictionary(
+                            c => c.Id, 
+                            c => c.TypeName
+                        );
+
+                        // Bulk update category names
+                        foreach (var driver in drivers) {
+                            if (categoriesDict.TryGetValue(driver.CategoryId, out var categoryName)) {
+                                driver.CategoryName = categoryName;
+                            }
+                        }
+                    }
+
+                    // Optimize category retrieval with a single query and dictionary lookup
+                    var uniquedistrictIds = drivers
+                        .Select(d => d.ResidentialDistrictId)
+                        .Distinct()
+                        .ToArray();
+
+                    if (uniquedistrictIds.Any()) {
+                        // Fetch area in a single async call
+                        var districts = await _districts.GetDistrictsAsync(false, uniqueCategoryIds);
+
+                        // Bulk update category names
+                        foreach (var driver in drivers) {
+                            if (districts.TryGetValue((long)driver.ResidentialDistrictId, out var districtName)) {
+                                driver.ResidentialDistrict = districtName;
+                            }
+                        }
+                    }
                 }
         
                 // Return paginated response
