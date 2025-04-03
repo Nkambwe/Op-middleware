@@ -52,13 +52,18 @@ namespace Operators.Moddleware.Controllers {
                 // Get user posting the settings
                 long userId = request.UserId;
                 User user = await UserService.FindUserByIdAsync(userId, true);
-                if (user == null)
-                {
-                    response = new()
-                    {
+                if (user == null) {
+                    response = new() {
                         ResponseCode = (int)ResponseCode.NOTFOUND,
                         ResponseMessage = ResponseCode.NOTFOUND.GetDescription(),
                         ResponseDescription = $"No User found with User ID '{request.UserId}'",
+                        Data = [],
+                        Meta = new Meta {
+                            TotalCount = 0,
+                            PageSize = request.PageSize,
+                            CurrentPage = request.PageSize,
+                            TotalPages = 0
+                        }
                     };
                     json = JsonConvert.SerializeObject(response);
                     _logger.LogToFile($"RESPONSE : {json}", "MSG");
@@ -72,7 +77,7 @@ namespace Operators.Moddleware.Controllers {
                  _logger.LogToFile($"Records found {totalCount}", "INFO");
 
                 // Decrypt columns required
-                List<DriverDto> drivers = new();
+                List<DriverDto> drivers = [];
                 string[] decrypt = request.Decrypt;
 
                 // First decrypt any fields if needed
@@ -85,7 +90,14 @@ namespace Operators.Moddleware.Controllers {
                         response = new() {
                             ResponseCode = (int)ResponseCode.SERVERERROR,
                             ResponseMessage = msg,
-                            ResponseDescription = "Oops! Something went wrong"
+                            ResponseDescription = "Oops! Something went wrong",
+                            Data = [],
+                            Meta = new Meta {
+                                TotalCount = 0,
+                                PageSize = request.PageSize,
+                                CurrentPage = request.PageSize,
+                                TotalPages = 0
+                            }
                         };
 
                         return new JsonResult(response);
@@ -96,7 +108,7 @@ namespace Operators.Moddleware.Controllers {
                 if (records?.Count > 0) {
                     drivers = records.Select(Mapper.Map<DriverDto>).ToList();
 
-                    // Optimize category retrieval with a single query and dictionary lookup
+                    // get categories
                     var uniqueCategoryIds = drivers
                         .Select(d => d.CategoryId)
                         .Distinct()
@@ -132,7 +144,7 @@ namespace Operators.Moddleware.Controllers {
 
                         // Bulk update category names
                         foreach (var driver in drivers) {
-                            if (districts.TryGetValue((long)driver.ResidentialDistrictId, out var districtName)) {
+                            if (districts.TryGetValue(driver.ResidentialDistrictId, out var districtName)) {
                                 driver.ResidentialDistrict = districtName;
                             }
                         }
@@ -160,7 +172,14 @@ namespace Operators.Moddleware.Controllers {
                 response = new() {
                     ResponseCode = (int)ResponseCode.FAILED,
                     ResponseMessage = ResponseCode.FAILED.GetDescription(),
-                    ResponseDescription = "Oops something went wrong"
+                    ResponseDescription = "Oops something went wrong",
+                    Data = [],
+                    Meta = new Meta {
+                        TotalCount = 0,
+                        PageSize = request.PageSize,
+                        CurrentPage = request.PageSize,
+                        TotalPages = 0
+                    }
                 };
                 return new JsonResult(response);
             }

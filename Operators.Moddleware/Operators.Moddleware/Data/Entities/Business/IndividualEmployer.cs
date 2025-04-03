@@ -45,7 +45,10 @@ namespace Operators.Moddleware.Data.Entities.Business {
         
         [Column(Order = 14)]
         public long? BusinessContactId { get; set; }
-
+ 
+        [Column(Order = 15)]
+        public long? IndustryId { get; set; }
+        
         public virtual District District { get; set; }
         public virtual BusinessIndustry Industry {get;set;}
 

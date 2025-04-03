@@ -28,7 +28,6 @@ namespace Operators.Moddleware.Extensions {
             services.AddScoped<IBusinessIndustryService, BusinessIndustryService>();
             services.AddScoped<IDriverService, DriverService>();
             services.AddScoped<IDriverTypeService, DriverTypeService>();
-            services.AddScoped<IEmployerTypeService, EmployerTypeService>();
             services.AddScoped<IIndividualEmployerService, IndividualEmployerService>();
             services.AddScoped<IMemberService, MemberService>();
             services.AddScoped<IReferenceService, ReferenceService>();

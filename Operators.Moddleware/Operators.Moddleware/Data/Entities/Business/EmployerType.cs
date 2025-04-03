@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
+﻿
 namespace Operators.Moddleware.Data.Entities.Business {
 
     public enum EmployerType {

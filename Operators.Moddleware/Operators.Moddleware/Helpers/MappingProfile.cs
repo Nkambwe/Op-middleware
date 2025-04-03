@@ -167,8 +167,31 @@ namespace Operators.Moddleware.Helpers {
                 .ForMember(dest => dest.ModifiedBy, opt => opt.MapFrom(o => (o.LastModifiedBy ?? string.Empty).Trim()))
                 .ForMember(dest => dest.ModifiedOn, opt => opt.MapFrom(o => o.LastModifiedOn)); 
 
-            }
+             CreateMap<Member, MemberDto>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(o => o.Id))
+                .ForMember(dest => dest.FirstName, opt => opt.MapFrom(o => (o.FirstName ?? string.Empty).Trim()))
+                .ForMember(dest => dest.MiddleName, opt => opt.MapFrom(o => (o.MiddleName ?? string.Empty).Trim()))
+                .ForMember(dest => dest.LastName, opt => opt.MapFrom(o => (o.LastName ?? string.Empty).Trim()))
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(o => o.ToString()))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(o => (o.Email ?? string.Empty).Trim()))
+                .ForMember(dest => dest.PrimaryContact, opt => opt.MapFrom(o => (o.PrimaryContact ?? string.Empty).Trim()))
+                .ForMember(dest => dest.SecondaryContact, opt => opt.MapFrom(o => (o.SecondaryContact ?? string.Empty).Trim()))
+                .ForMember(dest => dest.Address, opt => opt.MapFrom(o => (o.Address ?? string.Empty).Trim()))
+                .ForMember(dest => dest.IsActive, opt => opt.MapFrom(o => o.IsActive))
+                .ForMember(dest => dest.IsDeleted, opt => opt.MapFrom(o => o.IsDeleted))
+                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(o => (o.CreatedBy ?? string.Empty).Trim()))
+                .ForMember(dest => dest.CreatedOn, opt => opt.MapFrom(o => o.CreatedOn))
+                .ForMember(dest => dest.ModifiedBy, opt => opt.MapFrom(o => (o.LastModifiedBy ?? string.Empty).Trim()))
+                .ForMember(dest => dest.ModifiedOn, opt => opt.MapFrom(o => o.LastModifiedOn)); 
+        }
 
+
+
+        /// <summary>
+        /// Convert parameter value to its data type
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         private string ConvertParameterValue(object value) {
             if (value == null)
                 return null;

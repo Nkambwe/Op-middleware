@@ -37,16 +37,15 @@ namespace Operators.Moddleware.Controllers {
             decrypter = new(_logger);
         }
 
-        
         [HttpPost("getAllMembers")]
         [Produces("application/json")]
         public async Task<IActionResult> GetAllMembers([FromBody] ApplyRequest request) {
+
             try {
                 long userId = request.UserId;
                 User user = await UserService.FindUserByIdAsync(userId, true);
-                if (user == null)
-                {
-                    return NotFound(new SystemResponse<Member>
+                if (user == null) {
+                    return NotFound(new SystemResponse<MemberDto>
                     {
                         ResponseCode = (int)ResponseCode.NOTFOUND,
                         ResponseMessage = ResponseCode.NOTFOUND.GetDescription(),
@@ -56,19 +55,18 @@ namespace Operators.Moddleware.Controllers {
 
                 int page = request.Page > 0 ? request.Page : 1;
                 int pageSize = request.PageSize > 0 ? request.PageSize : 10;
-
                 var pagedResult = await _members.PageAllAsync(page, pageSize, request.IncludeDeleted);
 
-                if (request.Decrypt != null && request.Decrypt.Length > 0)
-                {
-                    try
-                    {
+                List<MemberDto> result = [];
+                if(pagedResult.Entities.Count > 0) { 
+                    result = pagedResult.Entities.Select(Mapper.Map<MemberDto>).ToList();
+                }
+
+                if (request.Decrypt != null && request.Decrypt.Length > 0) {
+                    try {
                         pagedResult.Entities = decrypter.DecryptProperties(pagedResult.Entities, request.Decrypt);
-                    }
-                    catch (Exception ex)
-                    {
-                        return StatusCode(500, new SystemResponse<Member>
-                        {
+                    }  catch (Exception ex) {
+                        return StatusCode(500, new SystemResponse<MemberDto> {
                             ResponseCode = (int)ResponseCode.SERVERERROR,
                             ResponseMessage = ex.Message,
                             ResponseDescription = "Oops! Something went wrong"
@@ -77,16 +75,16 @@ namespace Operators.Moddleware.Controllers {
                 }
 
                 return Ok(new {
-                    Data = pagedResult.Entities,
+                    Data = result,
                     TotalCount = pagedResult.Count,
-                    Page = pagedResult.Page,
+                    pagedResult.Page,
                     PageSize = pagedResult.Size
                 });
             } catch (Exception ex) {
                 _logger.LogToFile($"{ex.Message}", "ERROR");
                 _logger.LogToFile($"{ex.StackTrace}", "STACKTRACE");
 
-                return StatusCode(500, new SystemResponse<Member>
+                return StatusCode(500, new SystemResponse<MemberDto>
                 {
                     ResponseCode = (int)ResponseCode.FAILED,
                     ResponseMessage = ResponseCode.FAILED.GetDescription(),

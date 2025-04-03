@@ -2,7 +2,7 @@
 
 namespace Operators.Moddleware.Services.Business {
     public interface IDriverTypeService {
-        Task<IList<DriverType>> GetDriverTypesAsync(bool v, params long[] types);
+        Task<IList<DriverType>> GetDriverTypesAsync(bool includeDeleted, params long[] types);
     }
 
 }
