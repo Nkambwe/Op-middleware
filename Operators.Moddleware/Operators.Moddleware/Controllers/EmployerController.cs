@@ -14,6 +14,10 @@ using Operators.Moddleware.Services.Settings;
 using System.Collections.Generic;
 
 namespace Operators.Moddleware.Controllers {
+
+    
+    [ApiController]
+    [Route("employers")]
     public class EmployerController : BaseController {
 
         private readonly IServiceLogger _logger;
@@ -45,7 +49,7 @@ namespace Operators.Moddleware.Controllers {
             decrypter = new(_logger);
         }
 
-        [HttpPost("getAllEmployers")]
+        [HttpPost("employers/getAllEmployers")]
         [Produces("application/json")]
         public async Task<IActionResult> GetAllEmployers([FromBody] ApplyRequest request) {
 
@@ -109,7 +113,7 @@ namespace Operators.Moddleware.Controllers {
             return null;
         }
 
-        [HttpPost("getAllBusinessEmployers")]
+        [HttpPost("employers/getAllBusinessEmployers")]
         [Produces("application/json")]
         public async Task<IActionResult> GetAllBusinessEmployers([FromBody] ApplyRequest request) {
             string json;
@@ -166,7 +170,7 @@ namespace Operators.Moddleware.Controllers {
             }
         }
         
-        [HttpPost("getAllIndividualEmployers")]
+        [HttpPost("employers/getAllIndividualEmployers")]
         [Produces("application/json")]
         public async Task<IActionResult> GetAllIndividualEmployers([FromBody] ApplyRequest request) {
             string json;
@@ -222,7 +226,27 @@ namespace Operators.Moddleware.Controllers {
                 return StatusCode(500,response);
             }
         }
-
+        
+        [HttpPost("employers/createemployer")]
+        [Produces("application/json")]
+        public async Task<IActionResult> CreateMember([FromBody] ApplyRequest request){ 
+            var response = await Task.FromResult(new ApplyRequest());
+            return Ok(response);
+        }
+        
+        [HttpPost("employers/updateemployer")]
+        [Produces("application/json")]
+        public async Task<IActionResult> UpdateDriver([FromBody] ApplyRequest request){ 
+            var response = await Task.FromResult(new ApplyRequest());
+            return Ok(response);
+        }
+        
+        [HttpPost("employers/deleteemployer")]
+        [Produces("application/json")]
+        public async Task<IActionResult> DeleteDriver([FromBody] ApplyRequest request){ 
+            var response = await Task.FromResult(new ApplyRequest());
+            return Ok(response);
+        }
         protected async Task<PagedResponse<List<BusinessEmployerDto>>> GetAllBusinessesAsync(ApplyRequest request) {
             try {
                 

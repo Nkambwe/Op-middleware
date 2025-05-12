@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Operators.Moddleware.Helpers;
 using Operators.Moddleware.Services;
 using Operators.Moddleware.Services.Access;
 using Operators.Moddleware.Services.Settings;
 
 namespace Operators.Moddleware.Controllers {
-
+    
+    [ApiController]
+    [Route("middleware")]
     public class SystemController : BaseController {
 
         private readonly IServiceLogger _logger;

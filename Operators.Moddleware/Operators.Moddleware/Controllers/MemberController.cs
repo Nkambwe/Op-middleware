@@ -12,6 +12,8 @@ using System.Net.Mail;
 
 namespace Operators.Moddleware.Controllers {
 
+    [ApiController]
+    [Route("middleware")]
     public class MemberController : BaseController {
         
         private readonly IServiceLogger _logger;
@@ -37,7 +39,7 @@ namespace Operators.Moddleware.Controllers {
             decrypter = new(_logger);
         }
 
-        [HttpPost("getAllMembers")]
+        [HttpPost("members/getAllMembers")]
         [Produces("application/json")]
         public async Task<IActionResult> GetAllMembers([FromBody] ApplyRequest request) {
 
@@ -92,7 +94,27 @@ namespace Operators.Moddleware.Controllers {
                 });
             }
         }
-
+        
+        [HttpPost("members/createmember")]
+        [Produces("application/json")]
+        public async Task<IActionResult> CreateMember([FromBody] ApplyRequest request){ 
+            var response = await Task.FromResult(new ApplyRequest());
+            return Ok(response);
+        }
+        
+        [HttpPost("members/updatemember")]
+        [Produces("application/json")]
+        public async Task<IActionResult> UpdateDriver([FromBody] ApplyRequest request){ 
+            var response = await Task.FromResult(new ApplyRequest());
+            return Ok(response);
+        }
+        
+        [HttpPost("members/deletemember")]
+        [Produces("application/json")]
+        public async Task<IActionResult> DeleteDriver([FromBody] ApplyRequest request){ 
+            var response = await Task.FromResult(new ApplyRequest());
+            return Ok(response);
+        }
     }
 
 }

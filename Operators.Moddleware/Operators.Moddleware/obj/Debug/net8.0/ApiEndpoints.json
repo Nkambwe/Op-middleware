@@ -1,8 +1,120 @@
 [
   {
-    "ContainingType": "Operators.Moddleware.Controllers.MemberController",
-    "Method": "GetAllMembers",
-    "RelativePath": "getAllMembers",
+    "ContainingType": "Operators.Moddleware.Controllers.EmployerController",
+    "Method": "CreateMember",
+    "RelativePath": "employers/employers/createemployer",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Operators.Moddleware.HttpHelpers.ApplyRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Operators.Moddleware.Controllers.EmployerController",
+    "Method": "DeleteDriver",
+    "RelativePath": "employers/employers/deleteemployer",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Operators.Moddleware.HttpHelpers.ApplyRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Operators.Moddleware.Controllers.EmployerController",
+    "Method": "GetAllBusinessEmployers",
+    "RelativePath": "employers/employers/getAllBusinessEmployers",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Operators.Moddleware.HttpHelpers.ApplyRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Operators.Moddleware.Controllers.EmployerController",
+    "Method": "GetAllEmployers",
+    "RelativePath": "employers/employers/getAllEmployers",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Operators.Moddleware.HttpHelpers.ApplyRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Operators.Moddleware.Controllers.EmployerController",
+    "Method": "GetAllIndividualEmployers",
+    "RelativePath": "employers/employers/getAllIndividualEmployers",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Operators.Moddleware.HttpHelpers.ApplyRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Operators.Moddleware.Controllers.EmployerController",
+    "Method": "UpdateDriver",
+    "RelativePath": "employers/employers/updateemployer",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Operators.Moddleware.HttpHelpers.ApplyRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Operators.Moddleware.Controllers.DriverController",
+    "Method": "CreateDriver",
+    "RelativePath": "middleware/drivers/createdriver",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Operators.Moddleware.HttpHelpers.ApplyRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Operators.Moddleware.Controllers.DriverController",
+    "Method": "DeleteDriver",
+    "RelativePath": "middleware/drivers/deletedriver",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -42,6 +154,22 @@
       {
         "Name": "request",
         "Type": "Operators.Moddleware.HttpHelpers.DriverRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Operators.Moddleware.Controllers.DriverController",
+    "Method": "UpdateDriver",
+    "RelativePath": "middleware/drivers/updatedriver",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Operators.Moddleware.HttpHelpers.ApplyRequest",
         "IsRequired": true
       }
     ],
@@ -106,6 +234,70 @@
       {
         "Name": "request",
         "Type": "Operators.Moddleware.HttpHelpers.UserAccess",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Operators.Moddleware.Controllers.MemberController",
+    "Method": "CreateMember",
+    "RelativePath": "middleware/members/createmember",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Operators.Moddleware.HttpHelpers.ApplyRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Operators.Moddleware.Controllers.MemberController",
+    "Method": "DeleteDriver",
+    "RelativePath": "middleware/members/deletemember",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Operators.Moddleware.HttpHelpers.ApplyRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Operators.Moddleware.Controllers.MemberController",
+    "Method": "GetAllMembers",
+    "RelativePath": "middleware/members/getAllMembers",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Operators.Moddleware.HttpHelpers.ApplyRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Operators.Moddleware.Controllers.MemberController",
+    "Method": "UpdateDriver",
+    "RelativePath": "middleware/members/updatemember",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Operators.Moddleware.HttpHelpers.ApplyRequest",
         "IsRequired": true
       }
     ],

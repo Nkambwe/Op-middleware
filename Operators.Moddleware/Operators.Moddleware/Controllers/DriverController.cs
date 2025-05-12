@@ -267,6 +267,26 @@ namespace Operators.Moddleware.Controllers {
             }
         }
 
+        [HttpPost("drivers/createdriver")]
+        [Produces("application/json")]
+        public async Task<IActionResult> CreateDriver([FromBody] ApplyRequest request){ 
+            var response = await Task.FromResult(new ApplyRequest());
+            return Ok(response);
+        }
+        
+        [HttpPost("drivers/updatedriver")]
+        [Produces("application/json")]
+        public async Task<IActionResult> UpdateDriver([FromBody] ApplyRequest request){ 
+            var response = await Task.FromResult(new ApplyRequest());
+            return Ok(response);
+        }
+        
+        [HttpPost("drivers/deletedriver")]
+        [Produces("application/json")]
+        public async Task<IActionResult> DeleteDriver([FromBody] ApplyRequest request){ 
+            var response = await Task.FromResult(new ApplyRequest());
+            return Ok(response);
+        }
     }
 
 }
