@@ -187,7 +187,7 @@ namespace Operators.Moddleware.Controllers {
         
         [HttpPost("drivers/getDriver")]
         [Produces("application/json")]
-        public async Task<IActionResult> GetDrivers([FromBody] DriverRequest request) {
+        public async Task<IActionResult> GetDriver([FromBody] DriverRequest request) {
             SystemResponse<DriverDto> response;
              _logger.LogToFile($"Retrieving driver record", "INFO");
             string json;

@@ -49,6 +49,13 @@ namespace Operators.Moddleware.Controllers {
             decrypter = new(_logger);
         }
 
+        [HttpPost("employers/getEmployer")]
+        [Produces("application/json")]
+        public async Task<IActionResult> GetEmployer([FromBody] DriverRequest request) { 
+            var response = await Task.FromResult(new ApplyRequest());
+            return Ok(response);
+        }
+
         [HttpPost("employers/getAllEmployers")]
         [Produces("application/json")]
         public async Task<IActionResult> GetAllEmployers([FromBody] ApplyRequest request) {
@@ -229,24 +236,25 @@ namespace Operators.Moddleware.Controllers {
         
         [HttpPost("employers/createemployer")]
         [Produces("application/json")]
-        public async Task<IActionResult> CreateMember([FromBody] ApplyRequest request){ 
+        public async Task<IActionResult> CreateEmployer([FromBody] ApplyRequest request){ 
             var response = await Task.FromResult(new ApplyRequest());
             return Ok(response);
         }
         
         [HttpPost("employers/updateemployer")]
         [Produces("application/json")]
-        public async Task<IActionResult> UpdateDriver([FromBody] ApplyRequest request){ 
+        public async Task<IActionResult> UpdateEmployer([FromBody] ApplyRequest request){ 
             var response = await Task.FromResult(new ApplyRequest());
             return Ok(response);
         }
         
         [HttpPost("employers/deleteemployer")]
         [Produces("application/json")]
-        public async Task<IActionResult> DeleteDriver([FromBody] ApplyRequest request){ 
+        public async Task<IActionResult> DeleteEmployer([FromBody] ApplyRequest request){ 
             var response = await Task.FromResult(new ApplyRequest());
             return Ok(response);
         }
+
         protected async Task<PagedResponse<List<BusinessEmployerDto>>> GetAllBusinessesAsync(ApplyRequest request) {
             try {
                 
