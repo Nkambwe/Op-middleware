@@ -235,7 +235,53 @@
         }
       }
     },
-    "/employers/employers/getAllEmployers": {
+    "/middleware/employers/getEmployer": {
+      "post": {
+        "tags": [
+          "Employer"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverRequest"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverRequest"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverRequest"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/DriverRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/middleware/employers/getAllEmployers": {
       "post": {
         "tags": [
           "Employer"
@@ -281,7 +327,7 @@
         }
       }
     },
-    "/employers/employers/getAllBusinessEmployers": {
+    "/middleware/employers/getAllBusinessEmployers": {
       "post": {
         "tags": [
           "Employer"
@@ -327,7 +373,7 @@
         }
       }
     },
-    "/employers/employers/getAllIndividualEmployers": {
+    "/middleware/employers/getAllIndividualEmployers": {
       "post": {
         "tags": [
           "Employer"
@@ -373,7 +419,7 @@
         }
       }
     },
-    "/employers/employers/createemployer": {
+    "/middleware/employers/createemployer": {
       "post": {
         "tags": [
           "Employer"
@@ -419,7 +465,7 @@
         }
       }
     },
-    "/employers/employers/updateemployer": {
+    "/middleware/employers/updateemployer": {
       "post": {
         "tags": [
           "Employer"
@@ -465,7 +511,7 @@
         }
       }
     },
-    "/employers/employers/deleteemployer": {
+    "/middleware/employers/deleteemployer": {
       "post": {
         "tags": [
           "Employer"

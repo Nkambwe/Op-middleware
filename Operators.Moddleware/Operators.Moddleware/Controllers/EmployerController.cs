@@ -17,7 +17,7 @@ namespace Operators.Moddleware.Controllers {
 
     
     [ApiController]
-    [Route("employers")]
+    [Route("middleware")]
     public class EmployerController : BaseController {
 
         private readonly IServiceLogger _logger;
